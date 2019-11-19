@@ -4,6 +4,7 @@ import apiFacade from "./apiFacade";
 import Login from "./Login";
 import LoggedIn from "./LoggedIn";
 import Recipes from "./Recipes"
+import AllRecipes from "./Recipes";
 
 const NoMatch = () => <div>Urlen matcher ingen kendte routes</div>;
 const Home = () => <div>Home</div>;
@@ -47,16 +48,18 @@ function Header() {
 }
 
 function Content(props) {
+const {recipes, loggedIn} = props;
+
   return (
     <Switch>
       <Route exact path="/">
         <Home />
       </Route>
       <Route path="/recipes">
-        <Recipes apiFacade={props.apiFacade}/>
+        <Recipes />
       </Route>
       <Route path="/signIn">
-        <Login login={props.login} />
+        <Login loggedIn={loggedIn} />
       </Route>
       <Route path="/signUp">
       </Route>
