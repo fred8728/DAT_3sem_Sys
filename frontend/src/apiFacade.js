@@ -1,5 +1,5 @@
 
-const URL = "http://localhost:8080/securitystarter";
+const URL = "https://frederikkesimone.dk/sys";
 function handleHttpErrors(res) {
   if (!res.ok) {
     return Promise.reject({ status: res.status, fullError: res.json() });
