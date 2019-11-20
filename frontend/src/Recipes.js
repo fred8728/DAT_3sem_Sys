@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import apiFacade from "./apiFacade";
 
-const AllRecipes = () =>{
+const AllRecipes = (props) =>{
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
-      apiFacade.getRecipes()
-      .then(data => setRecipes(data));
-  }, []);
+    
+      apiFacade.getRecipes().then(data => setRecipes(data));
+      
 
+  }, []);
+  
+ 
   return (
     <div>
       <table>
@@ -22,8 +25,7 @@ const AllRecipes = () =>{
               <tr key={index}>
                 <td>{data.title}</td>
               </tr>
-            )
-          }
+            )}
         </tbody>
       </table>
     </div>

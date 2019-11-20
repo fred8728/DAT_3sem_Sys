@@ -26,7 +26,7 @@ import utils.EMF_Creator;
 /**
  * @author lam@cphbusiness.dk
  */
-@Path("info")
+@Path("food")
 public class DemoResource {
 
     private static EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory(EMF_Creator.DbSelector.DEV, EMF_Creator.Strategy.CREATE);
@@ -81,6 +81,25 @@ public class DemoResource {
     @Path("person/{id}")  
     public String getSwPeopleData(@PathParam("id") int id) throws MalformedURLException, IOException{
     URL url = new URL("https://swapi.co/api/people/"+id);
+    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+    con.setRequestMethod("GET");
+    con.setRequestProperty("Accept", "application/json;charset=UTF-8");
+    con.setRequestProperty("User-Agent", "server"); //remember if you are using SWAPI
+    Scanner scan = new Scanner(con.getInputStream());
+    String jsonStr = null;
+    if (scan.hasNext()) {
+      jsonStr = scan.nextLine();
+      //jsonStr += "\n";
+    }
+    scan.close();
+    return jsonStr;
+  }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("recipes")  
+    public String getStarwarz(@PathParam("id") int id) throws MalformedURLException, IOException{
+    URL url = new URL("http://www.recipepuppy.com/api/");
     HttpURLConnection con = (HttpURLConnection) url.openConnection();
     con.setRequestMethod("GET");
     con.setRequestProperty("Accept", "application/json;charset=UTF-8");
