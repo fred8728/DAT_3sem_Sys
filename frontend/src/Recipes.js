@@ -26,6 +26,7 @@ const AllRecipes = (props) => {
           {recipes.map((data, index) =>
             <tr key={index}>
               <td>{data.title}</td>
+
             </tr>
           )}
         </tbody>
