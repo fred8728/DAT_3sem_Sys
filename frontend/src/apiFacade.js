@@ -1,5 +1,5 @@
-
-const URL = "https://frederikkesimone.dk/sys";
+// http://localhost:8080/securitystarter   https://frederikkesimone.dk/sys
+const URL = " http://localhost:8080/securitystarter";
 function handleHttpErrors(res) {
   if (!res.ok) {
     return Promise.reject({ status: res.status, fullError: res.json() });
@@ -7,7 +7,7 @@ function handleHttpErrors(res) {
   return res.json();
 }
 
-function ApiFacade(){
+function ApiFacade() {
 
   const setToken = token => {
     localStorage.setItem("jwtToken", token);
@@ -24,13 +24,13 @@ function ApiFacade(){
   };
 
   const login = (user, pass) => {
-    const options = makeOptions("POST", true,{ username: user, password: pass });
+    const options = makeOptions("POST", true, { username: user, password: pass });
     return fetch(URL + "/api/login", options)
       .then(handleHttpErrors)
       .then(res => { setToken(res.token) })
   }
 
-  const makeOptions = (method, addToken, body) =>{
+  const makeOptions = (method, addToken, body) => {
     var opts = {
       method: method,
       headers: {
@@ -48,13 +48,13 @@ function ApiFacade(){
   }
 
   const fetchData = () => {
-    const options = makeOptions("GET",true); //True add's the token
+    const options = makeOptions("GET", true); //True add's the token
     return fetch(URL + "/api/info/user", options).then(handleHttpErrors);
-  } 
+  }
 
   const getRecipes = () => {
-    const options = makeOptions("GET",true);
-    return fetch(URL + "/api/food/recipes", options).then(handleHttpErrors)
+    const options = makeOptions("GET", true);
+    return fetch(URL + "/api/food/recipes/", options).then(handleHttpErrors)
   }
 
   return {
@@ -63,7 +63,7 @@ function ApiFacade(){
     fetchData,
     getRecipes
   }
-  
+
 }
 
 let returnVal = ApiFacade();
