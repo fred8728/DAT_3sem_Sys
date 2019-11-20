@@ -15,7 +15,8 @@ export default function SearchPage() {
       <form>
         <input type="text" /> <label> insert a search value</label>
         <p> test </p>
-        <p> lva</p>
+        <p>val
+        <input type ="button" value="press here"/></p>
       </form>
     </div>
   );
