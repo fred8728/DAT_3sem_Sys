@@ -20,12 +20,18 @@ const AllRecipes = (props) => {
         <thead>
           <tr>
             <th>Title</th>
+            <th>Ingredients</th>
+            <th>Thumbnail</th>
+            <th>Link(?)</th>
           </tr>
         </thead>
         <tbody>
           {recipes.map((data, index) =>
             <tr key={index}>
               <td>{data.title}</td>
+              <td>{data.ingredients}</td>
+              <td>{<img src={data.thumbnail} />}</td>
+              <td>{<a href={data.href}> Link </a>}</td>
             </tr>
           )}
         </tbody>
