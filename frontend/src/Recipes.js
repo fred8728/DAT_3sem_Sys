@@ -6,7 +6,8 @@ const AllRecipes = (props) =>{
 
   useEffect(() => {
     
-      apiFacade.getRecipes().then(data => setRecipes(data.results));
+      apiFacade.getRecipes().then(data => {setRecipes(data.results)
+      console.log("check data",data)});
       
       
 
