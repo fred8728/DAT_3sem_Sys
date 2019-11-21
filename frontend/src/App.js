@@ -5,6 +5,7 @@ import Login from "./Login";
 import LoggedIn from "./LoggedIn";
 import Recipes from "./Recipes"
 import AllRecipes from "./Recipes";
+import SearchPage from "./SearchPage";
 
 const NoMatch = () => <div>Urlen matcher ingen kendte routes</div>;
 const Home = () => <div>Home</div>;
@@ -43,6 +44,11 @@ function Header() {
           Sign up
         </NavLink>
       </li>
+      <li>
+        <NavLink activeClassName="active" to="/Search">
+          Search
+        </NavLink>
+      </li>
     </ul>
   );
 }
@@ -63,9 +69,13 @@ const {recipes, loggedIn} = props;
       </Route>
       <Route path="/signUp">
       </Route>
+      <Route path="/Search">
+        <SearchPage />
+      </Route>
       <Route path="*">
         <NoMatch />
       </Route>
+      
     </Switch>
   );
 }
