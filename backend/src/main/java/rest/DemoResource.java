@@ -129,9 +129,28 @@ public class DemoResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("multiple")  
     public String getMultiple() throws MalformedURLException, IOException, InterruptedException, ExecutionException{
-        RecipeFacade lol = new RecipeFacade();
-    String all = lol.allFetch();
+        RecipeFacade recipeFac = new RecipeFacade();
+    String all = recipeFac.allFetch();
     return all;
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("recipesDB/{letter}")
+    public static String getRecipeLetter(@PathParam("letter") String letter) throws MalformedURLException, IOException {
+        URL url = new URL("https://www.themealdb.com/api/json/v1/1/search.php?f=" + letter);
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("GET");
+        con.setRequestProperty("Accept", "application/json;charset=UTF-8");
+        con.setRequestProperty("User-Agent", "server"); //remember if you are using SWAPI
+        Scanner scan = new Scanner(con.getInputStream());
+        String jsonStr = null;
+        if (scan.hasNext()) {
+            jsonStr = scan.nextLine();
+            //jsonStr += "\n";
+        }
+        scan.close();
+        return jsonStr;
     }
 
 }

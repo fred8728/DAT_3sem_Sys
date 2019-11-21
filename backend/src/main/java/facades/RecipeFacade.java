@@ -92,12 +92,12 @@ public class RecipeFacade {
     
       public String allFetch() throws InterruptedException, ExecutionException{
           StringBuilder sb = new StringBuilder();
-          Callable<String> test1 = fetch1;
-          Callable<String> test2 = fetch2;
-          Callable<String> test3 = fetch3;
-          Future<String> future1 = executorservice.submit(test1);
-          Future<String> future2 = executorservice.submit(test2);
-          Future<String> future3 = executorservice.submit(test3);
+          Callable<String> value1 = fetch1;
+          Callable<String> value2 = fetch2;
+          Callable<String> value3 = fetch3;
+          Future<String> future1 = executorservice.submit(value1);
+          Future<String> future2 = executorservice.submit(value2);
+          Future<String> future3 = executorservice.submit(value3);
           String result1 = future1.get();
           String result2 = future2.get();
           String result3 = future3.get();
