@@ -65,7 +65,7 @@ const {recipes, loggedIn} = props;
         <Recipes recipes={recipes}/>
       </Route>
       <Route path="/signIn">
-        <Login loggedIn={loggedIn} />
+        <Login  />
       </Route>
       <Route path="/signUp">
       </Route>
