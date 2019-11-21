@@ -2,12 +2,14 @@ package rest;
 
 import com.google.gson.Gson;
 import entities.User;
+import facades.RecipeFacade;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import javax.annotation.security.RolesAllowed;
@@ -30,7 +32,8 @@ import utils.EMF_Creator;
 public class DemoResource {
 
     private static EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory(EMF_Creator.DbSelector.DEV, EMF_Creator.Strategy.CREATE);
-    ExecutorService executorservice = Executors.newFixedThreadPool(3);
+
+    //ExecutorService executorservice = Executors.newFixedThreadPool(3);
 
     @Context
     private UriInfo context;
@@ -121,4 +124,14 @@ public class DemoResource {
 //    https://www.themealdb.com/api/json/v1/1/search.php?f=a
 //Lookup full meal details by id
 //    https://www.themealdb.com/api/json/v1/1/lookup.php?i=52772
+
+        @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("multiple")  
+    public String getMultiple() throws MalformedURLException, IOException, InterruptedException, ExecutionException{
+        RecipeFacade lol = new RecipeFacade();
+    String all = lol.allFetch();
+    return all;
+    }
+
 }

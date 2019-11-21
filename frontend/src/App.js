@@ -62,10 +62,10 @@ const {recipes, loggedIn} = props;
         <Home />
       </Route>
       <Route path="/recipes">
-        <Recipes />
+        <Recipes recipes={recipes}/>
       </Route>
       <Route path="/signIn">
-        <Login loggedIn={loggedIn} />
+        <Login  />
       </Route>
       <Route path="/signUp">
       </Route>

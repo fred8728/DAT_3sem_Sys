@@ -54,7 +54,7 @@ function ApiFacade() {
 
   const getRecipes = () => {
     const options = makeOptions("GET", true);
-    return fetch(URL + "/api/food/recipes/", options).then(handleHttpErrors)
+    return fetch(URL + "/api/food/recipes", options).then(handleHttpErrors)
   }
 
   return {
