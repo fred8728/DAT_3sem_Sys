@@ -13,10 +13,13 @@ export default function SearchPage() {
   return (
     <div>
       <form>
-        <input type="text" /> <label> insert a search value</label>
-        <p> test </p>
-        <p>val
-        <input type ="button" value="press here"/></p>
+        <fieldset>
+          <legend>Date insert</legend>
+          <input value="text" type="text" />
+          <input type="button" value="Press here" />
+        </fieldset>
+
+        <div>{/* implemt a return method here */}</div>
       </form>
     </div>
   );
