@@ -2,19 +2,35 @@ import React, { useState, useEffect } from "react";
 import apiFacade from "./apiFacade";
 import { BrowserRouter, useRouteMatch, useParams, Route, Link } from "react-router-dom";
 
-const AllRecipes = () =>{
-  const [recipes, setRecipes] = useState([]);
-  let match = useRouteMatch();
+const AllRecipes = () => {
 
+  const [recipes, setRecipes] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  let match = useRouteMatch();
+  const handleChange = e => {
+    setSearchTerm(e.target.value);
+    console.log(recipes)
+  };
   useEffect(() => {
-    
-      apiFacade.getRecipes().then(data => {setRecipes(data.results)
-      console.log("check data",data)});
-  }, []);
-  
- 
+    apiFacade.getRecipes().then(data => {
+      setRecipes(data.results)
+      console.log("check data", data.results)
+    });
+  }, [searchTerm]);
+
   return (
     <div>
+      <form>
+        <fieldset>
+          <legend>Search for recipe</legend>
+          <input
+            type="text"
+            placeholder="Search"
+            value={searchTerm}
+            onChange={handleChange}
+          />
+        </fieldset>
+      </form>
       <link
         rel="stylesheet"
         href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -32,18 +48,26 @@ const AllRecipes = () =>{
           </tr>
         </thead>
         <tbody>
-          {recipes.map((data, index) =>(
-            <tr key={index}>
-              <td>{<img src={data.thumbnail} />}</td>
-              <td>{data.title}</td>
-              <td>
-                <Link to={`${match.url}/${data.title}/${data.ingredients}/${data.href}`}>
-                  Details
+          {recipes
+            .filter(recipe => {
+              return (
+                recipe.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                recipe.ingredients.toLowerCase().includes(searchTerm.toLowerCase())
+              )
+            }
+            )
+            .map((data, index) => (
+              <tr key={index}>
+                <td>{<img src={data.thumbnail} />}</td>
+                <td>{data.title}</td>
+                <td>
+                  <Link to={`${match.url}/${data.title}/${data.ingredients}/${data.href}`}>
+                    Details
                 </Link>
-              </td>
-              <td>{<a href={data.href}> Link </a>}</td>
-            </tr>
-          ))}
+                </td>
+                <td>{<a href={data.href}> Link </a>}</td>
+              </tr>
+            ))}
         </tbody>
       </table>
       <br></br>
@@ -54,10 +78,9 @@ const AllRecipes = () =>{
   );
 }
 
-function Recipe(){
-  let {picture, title, ingredients, link} = useParams();
-  return(
-    
+function Recipe() {
+  let { picture, title, ingredients, link } = useParams();
+  return (
     <div>
       <p>Recipe: {title}</p>
       <p>Ingredients: {ingredients}</p>
@@ -68,4 +91,3 @@ function Recipe(){
 }
 
 export default AllRecipes;
-
