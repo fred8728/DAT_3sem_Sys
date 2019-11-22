@@ -12,21 +12,14 @@ const AllRecipes = () => {
     setSearchTerm(e.target.value);
     console.log(recipes)
   };
-
-
   useEffect(() => {
-    const n =
-      apiFacade.getRecipes().then(data => {
-        setRecipes(data.results)
-        console.log("check data", data.results)
-      });
+    apiFacade.getRecipes().then(data => {
+      setRecipes(data.results)
+      console.log("check data", data.results)
+    });
   }, [searchTerm]);
 
-
-
-
   return (
-
     <div>
       <input
         type="text"
@@ -59,7 +52,6 @@ const AllRecipes = () => {
 
               )
             }
-
             )
             .map((data, index) => (
               <tr key={index}>
@@ -86,7 +78,6 @@ const AllRecipes = () => {
 function Recipe() {
   let { picture, title, ingredients, link } = useParams();
   return (
-
     <div>
       <p>Recipe: {title}</p>
       <p>Ingredients: {ingredients}</p>
@@ -97,4 +88,3 @@ function Recipe() {
 }
 
 export default AllRecipes;
-
