@@ -28,12 +28,17 @@ const AllRecipes = () => {
   return (
 
     <div>
-      <input
+      <form>
+        <fieldset>
+          <legend>Search for recipe</legend>
+          <input
         type="text"
         placeholder="Search"
         value={searchTerm}
         onChange={handleChange}
       />
+        </fieldset>
+      </form>
       <link
         rel="stylesheet"
         href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
