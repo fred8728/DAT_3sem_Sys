@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import apiFacade from "./apiFacade";
 import { BrowserRouter, useRouteMatch, useParams, Route, Link } from "react-router-dom";
 
-
 const AllRecipes = () => {
 
   const [recipes, setRecipes] = useState([]);
@@ -25,11 +24,11 @@ const AllRecipes = () => {
         <fieldset>
           <legend>Search for recipe</legend>
           <input
-        type="text"
-        placeholder="Search"
-        value={searchTerm}
-        onChange={handleChange}
-      />
+            type="text"
+            placeholder="Search"
+            value={searchTerm}
+            onChange={handleChange}
+          />
         </fieldset>
       </form>
       <link
@@ -54,7 +53,6 @@ const AllRecipes = () => {
               return (
                 recipe.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 recipe.ingredients.toLowerCase().includes(searchTerm.toLowerCase())
-
               )
             }
             )
