@@ -152,5 +152,32 @@ public class DemoResource {
         scan.close();
         return jsonStr;
     }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("recipesDB/dataAll")
+    public static String getAllOpenMealDB() throws IOException {
+            
+        
+        //ADD THREADS PLEASE
+        StringBuilder aVal = new StringBuilder();
+        StringBuilder totaldata = new StringBuilder();
+        for (char alphabet = 'A'; alphabet <= 'Z'; alphabet++) {
+            System.out.println(alphabet);
+            if(aVal.length()==1){
+            aVal.deleteCharAt(0);
+            }
+            else{
+             aVal.append(alphabet);
+            }
+            
+            System.out.println(aVal);
+            String vals = aVal.toString();
+            totaldata.append("\n" + getRecipeLetter(vals));
+            System.out.println(totaldata.toString());
+        }
+        String ReturnData = totaldata.toString();
+        return ReturnData;
+    }
 
 }
