@@ -157,7 +157,7 @@ public class DemoResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("recipesDB/dataAll")
     public static String getAllOpenMealDB() throws IOException {
-            
+            //cached thread pool create  a cache thread pool instead of fixed if you dont know the amount of calls
         
         //ADD THREADS PLEASE
         StringBuilder aVal = new StringBuilder();
