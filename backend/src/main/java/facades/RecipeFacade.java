@@ -77,6 +77,7 @@ public class RecipeFacade {
       jsonStr = scan.nextLine();
       //jsonStr += "\n";
     }
+    
     scan.close();
     return jsonStr;
         }
