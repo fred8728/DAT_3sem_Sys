@@ -103,9 +103,19 @@ public class DemoResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("recipes")
     public String getRecipes(@PathParam("id") int id) throws MalformedURLException, IOException, InterruptedException, ExecutionException, ExecutionException {
-        RecipeFacade recipeFac = new RecipeFacade();
-    String all = recipeFac.letterFetch();
-    return all;
+        URL url = new URL("http://www.recipepuppy.com/api/");
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("GET");
+        con.setRequestProperty("Accept", "application/json;charset=UTF-8");
+        con.setRequestProperty("User-Agent", "server"); //remember if you are using SWAPI
+        Scanner scan = new Scanner(con.getInputStream());
+        String jsonStr = null;
+        if (scan.hasNext()) {
+            jsonStr = scan.nextLine();
+            //jsonStr += "\n";
+        }
+        scan.close();
+        return jsonStr;
     }
 
 //    Search meal by name
