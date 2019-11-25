@@ -21,9 +21,11 @@ import static rest.DemoResource.getRecipeLetter;
  */
 public class RecipeFacade {
   
+    
     private static EntityManagerFactory emf;
     private static RecipeFacade instance;
-    ExecutorService executorservice = Executors.newCachedThreadPool();
+    int threads = 8;
+    ExecutorService executorservice = Executors.newFixedThreadPool(threads);
     
     public RecipeFacade(){}
     
@@ -116,6 +118,13 @@ public class RecipeFacade {
         return ReturnData;
         }
     };
+    
+    public String loltest(){
+    for (int i = 0; i < threads; i ++){
+        return "LOL";
+    }
+    return "lel";
+        };
     
     
       public String allFetch() throws InterruptedException, ExecutionException{
