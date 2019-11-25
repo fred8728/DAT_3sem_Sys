@@ -99,8 +99,7 @@ public class RecipeFacade {
         StringBuilder aVal = new StringBuilder();
         StringBuilder totaldata = new StringBuilder();
         for (char alphabet = 'A'; alphabet <= 'Z'; alphabet++) {
-           /* System.out.println(alphabet);
-            
+           /*
             if(aVal.length()==1){
             aVal.deleteCharAt(0);
             }
