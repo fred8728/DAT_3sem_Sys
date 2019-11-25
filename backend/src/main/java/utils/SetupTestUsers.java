@@ -1,6 +1,7 @@
 package utils;
 
 
+import entities.Custom_recipe;
 import entities.Role;
 import entities.User;
 
@@ -20,9 +21,11 @@ public class SetupTestUsers {
     // Also, either delete this file, when users are created or rename and add to .gitignore
     // Whatever you do DO NOT COMMIT and PUSH with the real passwords
 
-    User user = new User("user", "test1");
-    User admin = new User("admin", "test1");
-    User both = new User("user_admin", "test1");
+    User user = new User("user", "email@test.dk", "test1");
+    User admin = new User("admin", "email@test.dk", "test1");
+    User both = new User("user_admin", "email@test.dk","test1");
+    Custom_recipe cr = new Custom_recipe("Spaghetti kødsovs", 4, 40, "Oksekød, tomatsovs, spaghetti, parmazan", "Start med at putte oksekødet i gryden");
+    user.addRecipe(cr);
 
     if(admin.getUserPass().equals("test")||user.getUserPass().equals("test")||both.getUserPass().equals("test"))
       throw new UnsupportedOperationException("You have not changed the passwords");

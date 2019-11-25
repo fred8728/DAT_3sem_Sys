@@ -1,5 +1,7 @@
 package facades;
 //testtest
+import entities.Custom_recipe;
+import entities.Role;
 import entities.User;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -41,5 +43,5 @@ public class UserFacade {
         }
         return user;
     }
-
+  
 }
