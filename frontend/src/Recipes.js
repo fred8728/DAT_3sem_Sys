@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import apiFacade from "./apiFacade";
 import { BrowserRouter, useRouteMatch, useParams, Route, Link } from "react-router-dom";
 
-
 const AllRecipes = () => {
 
   const [recipes, setRecipes] = useState([]);
@@ -12,31 +11,24 @@ const AllRecipes = () => {
     setSearchTerm(e.target.value);
     console.log(recipes)
   };
-
-
   useEffect(() => {
-    const n =
-      apiFacade.getRecipes().then(data => {
-        setRecipes(data.results)
-        console.log("check data", data.results)
-      });
+    apiFacade.getRecipes().then(data => {
+      setRecipes(data.results)
+      console.log("check data", data.results)
+    });
   }, [searchTerm]);
 
-
-
-
   return (
-
     <div>
       <form>
         <fieldset>
           <legend>Search for recipe</legend>
           <input
-        type="text"
-        placeholder="Search"
-        value={searchTerm}
-        onChange={handleChange}
-      />
+            type="text"
+            placeholder="Search"
+            value={searchTerm}
+            onChange={handleChange}
+          />
         </fieldset>
       </form>
       <link
@@ -61,10 +53,8 @@ const AllRecipes = () => {
               return (
                 recipe.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 recipe.ingredients.toLowerCase().includes(searchTerm.toLowerCase())
-
               )
             }
-
             )
             .map((data, index) => (
               <tr key={index}>
@@ -91,7 +81,6 @@ const AllRecipes = () => {
 function Recipe() {
   let { picture, title, ingredients, link } = useParams();
   return (
-
     <div>
       <p>Recipe: {title}</p>
       <p>Ingredients: {ingredients}</p>
@@ -102,4 +91,3 @@ function Recipe() {
 }
 
 export default AllRecipes;
-

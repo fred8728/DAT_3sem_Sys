@@ -102,7 +102,7 @@ public class DemoResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("recipes")
-    public String getStarwarz(@PathParam("id") int id) throws MalformedURLException, IOException {
+    public String getRecipes(@PathParam("id") int id) throws MalformedURLException, IOException, InterruptedException, ExecutionException, ExecutionException {
         URL url = new URL("http://www.recipepuppy.com/api/");
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
@@ -151,6 +151,34 @@ public class DemoResource {
         }
         scan.close();
         return jsonStr;
+        
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("recipesDB/dataAll")
+    public static String getAllOpenMealDB() throws IOException {
+            //cached thread pool create  a cache thread pool instead of fixed if you dont know the amount of calls
+        
+        //ADD THREADS PLEASE
+        StringBuilder aVal = new StringBuilder();
+        StringBuilder totaldata = new StringBuilder();
+        for (char alphabet = 'A'; alphabet <= 'Z'; alphabet++) {
+            System.out.println(alphabet);
+            if(aVal.length()==1){
+            aVal.deleteCharAt(0);
+            }
+            else{
+             aVal.append(alphabet);
+            }
+            
+            System.out.println(aVal);
+            String vals = aVal.toString();
+            totaldata.append("\n" + getRecipeLetter(vals));
+            System.out.println(totaldata.toString());
+        }
+        String ReturnData = totaldata.toString();
+        return ReturnData;
     }
 
 }
