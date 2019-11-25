@@ -151,6 +151,7 @@ public class DemoResource {
         }
         scan.close();
         return jsonStr;
+        
     }
     
     @GET

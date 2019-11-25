@@ -98,19 +98,9 @@ public class RecipeFacade {
                 //cached thread pool create  a cache thread pool instead of fixed if you dont know the amount of calls
         
         //ADD THREADS PLEASE
-        StringBuilder aVal = new StringBuilder();
+        //StringBuilder aVal = new StringBuilder();
         StringBuilder totaldata = new StringBuilder();
         for (char alphabet = 'A'; alphabet <= 'Z'; alphabet++) {
-           /*
-            if(aVal.length()==1){
-            aVal.deleteCharAt(0);
-            }
-            else{
-             aVal.append(alphabet);
-            }
-            
-            System.out.println(aVal);
-            String vals = aVal.toString();*/
             totaldata.append("\n").append(getRecipeLetter(Character.toString(alphabet)));
             System.out.println(totaldata.toString());
         }
