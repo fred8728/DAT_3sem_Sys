@@ -1,6 +1,7 @@
 package rest;
 
 import com.google.gson.Gson;
+import entities.CustomRecipe;
 import entities.User;
 import facades.RecipeFacade;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import java.util.concurrent.Executors;
 import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
@@ -32,7 +34,9 @@ import utils.EMF_Creator;
 public class DemoResource {
 
     private static EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory(EMF_Creator.DbSelector.DEV, EMF_Creator.Strategy.CREATE);
-
+    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
+    private static RecipeFacade facade = RecipeFacade.getRecipeFacade(emf);
+    private static Gson gson = new Gson();
     //ExecutorService executorservice = Executors.newFixedThreadPool(3);
 
     @Context
@@ -180,5 +184,13 @@ public class DemoResource {
         String ReturnData = totaldata.toString();
         return ReturnData;
     }
-        
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("allhomemade")
+    public String getAllHomemadeRecipes(){
+        List<CustomRecipe> employees = facade.getAllRecipes();
+        return gson.toJson(employees);
+    }
+    
 }
