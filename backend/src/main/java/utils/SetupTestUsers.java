@@ -1,7 +1,7 @@
 package utils;
 
 
-import entities.Custom_recipe;
+import entities.CustomRecipe;
 import entities.Role;
 import entities.User;
 
@@ -24,7 +24,7 @@ public class SetupTestUsers {
     User user = new User("user", "email@test.dk", "test1");
     User admin = new User("admin", "email@test.dk", "test1");
     User both = new User("user_admin", "email@test.dk","test1");
-    Custom_recipe cr = new Custom_recipe("Spaghetti kødsovs", 4, 40, "Oksekød, tomatsovs, spaghetti, parmazan", "Start med at putte oksekødet i gryden");
+    CustomRecipe cr = new CustomRecipe("Spaghetti kødsovs", 4, 40, "Oksekød, tomatsovs, spaghetti, parmazan", "Start med at putte oksekødet i gryden");
     user.addRecipe(cr);
 
     if(admin.getUserPass().equals("test")||user.getUserPass().equals("test")||both.getUserPass().equals("test"))

@@ -1,6 +1,6 @@
 package facades;
 //testtest
-import entities.Custom_recipe;
+import entities.CustomRecipe;
 import entities.Role;
 import entities.User;
 import javax.persistence.EntityManager;
