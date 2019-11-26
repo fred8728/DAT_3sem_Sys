@@ -15,6 +15,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import javax.persistence.TypedQuery;
 import static rest.DemoResource.getRecipeLetter;
 
 /**
@@ -42,9 +43,22 @@ public class RecipeFacade {
         }
         return instance;
     }
+    private EntityManager getEntityManager() {
+        return emf.createEntityManager();
+    }
     
+    public List<CustomRecipe> getAllRecipes(){
+         EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery query = em.createQuery("SELECT c from CustomRecipe c", CustomRecipe.class);
 
-    
+            //  List<PersonDTO> getAll = em.createQuery("SELECT p Person FROM Person p ").getResultList();
+            return query.getResultList();
+
+        } finally {
+            em.close();
+        }
+    }    
     
     //methods
     Callable<String> fetch1 = new Callable<String>(){
