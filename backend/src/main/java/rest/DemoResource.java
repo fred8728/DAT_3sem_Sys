@@ -196,7 +196,8 @@ public class DemoResource {
     @Path("allh")
     public String getAllHomemadeRecipes(){
         List<CustomRecipe> employees = facade.getAllRecipes();
-        return gson.toJson(employees.toString());
+        return gson.toJson(employees);
     }
     
 }
+//test
