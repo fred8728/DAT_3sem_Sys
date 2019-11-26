@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import utils.EMF_Creator;
 
 /**
  *
@@ -23,12 +24,14 @@ public class FacadeTest {
     }
     
     public static void main(String[] args) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
+        EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory(EMF_Creator.DbSelector.DEV, EMF_Creator.Strategy.CREATE); //Persistence.createEntityManagerFactory("pu");
         EntityManager em = emf.createEntityManager();
             
         UserFacade userFac = UserFacade.getUserFacade(emf);
         
-        userFac.createUser("bob", "lolz", "bobNut@mail.dk");
+        userFac.createUser("lar", "bobNut@mail.dk","lolz");
+        userFac.createUser("frede", "fred@nutmail.dk","lolz");
+        userFac.deletUser("lar");
         
     }
     

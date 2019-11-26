@@ -55,7 +55,7 @@ public class UserFacade {
 //    
 //    }
 //    
-    public User createUser(String username, String password, String mail) {
+    public User createUser(String username, String password,String mail) {
         EntityManager em = emf.createEntityManager();
         User newUser = new User(username, password, mail);
         try {
