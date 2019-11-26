@@ -59,14 +59,22 @@ public class UserFacade {
 //        
 //    }
 //    
-//    public CustomRecipe createRecipe(User user, String nameRecipe, int portion, int cookTime, String ingredients, String description){
-//        EntityManager em = emf.createEntityManager();
-//        Custom_recipe recipe = new Custom_recipe(nameRecipe,portion, cookTime, ingredients,description);
-//        User ourUser = user;
-//        outUser.addRecipe(recipe);
-//        
-//        
-//    
-//    }
+    public void createRecipe(User user, String nameRecipe, int portion, int cookTime, String ingredients, String description){
+        EntityManager em = emf.createEntityManager();
+       try{
+        CustomRecipe recipe = new CustomRecipe(nameRecipe,portion, cookTime, ingredients,description);
+        User ourUser = user;
+        ourUser.addRecipe(recipe);
+        em.getTransaction().begin();
+        //em.persist(recipe);
+        em.persist(user);
+        em.getTransaction().commit();
+        System.out.println("recipe is " + recipe.toString());
+        System.out.println("made by: " + user.getUserName());
+       }finally{
+       em.close();
+       }
+        
+    }
   
 }
