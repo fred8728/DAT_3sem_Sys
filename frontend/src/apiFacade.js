@@ -67,7 +67,7 @@ function ApiFacade() {
   }
 
   const getHomemadeRecipes = () =>{
-    return fetch(URL + "NEED ENDPOINT FROM BACKEND", makeOptions("GET", true)).then(handleHttpErrors)
+    return fetch(URL + "/api/food/allh", makeOptions("GET", true)).then(handleHttpErrors)
   }
 
   return {

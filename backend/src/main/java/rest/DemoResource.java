@@ -1,6 +1,7 @@
 package rest;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import entities.CustomRecipe;
 import entities.User;
 import facades.RecipeFacade;
@@ -33,9 +34,15 @@ import utils.EMF_Creator;
 @Path("food")
 public class DemoResource {
 
-    private static EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory(EMF_Creator.DbSelector.DEV, EMF_Creator.Strategy.CREATE);
+    private static EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory(EMF_Creator.DbSelector.DEV, EMF_Creator.Strategy.CREATE);
+    private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory(
+            "pu",
+            "jdbc:mysql://localhost:3307/startcode",
+            "dev",
+            "ax2",
+            EMF_Creator.Strategy.CREATE);
     private static RecipeFacade facade = RecipeFacade.getRecipeFacade(EMF);
-    private static Gson gson = new Gson();
+    private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     //ExecutorService executorservice = Executors.newFixedThreadPool(3);
 
     @Context
@@ -186,10 +193,10 @@ public class DemoResource {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("allhomemade")
+    @Path("allh")
     public String getAllHomemadeRecipes(){
         List<CustomRecipe> employees = facade.getAllRecipes();
-        return gson.toJson(employees);
+        return gson.toJson(employees.toString());
     }
     
 }
