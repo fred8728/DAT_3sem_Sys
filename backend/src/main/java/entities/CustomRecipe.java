@@ -20,7 +20,7 @@ import javax.persistence.ManyToOne;
  * @author fskn
  */
 @Entity
-public class Custom_recipe implements Serializable {
+public class CustomRecipe implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,7 +41,7 @@ public class Custom_recipe implements Serializable {
     @ManyToOne
     private User user;
 
-    public Custom_recipe(String name, int portion_size, int cooking_time, String ingredients, String description) {
+    public CustomRecipe(String name, int portion_size, int cooking_time, String ingredients, String description) {
         this.name = name;
         this.portion_size = portion_size;
         this.cooking_time = cooking_time;
@@ -49,7 +49,7 @@ public class Custom_recipe implements Serializable {
         this.description = description;
     }
 
-    public Custom_recipe() {
+    public CustomRecipe() {
     }
 
     public Integer getId() {
