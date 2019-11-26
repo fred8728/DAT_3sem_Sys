@@ -40,7 +40,6 @@ function LoggedIn() {
               <h2>Data Received from server</h2>
               <h3>{username}</h3>
             </div>
-            <br></br>
             <button onClick={logout}>Sign out</button>
           </div>
         )}

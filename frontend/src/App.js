@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { BrowserRouter, Switch, NavLink, Route } from "react-router-dom";
-import apiFacade from "./apiFacade";
-import Login from "./Login";
-import LoggedIn from "./LoggedIn";
 import Recipes from "./Recipes"
 import Addrecipe from "./addRecipe";
 import SearchPage from "./SearchPage";
+import Profile from "./Profile"
+import Login from "./Login"
+import HomemadeRecipes from './HomemadeRecipes'
 
 const NoMatch = () => <div>Urlen matcher ingen kendte routes</div>;
-const Home = () => <div>Home</div>;
-const Company = () => <div>Company</div>;
+const Home = () => <div></div>
 
 function App({ apiFacade }) {
 
@@ -35,6 +34,11 @@ function Header() {
         </NavLink>
       </li>
       <li>
+        <NavLink activeClassName="active" to="/homemade">
+          Homemade Recipes
+        </NavLink>
+      </li>
+      <li>
         <NavLink activeClassName="active" to="/signIn">
           Sign In
         </NavLink>
@@ -52,14 +56,18 @@ function Header() {
       <li>
         <NavLink activeClassName="active" to="/addRecipe">
           ADD Recipes here
+          </NavLink>
+      </li>
+      <li>
+        <NavLink activeClassName="active" to="/profile">
+          Profile
         </NavLink>
       </li>
     </ul>
   );
 }
 
-function Content(props) {
-  const { recipes, loggedIn } = props;
+function Content() {
 
   return (
     <Switch>
@@ -67,7 +75,10 @@ function Content(props) {
         <Home />
       </Route>
       <Route path="/recipes">
-        <Recipes recipes={recipes} />
+        <Recipes />
+      </Route>
+      <Route path="/homemade">
+        <HomemadeRecipes />
       </Route>
       <Route path="/signIn">
         <Login />
@@ -79,6 +90,9 @@ function Content(props) {
       </Route>
       <Route path="/addrecipe">
         <Addrecipe />
+      </Route>
+      <Route path="/profile">
+        <Profile />
       </Route>
       <Route path="*">
         <NoMatch />

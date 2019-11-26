@@ -51,8 +51,6 @@ public class RecipeFacade {
          EntityManager em = emf.createEntityManager();
         try {
             TypedQuery query = em.createQuery("SELECT c from CustomRecipe c", CustomRecipe.class);
-
-            //  List<PersonDTO> getAll = em.createQuery("SELECT p Person FROM Person p ").getResultList();
             return query.getResultList();
 
         } finally {
