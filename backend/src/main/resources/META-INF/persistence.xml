@@ -3,7 +3,7 @@
   <!-- DO NOT RENAME THE PERSISTENCE UNIT -->
   <persistence-unit name="pu" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>entities.Custom_recipe</class>
+    <class>entities.CustomRecipe</class>
     <class>entities.User</class>
     <class>entities.Role</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>

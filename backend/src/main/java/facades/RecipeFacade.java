@@ -1,5 +1,6 @@
 package facades;
 //testtest
+import entities.CustomRecipe;
 import entities.User;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -14,6 +15,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import javax.persistence.TypedQuery;
 import static rest.DemoResource.getRecipeLetter;
 
 /**
@@ -41,9 +43,22 @@ public class RecipeFacade {
         }
         return instance;
     }
+    private EntityManager getEntityManager() {
+        return emf.createEntityManager();
+    }
     
+    public List<CustomRecipe> getAllRecipes(){
+         EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery query = em.createQuery("SELECT c from CustomRecipe c", CustomRecipe.class);
 
-    
+            //  List<PersonDTO> getAll = em.createQuery("SELECT p Person FROM Person p ").getResultList();
+            return query.getResultList();
+
+        } finally {
+            em.close();
+        }
+    }    
     
     //methods
     Callable<String> fetch1 = new Callable<String>(){
@@ -109,14 +124,6 @@ public class RecipeFacade {
         }
     };
     
-    public String loltest(){
-    for (int i = 0; i < threads; i ++){
-  
-        return "LOL";
-    }
-    return "lel";
-        };
-    
     
       public String allFetch() throws InterruptedException, ExecutionException{
           StringBuilder sb = new StringBuilder();
@@ -150,6 +157,24 @@ public class RecipeFacade {
           executorservice.shutdown();
           return all;
       }
+      
+       public void createRecipe(User user, String nameRecipe, int portion, int cookTime, String ingredients, String description){
+        EntityManager em = emf.createEntityManager();
+       try{
+        CustomRecipe recipe = new CustomRecipe(nameRecipe,portion, cookTime, ingredients,description);
+        User ourUser = user;
+        ourUser.addRecipe(recipe);
+        em.getTransaction().begin();
+        //em.persist(recipe);
+        em.persist(user);
+        em.getTransaction().commit();
+        System.out.println("recipe is " + recipe.toString());
+        System.out.println("made by: " + user.getUserName());
+       }finally{
+       em.close();
+       }
+        
+    }
 }
             
 

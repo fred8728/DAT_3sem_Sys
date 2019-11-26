@@ -42,7 +42,7 @@ public class User implements Serializable {
 
     
     @OneToMany(mappedBy = "user", cascade=CascadeType.PERSIST)
-    private List<Custom_recipe> cust = new ArrayList();
+    private List<CustomRecipe> cust = new ArrayList();
     
     @ManyToMany
     private List<Role> roleList = new ArrayList();
@@ -108,18 +108,19 @@ public class User implements Serializable {
         roleList.add(userRole);
     }
 
-    public List<Custom_recipe> getCust() {
+    public List<CustomRecipe> getCust() {
         return cust;
     }
 
-    public void setCust(Custom_recipe cr) {
+    public void setCust(CustomRecipe cr) {
         this.cust.add(cr);
     }
     
-public void addRecipe(Custom_recipe cr){
+public void addRecipe(CustomRecipe cr){
     this.cust.add(cr);
     cr.setUser(this);
 }    
     
 
 }
+    
