@@ -1,35 +1,38 @@
 package facades;
 //testtest
+
 import entities.CustomRecipe;
 import entities.Role;
 import entities.User;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import errorhandling.AuthenticationException;
+import java.util.List;
 
 /**
  * @author lam@cphbusiness.dk
  */
 public class UserFacade {
-  
+
     private static EntityManagerFactory emf;
     private static UserFacade instance;
-    
-    private UserFacade(){}
-    
+
+    private UserFacade() {
+    }
+
     /**
-     * 
+     *
      * @param _emf
      * @return the instance of this facade.
      */
-    public static UserFacade getUserFacade (EntityManagerFactory _emf) {
+    public static UserFacade getUserFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
             instance = new UserFacade();
         }
         return instance;
     }
-    
+
     public User getVeryfiedUser(String username, String password) throws AuthenticationException {
         EntityManager em = emf.createEntityManager();
         User user;
@@ -43,38 +46,49 @@ public class UserFacade {
         }
         return user;
     }
-    
-//    public User getUser(){
+
+//    public User getUser(String username){
 //    
-//    //gotta get a user back from the database;
-//    
+//    //gotta get a user back from the database; 
+//    }
+//    public List<User> getAllUsers(){
 //    
 //    }
 //    
-//    public User createUser(String username, String password, String mail){
-//        EntityManager em = emf.createEntityManager();
-//        User newUser = new User(username,password,mail);
-//        
-//        
-//        
-//    }
-//    
-    public void createRecipe(User user, String nameRecipe, int portion, int cookTime, String ingredients, String description){
+    public User createUser(String username, String password, String mail) {
         EntityManager em = emf.createEntityManager();
-       try{
-        CustomRecipe recipe = new CustomRecipe(nameRecipe,portion, cookTime, ingredients,description);
-        User ourUser = user;
-        ourUser.addRecipe(recipe);
+        User newUser = new User(username, password, mail);
+        try {
+            em.getTransaction().begin();
+            em.persist(newUser);
+            em.getTransaction().commit();
+            return newUser;
+        } finally {
+            em.close();
+        }
+
+    }
+
+    public void deletUser(String username) {
+        EntityManager em = emf.createEntityManager();
+        User userChose = em.find(User.class,username);
+        User showedUser = userChose;
+        
+        try{
         em.getTransaction().begin();
-        //em.persist(recipe);
-        em.persist(user);
+        em.remove(userChose);
         em.getTransaction().commit();
-        System.out.println("recipe is " + recipe.toString());
-        System.out.println("made by: " + user.getUserName());
-       }finally{
-       em.close();
-       }
+        }finally{
+        em.close();
+        }
+        System.out.println(showedUser);
         
     }
-  
+
+    public void edditUserPassword(String username, String newPassword) {
+
+        
+        
+    }
+        
 }
