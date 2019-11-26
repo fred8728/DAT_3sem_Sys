@@ -1,5 +1,7 @@
 package facades;
 //testtest
+import entities.CustomRecipe;
+import entities.Role;
 import entities.User;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -41,5 +43,38 @@ public class UserFacade {
         }
         return user;
     }
-
+    
+//    public User getUser(){
+//    
+//    //gotta get a user back from the database;
+//    
+//    
+//    }
+//    
+//    public User createUser(String username, String password, String mail){
+//        EntityManager em = emf.createEntityManager();
+//        User newUser = new User(username,password,mail);
+//        
+//        
+//        
+//    }
+//    
+    public void createRecipe(User user, String nameRecipe, int portion, int cookTime, String ingredients, String description){
+        EntityManager em = emf.createEntityManager();
+       try{
+        CustomRecipe recipe = new CustomRecipe(nameRecipe,portion, cookTime, ingredients,description);
+        User ourUser = user;
+        ourUser.addRecipe(recipe);
+        em.getTransaction().begin();
+        //em.persist(recipe);
+        em.persist(user);
+        em.getTransaction().commit();
+        System.out.println("recipe is " + recipe.toString());
+        System.out.println("made by: " + user.getUserName());
+       }finally{
+       em.close();
+       }
+        
+    }
+  
 }
