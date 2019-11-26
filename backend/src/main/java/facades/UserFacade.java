@@ -59,7 +59,7 @@ public class UserFacade {
 //        
 //    }
 //    
-//    public Custom_recipe createRecipe(User user, String nameRecipe, int portion, int cookTime, String ingredients, String description){
+//    public CustomRecipe createRecipe(User user, String nameRecipe, int portion, int cookTime, String ingredients, String description){
 //        EntityManager em = emf.createEntityManager();
 //        Custom_recipe recipe = new Custom_recipe(nameRecipe,portion, cookTime, ingredients,description);
 //        User ourUser = user;
