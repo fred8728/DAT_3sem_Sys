@@ -13,11 +13,22 @@ const AllRecipes = () => {
   };
   useEffect(() => {
     apiFacade.getRecipes().then(data => {
-      setRecipes(data.results)
+      const x = data.results.sort(function (a, b) {
+        var nameA = a.title.toLowerCase(), nameB = b.title.toLowerCase();
+        if (nameA < nameB) //sort string ascending
+          return -1;
+        if (nameA > nameB)
+          return 1;
+        return 0; //default return value (no sorting)
+      });
+      setRecipes(x)
       console.log("check data", data.results)
     });
   }, [searchTerm]);
-
+  function sortData() {
+    const x = recipes.reverse()
+    setRecipes([...x])
+  }
   return (
     <div>
       <form>
@@ -31,6 +42,8 @@ const AllRecipes = () => {
           />
         </fieldset>
       </form>
+      <button onClick={sortData}>
+        A-Z</button>
       <link
         rel="stylesheet"
         href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -74,7 +87,7 @@ const AllRecipes = () => {
       <Route path={`${match.path}/:title/:ingredients`}>
         <Recipe></Recipe>
       </Route>
-    </div>
+    </div >
   );
 }
 

@@ -1,6 +1,5 @@
 package utils;
 
-
 import entities.CustomRecipe;
 import entities.Role;
 import entities.User;

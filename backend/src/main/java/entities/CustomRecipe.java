@@ -25,17 +25,11 @@ public class CustomRecipe implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_customR")
     private Integer id;
-    @Column(name = "name_customR")
     private String name;
-    @Column(name = "portion_customR")
     private int portion_size;
-    @Column(name = "time_customR")
     private int cooking_time;
-    @Column(name = "ingredients_customR")
     private String ingredients;
-    @Column(name = "description_customR")
     private String description;
     
     @ManyToOne
