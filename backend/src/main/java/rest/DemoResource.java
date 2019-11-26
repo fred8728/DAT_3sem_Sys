@@ -188,8 +188,8 @@ public class DemoResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("allhomemade")
     public String getAllHomemadeRecipes(){
-        List<CustomRecipe> employees = facade.getAllRecipes();
-        return gson.toJson(employees);
+        List<CustomRecipe> crecipes = facade.getAllRecipes();
+        return gson.toJson(crecipes);
     }
     
 }
