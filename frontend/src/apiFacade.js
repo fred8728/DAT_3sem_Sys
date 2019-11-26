@@ -46,22 +46,39 @@ function ApiFacade() {
     }
     return opts;
   }
-
-  const fetchData = () => {
-    const options = makeOptions("GET", true); //True add's the token
-    return fetch(URL + "/api/info/user", options).then(handleHttpErrors);
+  const getRecipes = () => {
+    return fetch(URL + "/api/food/recipes", makeOptions("GET",true)).then(handleHttpErrors)
   }
 
-  const getRecipes = () => {
-    const options = makeOptions("GET", true);
-    return fetch(URL + "/api/food/recipes", options).then(handleHttpErrors)
+  const addRecipe = () =>{
+    return fetch(URL + "NEED ENDPOINT FROM BACKEND ",makeOptions("POST", true)).then(handleHttpErrors)
+  }
+
+  const updateRecipe = () =>{
+    return fetch(URL + "NEED ENDPOINT FROM BACKEND",makeOptions("PUT", true)).then(handleHttpErrors);
+  }
+
+  const deleteRecipe = () =>{
+    return fetch(URL + "NEED ENDPOINT FROM BACKEND", makeOptions("DELETE", true)).then(handleHttpErrors);
+  }
+
+  const getRecipe = (id) =>{
+    return fetch(URL + "NEED ENDPOINT FROM BACKEND"+id, makeOptions("GET", true)).then(handleHttpErrors)
+  }
+
+  const getHomemadeRecipes = () =>{
+    return fetch(URL + "NEED ENDPOINT FROM BACKEND", makeOptions("GET", true)).then(handleHttpErrors)
   }
 
   return {
     login,
     logout,
-    fetchData,
-    getRecipes
+    getRecipes,
+    addRecipe,
+    updateRecipe,
+    deleteRecipe,
+    getRecipe,
+    getHomemadeRecipes
   }
 
 }
