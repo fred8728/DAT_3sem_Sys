@@ -4,14 +4,14 @@ import apiFacade from "./apiFacade";
 import Login from "./Login";
 import LoggedIn from "./LoggedIn";
 import Recipes from "./Recipes"
-import AllRecipes from "./Recipes";
+import Addrecipe from "./addRecipe";
 import SearchPage from "./SearchPage";
 
 const NoMatch = () => <div>Urlen matcher ingen kendte routes</div>;
 const Home = () => <div>Home</div>;
 const Company = () => <div>Company</div>;
 
-function App({apiFacade}) {
+function App({ apiFacade }) {
 
   return (
     <BrowserRouter>
@@ -49,12 +49,17 @@ function Header() {
           Search
         </NavLink>
       </li>
+      <li>
+        <NavLink activeClassName="active" to="/addRecipe">
+          ADD Recipes here
+        </NavLink>
+      </li>
     </ul>
   );
 }
 
 function Content(props) {
-const {recipes, loggedIn} = props;
+  const { recipes, loggedIn } = props;
 
   return (
     <Switch>
@@ -62,20 +67,22 @@ const {recipes, loggedIn} = props;
         <Home />
       </Route>
       <Route path="/recipes">
-        <Recipes recipes={recipes}/>
+        <Recipes recipes={recipes} />
       </Route>
       <Route path="/signIn">
-        <Login  />
+        <Login />
       </Route>
       <Route path="/signUp">
       </Route>
       <Route path="/Search">
         <SearchPage />
       </Route>
+      <Route path="/addrecipe">
+        <Addrecipe />
+      </Route>
       <Route path="*">
         <NoMatch />
       </Route>
-      
     </Switch>
   );
 }
