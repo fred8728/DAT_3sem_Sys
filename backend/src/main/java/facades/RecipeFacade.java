@@ -109,14 +109,6 @@ public class RecipeFacade {
         }
     };
     
-    public String loltest(){
-    for (int i = 0; i < threads; i ++){
-  
-        return "LOL";
-    }
-    return "lel";
-        };
-    
     
       public String allFetch() throws InterruptedException, ExecutionException{
           StringBuilder sb = new StringBuilder();

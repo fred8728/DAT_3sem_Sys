@@ -43,5 +43,30 @@ public class UserFacade {
         }
         return user;
     }
+    
+//    public User getUser(){
+//    
+//    //gotta get a user back from the database;
+//    
+//    
+//    }
+//    
+//    public User createUser(String username, String password, String mail){
+//        EntityManager em = emf.createEntityManager();
+//        User newUser = new User(username,password,mail);
+//        
+//        
+//        
+//    }
+//    
+//    public Custom_recipe createRecipe(User user, String nameRecipe, int portion, int cookTime, String ingredients, String description){
+//        EntityManager em = emf.createEntityManager();
+//        Custom_recipe recipe = new Custom_recipe(nameRecipe,portion, cookTime, ingredients,description);
+//        User ourUser = user;
+//        outUser.addRecipe(recipe);
+//        
+//        
+//    
+//    }
   
 }
