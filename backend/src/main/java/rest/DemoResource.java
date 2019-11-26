@@ -34,8 +34,7 @@ import utils.EMF_Creator;
 public class DemoResource {
 
     private static EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory(EMF_Creator.DbSelector.DEV, EMF_Creator.Strategy.CREATE);
-    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
-    private static RecipeFacade facade = RecipeFacade.getRecipeFacade(emf);
+    private static RecipeFacade facade = RecipeFacade.getRecipeFacade(EMF);
     private static Gson gson = new Gson();
     //ExecutorService executorservice = Executors.newFixedThreadPool(3);
 
