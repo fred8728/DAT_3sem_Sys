@@ -157,6 +157,24 @@ public class RecipeFacade {
           executorservice.shutdown();
           return all;
       }
+      
+       public void createRecipe(User user, String nameRecipe, int portion, int cookTime, String ingredients, String description){
+        EntityManager em = emf.createEntityManager();
+       try{
+        CustomRecipe recipe = new CustomRecipe(nameRecipe,portion, cookTime, ingredients,description);
+        User ourUser = user;
+        ourUser.addRecipe(recipe);
+        em.getTransaction().begin();
+        //em.persist(recipe);
+        em.persist(user);
+        em.getTransaction().commit();
+        System.out.println("recipe is " + recipe.toString());
+        System.out.println("made by: " + user.getUserName());
+       }finally{
+       em.close();
+       }
+        
+    }
 }
             
 
