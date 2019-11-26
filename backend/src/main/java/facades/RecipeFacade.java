@@ -58,6 +58,25 @@ public class RecipeFacade {
         }
     }    
     
+    public void deleteRecipe(){
+        
+    }
+    
+    
+    public void addRecipe(){
+        //denne metode er måske det samme som create længere nede i denne class
+    }
+    
+    //return
+    public void editRecipe(){
+        
+    }
+    
+    //returns a recipe
+    public void getRecipe(){
+        
+    }
+    
     //methods
     Callable<String> fetch1 = new Callable<String>(){
         @Override
