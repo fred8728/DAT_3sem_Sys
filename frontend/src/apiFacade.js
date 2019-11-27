@@ -51,7 +51,7 @@ function ApiFacade() {
   }
 
   const addRecipe = () =>{
-    return fetch(URL + "NEED ENDPOINT FROM BACKEND ",makeOptions("POST", true)).then(handleHttpErrors)
+    return fetch(URL + "/api/food/add",makeOptions("POST", true)).then(handleHttpErrors)
   }
 
   const updateRecipe = () =>{

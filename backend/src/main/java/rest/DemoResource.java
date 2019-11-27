@@ -31,6 +31,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -209,5 +210,15 @@ public class DemoResource {
     public String editRecipe(String personAsJson, @PathParam("id") int id) {
         return facade.editRecipe(personAsJson, id);
     }
+    
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("add")
+    public String addCustomRecipe(String name, int portion, int time, String ingredients, String description) {
+        CustomRecipe rs1 = facade.addRecipe(name, portion, time, ingredients, description);
+        return gson.toJson(rs1);
+    }
+    
 }
 //test
