@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Switch, NavLink, Route } from "react-router-dom";
 import Recipes from "./Recipes"
+import Addrecipe from "./addRecipe";
 import SearchPage from "./SearchPage";
 import Profile from "./Profile"
 import Login from "./Login"
@@ -9,7 +10,7 @@ import HomemadeRecipes from './HomemadeRecipes'
 const NoMatch = () => <div>Urlen matcher ingen kendte routes</div>;
 const Home = () => <div></div>
 
-function App({apiFacade}) {
+function App({ apiFacade }) {
 
   return (
     <BrowserRouter>
@@ -53,6 +54,11 @@ function Header() {
         </NavLink>
       </li>
       <li>
+        <NavLink activeClassName="active" to="/addRecipe">
+          ADD Recipes here
+          </NavLink>
+      </li>
+      <li>
         <NavLink activeClassName="active" to="/profile">
           Profile
         </NavLink>
@@ -69,26 +75,28 @@ function Content() {
         <Home />
       </Route>
       <Route path="/recipes">
-        <Recipes/>
+        <Recipes />
       </Route>
       <Route path="/homemade">
-      <HomemadeRecipes/>
+        <HomemadeRecipes />
       </Route>
       <Route path="/signIn">
-        <Login  />
+        <Login />
       </Route>
       <Route path="/signUp">
       </Route>
       <Route path="/Search">
         <SearchPage />
       </Route>
+      <Route path="/addrecipe">
+        <Addrecipe />
+      </Route>
       <Route path="/profile">
-        <Profile/>
+        <Profile />
       </Route>
       <Route path="*">
         <NoMatch />
       </Route>
-      
     </Switch>
   );
 }
