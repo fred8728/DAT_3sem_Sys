@@ -1,8 +1,13 @@
 package rest;
 
+
+import dto.CustomRecipeDTO;
+
 import DTO.UserDTO;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import dto.CustomRecipeDTO;
 import entities.CustomRecipe;
 import entities.User;
 import facades.RecipeFacade;
@@ -11,6 +16,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
@@ -25,6 +31,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -173,14 +180,13 @@ public class DemoResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("allh")
     public String getAllHomemadeRecipes() {
-        //        StringBuilder str = new StringBuilder();
-//        for(CustomRecipe elem : employees){
-//            str.append(elem);
-//        }
-//        String result = str.toString();
-
         List<CustomRecipe> employees = facade.getAllRecipes();
-        return gson.toJson(employees.toString());
+        CustomRecipeDTO custDTOClass = new CustomRecipeDTO();
+        List<CustomRecipeDTO> custDTO = new ArrayList();
+        for(CustomRecipe cRep : employees){
+        custDTO = custDTOClass.getList(cRep);
+        }
+        return gson.toJson(custDTO);
 
     }
 
@@ -190,6 +196,7 @@ public class DemoResource {
     public String getUser(@PathParam("name") String name) {
 
         User chosenOne = facadeUser.getUser(name);
+
         //String data = chosenOne;
         System.out.println( "XX dATA " + chosenOne);
         UserDTO userdto = new UserDTO(chosenOne);
@@ -203,5 +210,15 @@ public class DemoResource {
     public String editRecipe(String personAsJson, @PathParam("id") int id) {
         return facade.editRecipe(personAsJson, id);
     }
+    
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("add")
+    public String addCustomRecipe(String name, int portion, int time, String ingredients, String description) {
+        CustomRecipe rs1 = facade.addRecipe(name, portion, time, ingredients, description);
+        return gson.toJson(rs1);
+    }
+    
 }
 //test
