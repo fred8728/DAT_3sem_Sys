@@ -29,12 +29,13 @@ public class FacadeTest {
             
         UserFacade userFac = UserFacade.getUserFacade(emf);
         
-        userFac.deletUser("lar");
-        userFac.deletUser("frede");
         userFac.createUser("lar", "bobNut@mail.dk","lolz");
         userFac.createUser("frede", "fred@nutmail.dk","lolz");
-        
+        userFac.deleteUser("lar");
         System.out.println("print data " +userFac.getUser("lar").getUserName());
+        
+        RecipeFacade rf = RecipeFacade.getRecipeFacade(emf);
+        rf.addRecipe("Burrito", 3, 30, "Pandekager, salsa, salat", "Snart med at varme pandekagerne i ovnen");
     }
     
 }

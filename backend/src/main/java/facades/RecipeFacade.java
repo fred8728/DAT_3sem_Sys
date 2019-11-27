@@ -61,13 +61,21 @@ public class RecipeFacade {
         }
     }    
     
-    public void deleteRecipe(){
-        
+    public void deleteRecipe(int id){
     }
     
     
-    public void addRecipe(){
-        //denne metode er måske det samme som create længere nede i denne class
+    public CustomRecipe addRecipe(String name, int portion, int time, String ingredients, String description){
+       EntityManager em = emf.createEntityManager();
+        CustomRecipe cr = new CustomRecipe(name, portion, time, ingredients, description);
+        try {
+            em.getTransaction().begin();
+            em.persist(cr);
+            em.getTransaction().commit();
+            return cr;
+        } finally {
+            em.close();
+        }
     }
     
     //return
