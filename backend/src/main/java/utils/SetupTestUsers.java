@@ -1,8 +1,12 @@
 package utils;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import entities.CustomRecipe;
 import entities.Role;
 import entities.User;
+import facades.RecipeFacade;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -13,41 +17,45 @@ public class SetupTestUsers {
 
     EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory(EMF_Creator.DbSelector.DEV, EMF_Creator.Strategy.CREATE);
     EntityManager em = emf.createEntityManager();
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
     
     // IMPORTAAAAAAAAAANT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // This breaks one of the MOST fundamental security rules in that it ships with default users and passwords
     // CHANGE the three passwords below, before you uncomment and execute the code below
     // Also, either delete this file, when users are created or rename and add to .gitignore
     // Whatever you do DO NOT COMMIT and PUSH with the real passwords
-
-    User user = new User("user", "email@test.dk", "test1");
-    User admin = new User("admin", "email@test.dk", "test1");
-    User both = new User("user_admin", "email@test.dk","test1");
-    CustomRecipe cr = new CustomRecipe("Spaghetti kødsovs", 4, 40, "Oksekød, tomatsovs, spaghetti, parmazan", "Start med at putte oksekødet i gryden");
-    CustomRecipe cr1 = new CustomRecipe("Spaghetti Carbonare", 4, 40, "Spaghetti, ost, Fløde, Æg", "Kog Spaghetti");
-    user.addRecipe(cr);
-    user.addRecipe(cr1);
-
-    if(admin.getUserPass().equals("test")||user.getUserPass().equals("test")||both.getUserPass().equals("test"))
-      throw new UnsupportedOperationException("You have not changed the passwords");
-
-    em.getTransaction().begin();
-    Role userRole = new Role("user");
-    Role adminRole = new Role("admin");
-    user.addRole(userRole);
-    admin.addRole(adminRole);
-    both.addRole(userRole);
-    both.addRole(adminRole);
-    em.persist(userRole);
-    em.persist(adminRole);
-    em.persist(user);
-    em.persist(admin);
-    em.persist(both);
-    em.getTransaction().commit();
-    System.out.println("PW: " + user.getUserPass());
-    System.out.println("Testing user with OK password: " + user.verifyPassword("test"));
-    System.out.println("Testing user with wrong password: " + user.verifyPassword("test1"));
-    System.out.println("Created TEST Users");
+    RecipeFacade rs = RecipeFacade.getRecipeFacade(emf);
+//    List<CustomRecipe> employees = facade.getAllRecipes();
+//        return gson.toJson(facade.getAllRecipes());
+      System.out.println(rs.getAllRecipes());
+//    User user = new User("user", "email@test.dk", "test1");
+//    User admin = new User("admin", "email@test.dk", "test1");
+//    User both = new User("user_admin", "email@test.dk","test1");
+//    CustomRecipe cr = new CustomRecipe("Spaghetti kødsovs", 4, 40, "Oksekød, tomatsovs, spaghetti, parmazan", "Start med at putte oksekødet i gryden");
+//    CustomRecipe cr1 = new CustomRecipe("Spaghetti Carbonare", 4, 40, "Spaghetti, ost, Fløde, Æg", "Kog Spaghetti");
+//    user.addRecipe(cr);
+//    user.addRecipe(cr1);
+//
+//    if(admin.getUserPass().equals("test")||user.getUserPass().equals("test")||both.getUserPass().equals("test"))
+//      throw new UnsupportedOperationException("You have not changed the passwords");
+//
+//    em.getTransaction().begin();
+//    Role userRole = new Role("user");
+//    Role adminRole = new Role("admin");
+//    user.addRole(userRole);
+//    admin.addRole(adminRole);
+//    both.addRole(userRole);
+//    both.addRole(adminRole);
+//    em.persist(userRole);
+//    em.persist(adminRole);
+//    em.persist(user);
+//    em.persist(admin);
+//    em.persist(both);
+//    em.getTransaction().commit();
+//    System.out.println("PW: " + user.getUserPass());
+//    System.out.println("Testing user with OK password: " + user.verifyPassword("test"));
+//    System.out.println("Testing user with wrong password: " + user.verifyPassword("test1"));
+//    System.out.println("Created TEST Users");
    
   }
 
