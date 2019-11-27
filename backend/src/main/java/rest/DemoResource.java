@@ -1,10 +1,12 @@
 package rest;
 
+import DTO.UserDTO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import entities.CustomRecipe;
 import entities.User;
 import facades.RecipeFacade;
+import facades.UserFacade;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -37,9 +39,9 @@ import utils.EMF_Creator;
 @Path("food")
 public class DemoResource {
 
-
     private static EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory(EMF_Creator.DbSelector.DEV, EMF_Creator.Strategy.CREATE);
     private static RecipeFacade facade = RecipeFacade.getRecipeFacade(EMF);
+    private static UserFacade facadeUser = UserFacade.getUserFacade(EMF);
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     //ExecutorService executorservice = Executors.newFixedThreadPool(3);
 
@@ -113,16 +115,15 @@ public class DemoResource {
 //    https://www.themealdb.com/api/json/v1/1/search.php?f=a
 //Lookup full meal details by id
 //    https://www.themealdb.com/api/json/v1/1/lookup.php?i=52772
-
-        @GET
+    @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("multiple")  
-    public String getMultiple() throws MalformedURLException, IOException, InterruptedException, ExecutionException{
+    @Path("multiple")
+    public String getMultiple() throws MalformedURLException, IOException, InterruptedException, ExecutionException {
         RecipeFacade recipeFac = new RecipeFacade();
-    String all = recipeFac.allFetch();
-    return all;
+        String all = recipeFac.allFetch();
+        return all;
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("recipesDB/{letter}")
@@ -140,27 +141,26 @@ public class DemoResource {
         }
         scan.close();
         return jsonStr;
-        
+
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("recipesDB/dataAll")
     public static String getAllOpenMealDB() throws IOException {
-            //cached thread pool create  a cache thread pool instead of fixed if you dont know the amount of calls
-        
+        //cached thread pool create  a cache thread pool instead of fixed if you dont know the amount of calls
+
         //ADD THREADS PLEASE
         StringBuilder aVal = new StringBuilder();
         StringBuilder totaldata = new StringBuilder();
         for (char alphabet = 'A'; alphabet <= 'Z'; alphabet++) {
             System.out.println(alphabet);
-            if(aVal.length()==1){
-            aVal.deleteCharAt(0);
+            if (aVal.length() == 1) {
+                aVal.deleteCharAt(0);
+            } else {
+                aVal.append(alphabet);
             }
-            else{
-             aVal.append(alphabet);
-            }
-            
+
             System.out.println(aVal);
             String vals = aVal.toString();
             totaldata.append("\n" + getRecipeLetter(vals));
@@ -169,20 +169,39 @@ public class DemoResource {
         String ReturnData = totaldata.toString();
         return ReturnData;
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("allh")
-    public String getAllHomemadeRecipes(){
+    public String getAllHomemadeRecipes() {
+        //        StringBuilder str = new StringBuilder();
+//        for(CustomRecipe elem : employees){
+//            str.append(elem);
+//        }
+//        String result = str.toString();
+
         List<CustomRecipe> employees = facade.getAllRecipes();
         return gson.toJson(employees.toString());
+
     }
-    
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("userCustom/{name}")
+    public String getUser(@PathParam("name") String name) {
+
+        User chosenOne = facadeUser.getUser(name);
+        //String data = chosenOne;
+        System.out.println( "XX dATA " + chosenOne);
+        UserDTO userdto = new UserDTO(chosenOne);
+        return gson.toJson(userdto);
+    }
+
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
-    public String editRecipe(String personAsJson, @PathParam("id") int id){
+    public String editRecipe(String personAsJson, @PathParam("id") int id) {
         return facade.editRecipe(personAsJson, id);
     }
     

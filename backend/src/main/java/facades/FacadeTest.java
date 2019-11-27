@@ -24,7 +24,7 @@ public class FacadeTest {
     }
     
     public static void main(String[] args) {
-        EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory(EMF_Creator.DbSelector.DEV, EMF_Creator.Strategy.CREATE); //Persistence.createEntityManagerFactory("pu");
+        emf = EMF_Creator.createEntityManagerFactory(EMF_Creator.DbSelector.DEV, EMF_Creator.Strategy.CREATE); //Persistence.createEntityManagerFactory("pu");
         EntityManager em = emf.createEntityManager();
             
         UserFacade userFac = UserFacade.getUserFacade(emf);
