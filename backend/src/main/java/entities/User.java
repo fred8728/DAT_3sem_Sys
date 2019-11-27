@@ -30,10 +30,12 @@ public class User implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
-    
+   
     @Column(name = "user_email")
     private String email;
     
+    @NotNull
+    @Size(min = 1, max = 255)
     @Column(name = "user_pass")
     private String userPass;
     @JoinTable(name = "user_roles", joinColumns = {
@@ -120,6 +122,11 @@ public void addRecipe(CustomRecipe cr){
     this.cust.add(cr);
     cr.setUser(this);
 }    
+
+    @Override
+    public String toString() {
+        return "User[" + "userName:" + userName + " email:" + email + " userPass:" + userPass + " cust:" + cust + " roleList:" + roleList + ']';
+    }
     
 
 }

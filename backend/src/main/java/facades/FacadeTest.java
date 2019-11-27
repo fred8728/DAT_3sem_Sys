@@ -29,10 +29,12 @@ public class FacadeTest {
             
         UserFacade userFac = UserFacade.getUserFacade(emf);
         
+        userFac.deletUser("lar");
+        userFac.deletUser("frede");
         userFac.createUser("lar", "bobNut@mail.dk","lolz");
         userFac.createUser("frede", "fred@nutmail.dk","lolz");
-        userFac.deletUser("lar");
         
+        System.out.println("print data " +userFac.getUser("lar").getUserName());
     }
     
 }

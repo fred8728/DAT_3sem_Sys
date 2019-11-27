@@ -84,6 +84,12 @@ public class UserFacade {
         System.out.println(showedUser);
         
     }
+    public User getUser(String username){
+    
+        EntityManager em = emf.createEntityManager();
+        User foundUser = em.find(User.class,username);
+        return foundUser;
+    }
 
     public void edditUserPassword(String username, String newPassword) {
 
