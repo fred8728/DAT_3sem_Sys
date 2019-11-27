@@ -1,7 +1,6 @@
 package rest;
 
 
-import dto.CustomRecipeDTO;
 
 import DTO.UserDTO;
 
@@ -211,14 +210,14 @@ public class DemoResource {
         return facade.editRecipe(personAsJson, id);
     }
     
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("add")
-    public String addCustomRecipe(String name, int portion, int time, String ingredients, String description) {
-        CustomRecipe rs1 = facade.addRecipe(name, portion, time, ingredients, description);
-        return gson.toJson(rs1);
-    }
+//    @POST
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    @Produces(MediaType.APPLICATION_JSON)
+//    @Path("add")
+//    public String addCustomRecipe(String name, int portion, int time, String ingredients, String description) {
+//        CustomRecipe rs1 = facade.addRecipe(name, portion, time, ingredients, description);
+//        return gson.toJson(rs1);
+//    }
     
 }
 //test
