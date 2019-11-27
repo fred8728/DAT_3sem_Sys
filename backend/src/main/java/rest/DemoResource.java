@@ -18,10 +18,12 @@ import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
@@ -196,8 +198,15 @@ public class DemoResource {
     @Path("allh")
     public String getAllHomemadeRecipes(){
         List<CustomRecipe> employees = facade.getAllRecipes();
-        return gson.toJson(employees.toString());
+        return gson.toJson(employees);
     }
     
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("{id}")
+    public String editRecipe(String personAsJson, @PathParam("id") int id){
+        return facade.editRecipe(personAsJson, id);
+    }
 }
 //test
