@@ -1,5 +1,7 @@
 package facades;
 //testtest
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import entities.CustomRecipe;
 import entities.User;
 import javax.persistence.EntityManager;
@@ -27,6 +29,7 @@ public class RecipeFacade {
     private static EntityManagerFactory emf;
     private static RecipeFacade instance;
     int threads = 8;
+    private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
     ExecutorService executorservice = Executors.newFixedThreadPool(threads);
     
     public RecipeFacade(){}
@@ -68,12 +71,29 @@ public class RecipeFacade {
     }
     
     //return
-    public void editRecipe(){
+    public String editRecipe(String cRecipeJson, int id){
+       CustomRecipe OriRec = getRecipeById(id);
+       CustomRecipe NewRec = gson.fromJson(cRecipeJson, CustomRecipe.class);
+       OriRec.setName(NewRec.getName());
+       OriRec.setPortion_size(NewRec.getPortion_size());
+       OriRec.setCooking_time(NewRec.getCooking_time());
+       OriRec.setIngredients(NewRec.getIngredients());
+       OriRec.setDescription(NewRec.getDescription());
+       return gson.toJson(OriRec);
         
     }
     
     //returns a recipe
-    public void getRecipe(){
+    public CustomRecipe getRecipeById(int id){
+        EntityManager em = getEntityManager();
+        try{
+            CustomRecipe rec1 = em.find(CustomRecipe.class,id);
+            return rec1;
+            
+        }finally{
+            em.close();
+            
+        }
         
     }
     
