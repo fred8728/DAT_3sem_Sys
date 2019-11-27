@@ -1,7 +1,9 @@
 package rest;
 
+import dto.CustomRecipeDTO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import dto.CustomRecipeDTO;
 import entities.CustomRecipe;
 import entities.User;
 import facades.RecipeFacade;
@@ -10,6 +12,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
@@ -172,14 +175,13 @@ public class DemoResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("allh")
     public String getAllHomemadeRecipes() {
-        //        StringBuilder str = new StringBuilder();
-//        for(CustomRecipe elem : employees){
-//            str.append(elem);
-//        }
-//        String result = str.toString();
-
         List<CustomRecipe> employees = facade.getAllRecipes();
-        return gson.toJson(employees.toString());
+        CustomRecipeDTO custDTOClass = new CustomRecipeDTO();
+        List<CustomRecipeDTO> custDTO = new ArrayList();
+        for(CustomRecipe cRep : employees){
+        custDTO = custDTOClass.getList(cRep);
+        }
+        return gson.toJson(custDTO);
 
     }
 
@@ -190,7 +192,7 @@ public class DemoResource {
 
         User chosenOne = facadeUser.getUser(name);
         String data = chosenOne.toString();
-
+        
         return gson.toJson(data);
     }
 
