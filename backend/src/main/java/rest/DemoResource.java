@@ -41,7 +41,7 @@ public class DemoResource {
             "dev",
             "ax2",
             EMF_Creator.Strategy.CREATE);
-    private static RecipeFacade facade = RecipeFacade.getRecipeFacade(EMF);
+    private static RecipeFacade facade = RecipeFacade.getRecipeFacade(emf);
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     //ExecutorService executorservice = Executors.newFixedThreadPool(3);
 
@@ -196,7 +196,7 @@ public class DemoResource {
     @Path("allh")
     public String getAllHomemadeRecipes(){
         List<CustomRecipe> employees = facade.getAllRecipes();
-        return gson.toJson(employees.toString());
+        return gson.toJson(employees);
     }
     
 }

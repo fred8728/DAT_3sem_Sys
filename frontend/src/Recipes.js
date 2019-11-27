@@ -94,7 +94,7 @@ const AllRecipes = () => {
 }
 
 function Recipe() {
-  let { picture, title, ingredients, link } = useParams();
+  let { picture, title, ingredients } = useParams();
   return (
     <div>
       <p>Recipe: {title}</p>
