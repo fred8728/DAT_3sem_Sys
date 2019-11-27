@@ -1,5 +1,6 @@
 package rest;
 
+import DTO.UserDTO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import entities.CustomRecipe;
@@ -189,9 +190,10 @@ public class DemoResource {
     public String getUser(@PathParam("name") String name) {
 
         User chosenOne = facadeUser.getUser(name);
-        String data = chosenOne.toString();
-
-        return gson.toJson(data);
+        //String data = chosenOne;
+        System.out.println( "XX dATA " + chosenOne);
+        UserDTO userdto = new UserDTO(chosenOne);
+        return gson.toJson(userdto);
     }
 
     @PUT
