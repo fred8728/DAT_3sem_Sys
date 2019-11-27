@@ -34,13 +34,7 @@ import utils.EMF_Creator;
 @Path("food")
 public class DemoResource {
 
-    private static EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory(EMF_Creator.DbSelector.DEV, EMF_Creator.Strategy.CREATE);
-    private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory(
-            "pu",
-            "jdbc:mysql://localhost:3307/startcode",
-            "dev",
-            "ax2",
-            EMF_Creator.Strategy.CREATE);
+    private static EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory(EMF_Creator.DbSelector.DEV, EMF_Creator.Strategy.CREATE);
     private static RecipeFacade facade = RecipeFacade.getRecipeFacade(EMF);
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     //ExecutorService executorservice = Executors.newFixedThreadPool(3);

@@ -106,7 +106,7 @@ public class CustomRecipe implements Serializable {
 
     @Override
     public String toString() {
-        return "Custom_recipe{" + "name=" + name + ", portion_size=" + portion_size + ", cooking_time=" + cooking_time + ", ingredients=" + ingredients + ", description=" + description + ", user=" + user + '}';
+        return "Homemade Recipe {" + "name=" + name + ", portion_size=" + portion_size + ", cooking_time=" + cooking_time + ", ingredients=" + ingredients + ", description=" + description + '}';
     }
 
 }

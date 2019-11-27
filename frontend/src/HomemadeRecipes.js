@@ -5,8 +5,9 @@ function CustomRecipe(){
 const [customRecipe, setCustomRecipe] = useState([]);
 
 useEffect(() =>{
-facade.getHomemadeRecipes().then(data => {setCustomRecipe(data)})
-})
+facade.getHomemadeRecipes().then(data => { setCustomRecipe(data)})
+},[])
+console.log("check data", customRecipe)
 return(
     <div>
 <table>
