@@ -30,10 +30,10 @@ public class User implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
-   
+
     @Column(name = "user_email")
     private String email;
-    
+
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "user_pass")
@@ -42,10 +42,9 @@ public class User implements Serializable {
         @JoinColumn(name = "user_name", referencedColumnName = "user_name")}, inverseJoinColumns = {
         @JoinColumn(name = "role_name", referencedColumnName = "role_name")})
 
-    
-    @OneToMany(mappedBy = "user", cascade=CascadeType.PERSIST)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
     private List<CustomRecipe> cust = new ArrayList();
-    
+
     @ManyToMany
     private List<Role> roleList = new ArrayList();
 
@@ -89,7 +88,7 @@ public class User implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-    
+
     public String getUserPass() {
         return this.userPass;
     }
@@ -117,17 +116,15 @@ public class User implements Serializable {
     public void setCust(CustomRecipe cr) {
         this.cust.add(cr);
     }
-    
-public void addRecipe(CustomRecipe cr){
-    this.cust.add(cr);
-    cr.setUser(this);
-}    
+
+    public void addRecipe(CustomRecipe cr) {
+        this.cust.add(cr);
+        cr.setUser(this);
+    }
 
     @Override
     public String toString() {
         return "User[" + "userName:" + userName + " email:" + email + " userPass:" + userPass + " cust:" + cust + " roleList:" + roleList + ']';
     }
-    
 
 }
-    

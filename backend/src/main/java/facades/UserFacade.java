@@ -55,7 +55,7 @@ public class UserFacade {
 //    
 //    }
 //    
-    public User createUser(String username, String password,String mail) {
+    public User createUser(String username, String password, String mail) {
         EntityManager em = emf.createEntityManager();
         User newUser = new User(username, password, mail);
         try {
@@ -71,30 +71,29 @@ public class UserFacade {
 
     public void deletUser(String username) {
         EntityManager em = emf.createEntityManager();
-        User userChose = em.find(User.class,username);
+        User userChose = em.find(User.class, username);
         User showedUser = userChose;
-        
-        try{
-        em.getTransaction().begin();
-        em.remove(userChose);
-        em.getTransaction().commit();
-        }finally{
-        em.close();
+
+        try {
+            em.getTransaction().begin();
+            em.remove(userChose);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
         }
         System.out.println(showedUser);
-        
+
     }
-    public User getUser(String username){
-    
+
+    public User getUser(String username) {
+
         EntityManager em = emf.createEntityManager();
-        User foundUser = em.find(User.class,username);
+        User foundUser = em.find(User.class, username);
         return foundUser;
     }
 
-    public void edditUserPassword(String username, String newPassword) {
+    public void editUserPassword(String username, String newPassword) {
 
-        
-        
     }
-        
+
 }

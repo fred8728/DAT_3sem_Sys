@@ -8,6 +8,7 @@ import Login from "./Login"
 import HomemadeRecipes from './HomemadeRecipes'
 import CreateUser from "./CreateUser";
 
+
 const NoMatch = () => <div>Urlen matcher ingen kendte routes</div>;
 const Home = () => <div></div>
 
@@ -85,7 +86,7 @@ function Content() {
         <Login />
       </Route>
       <Route path="/signUp">
-        <CreateUser/>
+        <CreateUser />
       </Route>
       <Route path="/Search">
         <SearchPage />
