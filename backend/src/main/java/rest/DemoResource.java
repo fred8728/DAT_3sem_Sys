@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import entities.CustomRecipe;
 import entities.User;
 import facades.RecipeFacade;
+import facades.UserFacade;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -42,6 +43,7 @@ public class DemoResource {
             "ax2",
             EMF_Creator.Strategy.CREATE);
     private static RecipeFacade facade = RecipeFacade.getRecipeFacade(EMF);
+    private static UserFacade facadeUser = UserFacade.getUserFacade(EMF);
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     //ExecutorService executorservice = Executors.newFixedThreadPool(3);
 
@@ -135,7 +137,7 @@ public class DemoResource {
 //Lookup full meal details by id
 //    https://www.themealdb.com/api/json/v1/1/lookup.php?i=52772
 
-        @GET
+    @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("multiple")  
     public String getMultiple() throws MalformedURLException, IOException, InterruptedException, ExecutionException{
@@ -191,13 +193,31 @@ public class DemoResource {
         return ReturnData;
     }
     
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("allh")
     public String getAllHomemadeRecipes(){
         List<CustomRecipe> employees = facade.getAllRecipes();
+        //StringBuilder str = new StringBuilder();
+//        for(CustomRecipe elem : employees){
+//            str.append(elem);
+//        }
+//        String result = str.toString();
         return gson.toJson(employees.toString());
     }
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("userCustom/{name}")
+    public String getUser(@PathParam("name") String name){
+        
+        User chosenOne = facadeUser.getUser(name);
+        String data = chosenOne.toString();
+        
+        return gson.toJson(data);
+    }
+    
+    
     
 }
 //test
