@@ -55,7 +55,6 @@ public class RecipeFacade {
         try {
             TypedQuery query = em.createQuery("SELECT c from CustomRecipe c", CustomRecipe.class);
             return query.getResultList();
-
         } finally {
             em.close();
         }

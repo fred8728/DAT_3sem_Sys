@@ -70,6 +70,10 @@ function ApiFacade() {
     return fetch(URL + "/api/food/allh", makeOptions("GET", true)).then(handleHttpErrors)
   }
 
+  const createUser = () => {
+    return fetch(URL + "NEED ENDPOINT FROM BACKEND", makeOptions("POST", true)).then(handleHttpErrors)
+  }
+
   return {
     login,
     logout,
@@ -78,7 +82,8 @@ function ApiFacade() {
     updateRecipe,
     deleteRecipe,
     getRecipe,
-    getHomemadeRecipes
+    getHomemadeRecipes,
+    createUser
   }
 
 }
