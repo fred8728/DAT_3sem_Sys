@@ -81,12 +81,12 @@ public class CustomRecipeDTO {
         this.description = description;
     }
 
-    public List<CustomRecipeDTO> getList(CustomRecipe cRest){ //List<CustomRecipe> list1,
-        List<CustomRecipeDTO> cList = new ArrayList();
+    public CustomRecipeDTO getList(CustomRecipe cRest){ //List<CustomRecipe> list1,
+        //List<CustomRecipeDTO> cList = new ArrayList();
         
         CustomRecipeDTO data = new CustomRecipeDTO(cRest);
-        cList.add(data);
-        return cList;
+        
+        return data;
     }
     
 }

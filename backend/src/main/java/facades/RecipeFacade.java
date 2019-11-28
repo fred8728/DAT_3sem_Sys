@@ -60,10 +60,6 @@ public class RecipeFacade {
         }
     }    
     
-    public void deleteRecipe(int id){
-    }
-    
-    
     public CustomRecipe addRecipe(String name, int portion, int time, String ingredients, String description){
        EntityManager em = emf.createEntityManager();
         CustomRecipe cr = new CustomRecipe(name, portion, time, ingredients, description);
@@ -100,8 +96,7 @@ public class RecipeFacade {
         }finally{
             em.close();
             
-        }
-        
+        }  
     }
     public CustomRecipe getRecipeByName(String name){
         EntityManager em = getEntityManager();
@@ -113,6 +108,20 @@ public class RecipeFacade {
             em.close();
             
         }
+    }
+    public void deleteCustomRecipe(int id) {
+        EntityManager em = emf.createEntityManager();
+        CustomRecipe recipeCust = em.find(CustomRecipe.class,id);
+        CustomRecipe deletedRecipe = recipeCust;
+        
+        try{
+        em.getTransaction().begin();
+        em.remove(recipeCust);
+        em.getTransaction().commit();
+        }finally{
+        em.close();
+        }
+        System.out.println(deletedRecipe);
         
     }
     

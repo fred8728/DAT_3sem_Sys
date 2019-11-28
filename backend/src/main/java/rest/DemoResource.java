@@ -27,6 +27,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
@@ -49,6 +50,7 @@ public class DemoResource {
     private static RecipeFacade facade = RecipeFacade.getRecipeFacade(EMF);
     private static UserFacade facadeUser = UserFacade.getUserFacade(EMF);
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    int nextId = 3;
     //ExecutorService executorservice = Executors.newFixedThreadPool(3);
 
     @Context
@@ -98,7 +100,7 @@ public class DemoResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("recipes")
+    @Path("recipe/all")
     public String getRecipes(@PathParam("id") int id) throws MalformedURLException, IOException, InterruptedException, ExecutionException, ExecutionException {
         URL url = new URL("http://www.recipepuppy.com/api/");
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -132,7 +134,7 @@ public class DemoResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("recipesDB/{letter}")
+    @Path("recipe/openMeal/{letter}")
     public static String getRecipeLetter(@PathParam("letter") String letter) throws MalformedURLException, IOException {
         URL url = new URL("https://www.themealdb.com/api/json/v1/1/search.php?f=" + letter);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -152,7 +154,7 @@ public class DemoResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("recipesDB/dataAll")
+    @Path("recipe/openMeal/all")
     public static String getAllOpenMealDB() throws IOException {
         //cached thread pool create  a cache thread pool instead of fixed if you dont know the amount of calls
 
@@ -178,13 +180,13 @@ public class DemoResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("allh")
+    @Path("recipeC/all")
     public String getAllHomemadeRecipes() {
-        List<CustomRecipe> employees = facade.getAllRecipes();
+        List<CustomRecipe> chosenRecipe = facade.getAllRecipes();
         CustomRecipeDTO custDTOClass = new CustomRecipeDTO();
         List<CustomRecipeDTO> custDTO = new ArrayList();
-        for(CustomRecipe cRep : employees){
-        custDTO = custDTOClass.getList(cRep);
+        for(CustomRecipe cRep : chosenRecipe){
+        custDTO.add(custDTOClass.getList(cRep));
         }
         return gson.toJson(custDTO);
 
@@ -192,7 +194,7 @@ public class DemoResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("userCustom/{name}")
+    @Path("user/{name}")
     public String getUser(@PathParam("name") String name) {
 
         User chosenOne = facadeUser.getUser(name);
@@ -206,30 +208,51 @@ public class DemoResource {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("{id}")
-    public String editRecipe(String personAsJson, @PathParam("id") int id) {
-        return facade.editRecipe(personAsJson, id);
+    @Path("recipeC/edit/{id}")
+    public String editRecipe(String recAsJson, @PathParam("id") int id) {
+        return facade.editRecipe(recAsJson, id);
     }
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("add")
-    public String addCustomRecipe(String name, int portion, int time, String ingredients, String description) {
-        CustomRecipe rs1 = facade.addRecipe(name, portion, time, ingredients, description);
-        return gson.toJson(rs1);
+    @Path("recipeC/add")
+    public String addCustomRecipe(String recAsJson) {
+        CustomRecipe cNew = gson.fromJson(recAsJson, CustomRecipe.class);
+        EntityManager em = EMF.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(cNew);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return gson.toJson(recAsJson);
+
     }
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("userRecipe/{name}")
-    public String getRecipe(@PathParam("name") String name) {
-        CustomRecipe chosenRecipe = facade.getRecipeByName(name);
+    @Path("recipeC/get/{id}")
+    public String getRecipe(@PathParam("id") int id) {
+        CustomRecipe chosenRecipe = facade.getRecipeById(id);
                 
         //String data = chosenOne;
         System.out.println( "XX dATA " + chosenRecipe);
         CustomRecipeDTO recipeDTo = new CustomRecipeDTO(chosenRecipe);
         return gson.toJson(recipeDTo);
+    }
+    
+    @DELETE
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("recipeC/delete/[id]")
+     public void deleteRecipe(@PathParam("id") int id) {
+        CustomRecipe chosenRecipe = facade.getRecipeById(id);
+        CustomRecipe deletedRec = chosenRecipe;
+         facade.deleteCustomRecipe(chosenRecipe.getId());
+                
+        //String data = chosenOne;
+        System.out.println( "Deleted data: " + deletedRec);
     }
 }
 //test
