@@ -103,6 +103,18 @@ public class RecipeFacade {
         }
         
     }
+    public CustomRecipe getRecipeByName(String name){
+        EntityManager em = getEntityManager();
+        try{
+            CustomRecipe rec1 = em.find(CustomRecipe.class,name);
+            return rec1;
+            
+        }finally{
+            em.close();
+            
+        }
+        
+    }
     
     //methods
     Callable<String> fetch1 = new Callable<String>(){

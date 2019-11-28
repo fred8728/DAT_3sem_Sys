@@ -211,14 +211,25 @@ public class DemoResource {
         return facade.editRecipe(personAsJson, id);
     }
     
-//    @POST
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    @Produces(MediaType.APPLICATION_JSON)
-//    @Path("add")
-//    public String addCustomRecipe(String name, int portion, int time, String ingredients, String description) {
-//        CustomRecipe rs1 = facade.addRecipe(name, portion, time, ingredients, description);
-//        return gson.toJson(rs1);
-//    }
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("add")
+    public String addCustomRecipe(String name, int portion, int time, String ingredients, String description) {
+        CustomRecipe rs1 = facade.addRecipe(name, portion, time, ingredients, description);
+        return gson.toJson(rs1);
+    }
     
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("userRecipe/{name}")
+    public String getRecipe(@PathParam("name") String name) {
+        CustomRecipe chosenRecipe = facade.getRecipeByName(name);
+                
+        //String data = chosenOne;
+        System.out.println( "XX dATA " + chosenRecipe);
+        CustomRecipeDTO recipeDTo = new CustomRecipeDTO(chosenRecipe);
+        return gson.toJson(recipeDTo);
+    }
 }
 //test
