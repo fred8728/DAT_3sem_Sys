@@ -44,6 +44,7 @@ public class DemoResource {
 
     private static EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory(EMF_Creator.DbSelector.DEV, EMF_Creator.Strategy.CREATE);
     private static RecipeFacade facade = RecipeFacade.getRecipeFacade(EMF);
+    private static UserFacade facadeUser = UserFacade.getUserFacade(EMF);
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     int nextId = 3;
     //ExecutorService executorservice = Executors.newFixedThreadPool(3);
@@ -192,14 +193,14 @@ public class DemoResource {
     @Path("userCustom/{name}")
     public String getUser(@PathParam("name") String name) {
 
-        User chosenOne = UserFacade.getUser(name);
+        User chosenOne = facadeUser.getUser(name);
 
         //String data = chosenOne;
         System.out.println( "XX dATA " + chosenOne);
         UserDTO userdto = new UserDTO(chosenOne);
         return gson.toJson(userdto);
     }
-    
+
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -207,7 +208,7 @@ public class DemoResource {
     public String editRecipe(String recAsJson, @PathParam("id") int id) {
         return facade.editRecipe(recAsJson, id);
     }
-
+    
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -224,4 +225,5 @@ public class DemoResource {
         }
         return gson.toJson(recAsJson);
     }
+    
 }
