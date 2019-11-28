@@ -45,6 +45,7 @@ public class FacadeTest {
         System.out.println("get list size" + recFac.getAllRecipes().size());
         RecipeFacade rf = RecipeFacade.getRecipeFacade(emf);
         rf.addRecipe("Burrito", 3, 30, "Pandekager, salsa, salat", "Snart med at varme pandekagerne i ovnen");
+        
     }
     
 }

@@ -1,10 +1,7 @@
 package rest;
 
-
-
 import DTO.UserDTO;
 import DTO.CustomRecipeDTO;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 //import dto.CustomRecipeDTO;
@@ -204,6 +201,17 @@ public class DemoResource {
         UserDTO userdto = new UserDTO(chosenOne);
         return gson.toJson(userdto);
     }
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("user/add")
+    public String addUser(String userAsJson) {
+        User uNew = gson.fromJson(userAsJson, User.class);
+        EntityManager em = EMF.createEntityManager();
+        facadeUser.createUser(uNew.getUserName(), uNew.getEmail(), uNew.getUserPass());  
+        return gson.toJson(uNew);
+
+    }
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
@@ -245,7 +253,7 @@ public class DemoResource {
     
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("recipeC/delete/[id]")
+    @Path("recipeC/{id}")
      public void deleteRecipe(@PathParam("id") int id) {
         CustomRecipe chosenRecipe = facade.getRecipeById(id);
         CustomRecipe deletedRec = chosenRecipe;
@@ -255,4 +263,3 @@ public class DemoResource {
         System.out.println( "Deleted data: " + deletedRec);
     }
 }
-//test
