@@ -69,7 +69,7 @@ public class UserFacade {
 
     }
 
-    public void deletUser(String username) {
+    public void deleteUser(String username) {
         EntityManager em = emf.createEntityManager();
         User userChose = em.find(User.class, username);
         User showedUser = userChose;

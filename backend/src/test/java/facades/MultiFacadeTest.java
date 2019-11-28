@@ -16,12 +16,12 @@ import utils.EMF_Creator.Strategy;
 
 //Uncomment the line below, to temporarily disable this test
 @Disabled
-public class FacadeExampleTest {
+public class MultiFacadeTest {
 
     private static EntityManagerFactory emf;
     private static UserFacade facade;
 
-    public FacadeExampleTest() {
+    public MultiFacadeTest() {
     }
 
     //@BeforeAll
@@ -59,7 +59,7 @@ public class FacadeExampleTest {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            em.createNamedQuery("RenameMe.deleteAllRows").executeUpdate();
+            em.createNamedQuery("User.deleteAllRows").executeUpdate();
             //em.persist(new RenameMe("Some txt", "More text"));
             //em.persist(new RenameMe("aaa", "bbb"));
 

@@ -36,7 +36,6 @@ import utils.EMF_Creator;
 @Path("food")
 public class DemoResource {
 
-
     private static EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory(EMF_Creator.DbSelector.DEV, EMF_Creator.Strategy.CREATE);
     private static RecipeFacade facade = RecipeFacade.getRecipeFacade(EMF);
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -112,16 +111,15 @@ public class DemoResource {
 //    https://www.themealdb.com/api/json/v1/1/search.php?f=a
 //Lookup full meal details by id
 //    https://www.themealdb.com/api/json/v1/1/lookup.php?i=52772
-
-        @GET
+    @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("multiple")  
-    public String getMultiple() throws MalformedURLException, IOException, InterruptedException, ExecutionException{
+    @Path("multiple")
+    public String getMultiple() throws MalformedURLException, IOException, InterruptedException, ExecutionException {
         RecipeFacade recipeFac = new RecipeFacade();
-    String all = recipeFac.allFetch();
-    return all;
+        String all = recipeFac.allFetch();
+        return all;
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("recipesDB/{letter}")
@@ -139,27 +137,26 @@ public class DemoResource {
         }
         scan.close();
         return jsonStr;
-        
+
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("recipesDB/dataAll")
     public static String getAllOpenMealDB() throws IOException {
-            //cached thread pool create  a cache thread pool instead of fixed if you dont know the amount of calls
-        
+        //cached thread pool create  a cache thread pool instead of fixed if you dont know the amount of calls
+
         //ADD THREADS PLEASE
         StringBuilder aVal = new StringBuilder();
         StringBuilder totaldata = new StringBuilder();
         for (char alphabet = 'A'; alphabet <= 'Z'; alphabet++) {
             System.out.println(alphabet);
-            if(aVal.length()==1){
-            aVal.deleteCharAt(0);
+            if (aVal.length() == 1) {
+                aVal.deleteCharAt(0);
+            } else {
+                aVal.append(alphabet);
             }
-            else{
-             aVal.append(alphabet);
-            }
-            
+
             System.out.println(aVal);
             String vals = aVal.toString();
             totaldata.append("\n" + getRecipeLetter(vals));
@@ -168,22 +165,22 @@ public class DemoResource {
         String ReturnData = totaldata.toString();
         return ReturnData;
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("allh")
-    public String getAllHomemadeRecipes(){
-        
+    public String getAllHomemadeRecipes() {
+
         List<CustomRecipe> employees = facade.getAllRecipes();
         return gson.toJson(employees.toString());
 
     }
-    
+
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
-    public String editRecipe(String personAsJson, @PathParam("id") int id){
+    public String editRecipe(String personAsJson, @PathParam("id") int id) {
         return facade.editRecipe(personAsJson, id);
     }
 }
