@@ -49,6 +49,7 @@ public class DemoResource {
     private static RecipeFacade facade = RecipeFacade.getRecipeFacade(EMF);
     private static UserFacade facadeUser = UserFacade.getUserFacade(EMF);
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    int nextId = 3;
     //ExecutorService executorservice = Executors.newFixedThreadPool(3);
 
     @Context
@@ -184,7 +185,7 @@ public class DemoResource {
         CustomRecipeDTO custDTOClass = new CustomRecipeDTO();
         List<CustomRecipeDTO> custDTO = new ArrayList();
         for(CustomRecipe cRep : employees){
-        custDTO = custDTOClass.getList(cRep);
+        custDTO.add(custDTOClass.getList(cRep));
         }
         return gson.toJson(custDTO);
 
@@ -207,18 +208,26 @@ public class DemoResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{id}")
-    public String editRecipe(String personAsJson, @PathParam("id") int id) {
-        return facade.editRecipe(personAsJson, id);
+    public String editRecipe(String recAsJson, @PathParam("id") int id) {
+        return facade.editRecipe(recAsJson, id);
     }
     
-//    @POST
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    @Produces(MediaType.APPLICATION_JSON)
-//    @Path("add")
-//    public String addCustomRecipe(String name, int portion, int time, String ingredients, String description) {
-//        CustomRecipe rs1 = facade.addRecipe(name, portion, time, ingredients, description);
-//        return gson.toJson(rs1);
-//    }
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("add")
+    public String addCustomRecipe(String recAsJson) {
+        CustomRecipe cNew = gson.fromJson(recAsJson, CustomRecipe.class);
+        EntityManager em = EMF.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(cNew);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return gson.toJson(recAsJson);
+    }
     
 }
 //test
