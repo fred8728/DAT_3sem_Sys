@@ -23,6 +23,15 @@ public class UserDTO {
         this.userName = user.getUserName();
         this.mail = user.getEmail();
     }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+    
     
     
     
