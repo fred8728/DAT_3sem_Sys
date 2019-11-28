@@ -201,6 +201,17 @@ public class DemoResource {
         UserDTO userdto = new UserDTO(chosenOne);
         return gson.toJson(userdto);
     }
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("user/add")
+    public String addUser(String userAsJson) {
+        User uNew = gson.fromJson(userAsJson, User.class);
+        EntityManager em = EMF.createEntityManager();
+        facadeUser.createUser(uNew.getUserName(), uNew.getEmail(), uNew.getUserPass());  
+        return gson.toJson(uNew);
+
+    }
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
