@@ -253,7 +253,7 @@ public class DemoResource {
     
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("recipeC/delete/[id]")
+    @Path("recipeC/{id}")
      public void deleteRecipe(@PathParam("id") int id) {
         CustomRecipe chosenRecipe = facade.getRecipeById(id);
         CustomRecipe deletedRec = chosenRecipe;
