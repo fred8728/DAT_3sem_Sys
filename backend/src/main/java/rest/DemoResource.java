@@ -1,13 +1,13 @@
 package rest;
 
 
-import dto.CustomRecipeDTO;
 
 import DTO.UserDTO;
+import DTO.CustomRecipeDTO;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dto.CustomRecipeDTO;
+//import dto.CustomRecipeDTO;
 import entities.CustomRecipe;
 import entities.User;
 import facades.RecipeFacade;
@@ -211,14 +211,14 @@ public class DemoResource {
         return facade.editRecipe(personAsJson, id);
     }
     
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("add")
-    public String addCustomRecipe(String name, int portion, int time, String ingredients, String description) {
-        CustomRecipe rs1 = facade.addRecipe(name, portion, time, ingredients, description);
-        return gson.toJson(rs1);
-    }
+//    @POST
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    @Produces(MediaType.APPLICATION_JSON)
+//    @Path("add")
+//    public String addCustomRecipe(String name, int portion, int time, String ingredients, String description) {
+//        CustomRecipe rs1 = facade.addRecipe(name, portion, time, ingredients, description);
+//        return gson.toJson(rs1);
+//    }
     
 }
 //test

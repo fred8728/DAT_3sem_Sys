@@ -3,13 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dto;
+package DTO;
 
 import entities.CustomRecipe;
-import entities.User;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.ManyToOne;
 
 /**
  *
@@ -90,4 +88,5 @@ public class CustomRecipeDTO {
         cList.add(data);
         return cList;
     }
+    
 }
