@@ -60,6 +60,8 @@ public class MultiFacadeTest {
         try {
             em.getTransaction().begin();
             em.createNamedQuery("User.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Role.deleteAllRows").executeUpdate();
+            em.createNamedQuery("CustomRecipe.deleteAll").executeUpdate();
             //em.persist(new RenameMe("Some txt", "More text"));
             //em.persist(new RenameMe("aaa", "bbb"));
 
