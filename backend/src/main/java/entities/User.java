@@ -21,13 +21,13 @@ import org.mindrot.jbcrypt.BCrypt;
 
 @Entity
 @Table(name = "users")
-/*@NamedQueries({
+@NamedQueries({
     @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u"),
     @NamedQuery(name = "Users.findByUserName", query = "SELECT u FROM Users u WHERE u.userName = :userName"),
     @NamedQuery(name = "Users.findByUserEmail", query = "SELECT u FROM Users u WHERE u.userEmail = :userEmail"),
     @NamedQuery(name = "Users.findByUserPass", query = "SELECT u FROM Users u WHERE u.userPass = :userPass"),
     @NamedQuery(name = "Users.deleteAll", query = "DELETE FROM User")})
-    */
+    
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
