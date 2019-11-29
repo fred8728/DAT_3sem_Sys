@@ -1,5 +1,6 @@
 package rest;
 
+import entities.CustomRecipe;
 import entities.User;
 import entities.Role;
 
@@ -10,11 +11,15 @@ import io.restassured.parsing.Parser;
 import java.net.URI;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 import javax.ws.rs.core.UriBuilder;
 import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.grizzly.http.util.HttpStatus;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasItems;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,11 +32,18 @@ public class RecipeResourceTest {
 
     private static final int SERVER_PORT = 7777;
     private static final String SERVER_URL = "http://localhost/api";
+    private static final String TEST_DB = "jdbc:mysql://localhost:3307/startcode_test";
 
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
     private static EntityManagerFactory emf;
+    
 
+    CustomRecipe cr = new CustomRecipe("Spaghetti kødsovs", 4, 40, "Oksekød, tomatsovs, spaghetti, parmazan", "Start med at putte oksekødet i gryden");
+    CustomRecipe cr1 = new CustomRecipe("Spaghetti Carbonare", 4, 40, "Spaghetti, ost, Fløde, Æg", "Kog Spaghetti");
+    
+    
+    
     static HttpServer startServer() {
         ResourceConfig rc = ResourceConfig.forApplication(new ApplicationConfig());
         return GrizzlyHttpServerFactory.createHttpServer(BASE_URI, rc);
@@ -63,163 +75,73 @@ public class RecipeResourceTest {
     public void setUp() {
         EntityManager em = emf.createEntityManager();
         try {
-            em.getTransaction().begin();
-            //Delete existing users and roles to get a "fresh" database
-            em.createQuery("delete from User").executeUpdate();
-            em.createQuery("delete from Role").executeUpdate();
+    em.getTransaction().begin();
 
-            Role userRole = new Role("user");
-            Role adminRole = new Role("admin");
-            User user = new User("user","email@test.dk", "test");
-            user.addRole(userRole);
-            User admin = new User("admin","email@test.dk", "test");
-            admin.addRole(adminRole);
-            User both = new User("user_admin","email@test.dk", "test");
-            both.addRole(userRole);
-            both.addRole(adminRole);
-            em.persist(userRole);
-            em.persist(adminRole);
-            em.persist(user);
-            em.persist(admin);
-            em.persist(both);
-            System.out.println("Saved test data to database");
-            em.getTransaction().commit();
+    em.persist(cr);
+    em.persist(cr1);
+    em.getTransaction().commit();
         } finally {
             em.close();
         }
     }
     
-    //This is how we hold on to the token after login, similar to that a client must store the token somewhere
-  private static String securityToken;
+    @Test
+    public void testServerIsUp() {
+        System.out.println("Testing is server UP");
+        given().when().get("/food").then().statusCode(200);
+    }
+    
+    @Test
+    public void testGetAllRecipes() {
+        given()
+                .contentType("application/json")
+                .get("/food/recipe/all").then()
+                .assertThat()
+                .statusCode(HttpStatus.OK_200.getStatusCode())
+                .body("title", equalTo("Recipe Puppy"));
+        //System.out.println(m2);
+    }
+    
+    @Test
+    public void testGetAllCustomRecipes() {
+        given()
+                .contentType("application/json")
+                .get("/food/recipeC/all").then()
+                .assertThat()
+                .statusCode(HttpStatus.OK_200.getStatusCode())
+                .body("name", hasItems("Spaghetti Carbonare", "Spaghetti kødsovs"));
+    }
+    
+//        @Test
+//    public void testGetCustomRecipes() {
+//        given()
+//                .contentType("application/json")
+//                .get("/food/recipeC/get/2").then()
+//                .assertThat()
+//                .statusCode(HttpStatus.OK_200.getStatusCode())
+//                .body("description", equalTo("Start med at putte oksekødet i gryden"));
+//    }
+    
+         @Test
+    public void testPostCustomRecipes() {
+            String postlol = "{\n" +
+"    \"name\": \"Chili con carne\",\n" +
+"    \"portion_size\": 6,\n" +
+"    \"cooking_time\": 60,\n" +
+"    \"ingredients\": \"Chili, bønner, kødsovs\",\n" +
+"    \"description\": \"Put det hele i en gryde.\"\n" +
+"  }";
+            RecipeResource posttest = new RecipeResource();
+            posttest.addCustomRecipe(postlol);
+        given()
+                .contentType("application/json")
+                .get("/food/recipeC/all").then()
+                .assertThat()
+                .statusCode(HttpStatus.OK_200.getStatusCode())
+                .body("name", hasItems("Spaghetti Carbonare", "Spaghetti kødsovs", "Chili con carne"));
+    }
+    
 
-  //Utility method to login and set the returned securityToken
-  private static void login(String role, String password) {
-    String json = String.format("{username: \"%s\", password: \"%s\"}", role, password);
-    securityToken = given()
-            .contentType("application/json")
-            .body(json)
-            //.when().post("/api/login")
-            .when().post("/login")
-            .then()
-            .extract().path("token");
-      System.out.println("TOKEN ---> "+securityToken);
-  }
-
-  private void logOut() {
-    securityToken = null;
-  }
-
-  @Test
-  public void serverIsRunning() {
-    System.out.println("Testing is server UP");
-    given().when().get("/info").then().statusCode(200);
-  }
-
-  @Test
-  public void testRestNoAuthenticationRequired() {
-    given()
-            .contentType("application/json")
-            .when()
-            .get("/info").then()
-            .statusCode(200)
-            .body("msg", equalTo("Hello anonymous"));
-  }
-
-  @Test
-  public void testRestForAdmin() {
-    login("admin", "test");
-    given()
-            .contentType("application/json")
-            .accept(ContentType.JSON)
-            .header("x-access-token", securityToken)
-            .when()
-            .get("/info/admin").then()
-            .statusCode(200)
-            .body("msg", equalTo("Hello to (admin) User: admin"));
-  }
-
-  @Test
-  public void testRestForUser() {
-    login("user", "test");
-    given()
-            .contentType("application/json")
-            .header("x-access-token", securityToken)
-            .when()
-            .get("/info/user").then()
-            .statusCode(200)
-            .body("msg", equalTo("Hello to User: user"));
-  }
-  
-  @Test
-  public void testAutorizedUserCannotAccesAdminPage() {
-    login("user", "test");
-    given()
-            .contentType("application/json")
-            .header("x-access-token", securityToken)
-            .when()
-            .get("/info/admin").then()  //Call Admin endpoint as user
-            .statusCode(401);
-  }
-  
-  @Test
-  public void testAutorizedAdminCannotAccesUserPage() {
-    login("admin", "test");
-    given()
-            .contentType("application/json")
-            .header("x-access-token", securityToken)
-            .when()
-            .get("/info/user").then()  //Call User endpoint as Admin
-            .statusCode(401);
-  }
-  
-  @Test
-  public void testRestForMultiRole1() {
-    login("user_admin", "test");
-    given()
-            .contentType("application/json")
-            .accept(ContentType.JSON)
-            .header("x-access-token", securityToken)
-            .when()
-            .get("/info/admin").then()
-            .statusCode(200)
-            .body("msg", equalTo("Hello to (admin) User: user_admin"));
-  }
-
-  @Test
-  public void testRestForMultiRole2() {
-    login("user_admin", "test");
-    given()
-            .contentType("application/json")
-            .header("x-access-token", securityToken)
-            .when()
-            .get("/info/user").then()
-            .statusCode(200)
-            .body("msg", equalTo("Hello to User: user_admin"));
-  }
-
-  @Test
-  public void userNotAuthenticated() {
-    logOut();
-    given()
-            .contentType("application/json")
-            .when()
-            .get("/info/user").then()
-            .statusCode(403)
-            .body("code", equalTo(403))
-            .body("message", equalTo("Not authenticated - do login"));
-  }
-
-  @Test
-  public void adminNotAuthenticated() {
-    logOut();
-    given()
-            .contentType("application/json")
-            .when()
-            .get("/info/user").then()
-            .statusCode(403)
-            .body("code", equalTo(403))
-            .body("message", equalTo("Not authenticated - do login"));
-  }
     
     
 }
