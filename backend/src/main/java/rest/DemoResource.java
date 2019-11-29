@@ -221,23 +221,23 @@ public class DemoResource {
         return facade.editRecipe(recAsJson, id);
     }
     
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("recipeC/add")
-    public String addCustomRecipe(String recAsJson) {
-        CustomRecipe cNew = gson.fromJson(recAsJson, CustomRecipe.class);
-        EntityManager em = EMF.createEntityManager();
-        try {
-            em.getTransaction().begin();
-            em.persist(cNew);
-            em.getTransaction().commit();
-        } finally {
-            em.close();
-        }
-        return gson.toJson(recAsJson);
-
-    }
+//    @POST
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    @Produces(MediaType.APPLICATION_JSON)
+//    @Path("recipeC/add")
+//    public String addCustomRecipe(String recAsJson) {
+//        CustomRecipe cNew = gson.fromJson(recAsJson, CustomRecipe.class);
+//        EntityManager em = EMF.createEntityManager();
+//        try {
+//            em.getTransaction().begin();
+//            em.persist(cNew);
+//            em.getTransaction().commit();
+//        } finally {
+//            em.close();
+//        }
+//        return gson.toJson(recAsJson);
+//
+//    }
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -246,7 +246,7 @@ public class DemoResource {
         CustomRecipe chosenRecipe = facade.getRecipeById(id);
                 
         //String data = chosenOne;
-        System.out.println( "XX dATA " + chosenRecipe);
+        System.out.println( "Recipe dATA " + chosenRecipe);
         CustomRecipeDTO recipeDTo = new CustomRecipeDTO(chosenRecipe);
         return gson.toJson(recipeDTo);
     }
