@@ -19,7 +19,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import javax.persistence.TypedQuery;
-import static rest.DemoResource.getRecipeLetter;
+import static rest.OpenRecipeResource.getRecipeLetter;
 
 /**
  * @author Frederik

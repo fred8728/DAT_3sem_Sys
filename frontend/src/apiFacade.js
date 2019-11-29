@@ -51,11 +51,11 @@ function ApiFacade() {
   }
 
   const addRecipe = () => {
-    return fetch(URL + "/api/food/add", makeOptions("POST", true)).then(handleHttpErrors)
+    return fetch(URL + "/api/food/recipeC/add", makeOptions("POST", true)).then(handleHttpErrors)
   }
 
-  const updateRecipe = () => {
-    return fetch(URL + "NEED ENDPOINT FROM BACKEND", makeOptions("PUT", true)).then(handleHttpErrors);
+  const updateRecipe = (id) => {
+    return fetch(URL + "/api/food/recipeC/edit/"+id, makeOptions("PUT", true)).then(handleHttpErrors);
   }
 
   const deleteRecipe = (id) => {
@@ -67,7 +67,7 @@ function ApiFacade() {
   }
 
   const getHomemadeRecipes = () => {
-    return fetch(URL + "/api/food/allh", makeOptions("GET", true)).then(handleHttpErrors)
+    return fetch(URL + "/api/food/recipeC/all", makeOptions("GET", true)).then(handleHttpErrors)
   }
 
   const createUser = () => {
