@@ -29,9 +29,7 @@ public class FacadeTest {
             
         UserFacade userFac = UserFacade.getUserFacade(emf);
         RecipeFacade recFac = RecipeFacade.getRecipeFacade(emf);
-        
-        userFac.deleteUser("lar");
-        userFac.deleteUser("frede");
+     
         
         userFac.createUser("lar", "bobNut@mail.dk","lolz");
         userFac.createUser("frede", "fred@nutmail.dk","lolz");

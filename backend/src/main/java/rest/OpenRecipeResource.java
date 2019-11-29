@@ -9,6 +9,7 @@ import com.google.gson.GsonBuilder;
 //import dto.CustomRecipeDTO;
 import entities.CustomRecipe;
 import entities.User;
+import facades.OpenMealFacade;
 import facades.RecipeFacade;
 import facades.UserFacade;
 import java.io.IOException;
@@ -46,7 +47,7 @@ import utils.EMF_Creator;
 public class OpenRecipeResource {
 
     private static EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory(EMF_Creator.DbSelector.DEV, EMF_Creator.Strategy.CREATE);
-    private static RecipeFacade facade = RecipeFacade.getRecipeFacade(EMF);
+    private static OpenMealFacade facade = OpenMealFacade.getOpenMealFacade(EMF);
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     int nextId = 3;
     //ExecutorService executorservice = Executors.newFixedThreadPool(3);
@@ -74,7 +75,7 @@ public class OpenRecipeResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("multiple")
     public String getMultiple() throws MalformedURLException, IOException, InterruptedException, ExecutionException {
-        RecipeFacade recipeFac = new RecipeFacade();
+        OpenMealFacade recipeFac = new OpenMealFacade();
         String all = recipeFac.allFetch();
         return all;
     }
