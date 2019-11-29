@@ -1,5 +1,6 @@
 import React, { useState, Component } from "react"
 import facade from "./apiFacade";
+import "../scss/Login.scss"
 
 function LogIn(props) {
   const [state, setState] = useState();

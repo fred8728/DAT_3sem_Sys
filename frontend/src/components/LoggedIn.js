@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import facade from './apiFacade'
 import Login from "./Login"
-import apiFacade from "./apiFacade"
 
 function LoggedIn() {
   const [username, setUserName] = useState();
@@ -9,12 +8,12 @@ function LoggedIn() {
   const [error, setError] = useState();
 
   const logout = () => {
-    apiFacade.logout();
+    facade.logout();
     setLoggedIn({ loggedIn: false });
   };
 
   const login = (user, pass) => {
-    apiFacade.login(user, pass)
+    facade.login(user, pass)
       .then(response => {
         setLoggedIn(true);
         setError("");

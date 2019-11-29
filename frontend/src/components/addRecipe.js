@@ -2,7 +2,9 @@ import React
     //, { useState, useEffect } 
     from "react";
 import apiFacade from "./apiFacade";
-import pic from "./pic/Button1.png";
+import "../scss/AddRecipe.scss"
+
+//PICTURE  <input type="image" src={pic} border="0" height="40" alt="img" /><tr></tr>
 
 export default function Addrecipe() {
     return (
@@ -16,7 +18,7 @@ export default function Addrecipe() {
                     </thead>
                     <tbody>
                         <legend>Add you amazing homemade recipe image right here</legend>
-                        <input type="image" src={pic} border="0" height="40" alt="img" /><tr></tr>
+                       
                         <input type="text"
                             placeholder="time"
                         /> <tr></tr>
