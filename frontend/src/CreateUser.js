@@ -1,30 +1,30 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 
 function CreateUser(props) {
-const facade = props.apiFacade;
-const [user, setUser] = useState([props.newUser]);
-const initialState = {username: "", email: "" , password: ""}
-//const newUser = facade.newUser;
-//const { createUser} = facade;
+  const facade = props.apiFacade;
+  const [user, setUser] = useState([props.newUser]);
+  const initialState = { username: "", email: "", password: "" }
+  //const newUser = facade.newUser;
+  //const { createUser} = facade;
 
-const handleChange = event =>{
+  const handleChange = event => {
     const target = event.target;
     const id = target.id;
     const value = target.value;
-    setUser({...user,[id]: value})
-}
+    setUser({ ...user, [id]: value })
+  }
 
-const handleSubmit = event =>{
+  const handleSubmit = event => {
     event.preventDefault();
     //createUser(user);
-    setUser({...initialState})
-}
+    setUser({ ...initialState })
+  }
 
-/* useEffect (() => 
-   setUser({...newUser}), [newUser])
-*/
-    return(
-        <div>
+  /* useEffect (() => 
+     setUser({...newUser}), [newUser])
+  */
+  return (
+    <div>
       <form onChange={handleChange} onSubmit={handleSubmit}>
         <h1>Create User</h1>
         <div>
@@ -48,14 +48,24 @@ const handleSubmit = event =>{
               onChange={handleChange}
             />
           </div>
+
+          <label>password:</label>
+          <div>
+            <input
+              id="password"
+              value={user.password}
+              placeholder="password"
+              onChange={handleChange}
+            />
+          </div>
         </div>
         <div>
           <input type="submit" value="Save" onSubmit={handleSubmit} />
         </div>
       </form>
       <p>{JSON.stringify(user)}</p>
-        </div>
-    )
+    </div>
+  )
 }
 
 export default CreateUser;
