@@ -14,12 +14,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  *
  * @author fskn
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "CustomRecipe.findAll", query = "SELECT u FROM CustomRecipe u"),
+    @NamedQuery(name = "CustomRecipe.findByUserName", query = "SELECT u FROM Users u WHERE u.userName = :userName"),
+    @NamedQuery(name = "CustomRecipe.findByUserEmail", query = "SELECT u FROM Users u WHERE u.userEmail = :userEmail"),
+    @NamedQuery(name = "CustomRecipe.findByUserPass", query = "SELECT u FROM Users u WHERE u.userPass = :userPass"),
+    @NamedQuery(name = "CustomRecipe.deleteAll", query = "DELETE FROM CustomRecipe")})
+
 public class CustomRecipe implements Serializable {
 
     private static final long serialVersionUID = 1L;

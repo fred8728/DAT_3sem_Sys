@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -19,6 +21,13 @@ import org.mindrot.jbcrypt.BCrypt;
 
 @Entity
 @Table(name = "users")
+@NamedQueries({
+    @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u"),
+    @NamedQuery(name = "Users.findByUserName", query = "SELECT u FROM Users u WHERE u.userName = :userName"),
+    @NamedQuery(name = "Users.findByUserEmail", query = "SELECT u FROM Users u WHERE u.userEmail = :userEmail"),
+    @NamedQuery(name = "Users.findByUserPass", query = "SELECT u FROM Users u WHERE u.userPass = :userPass"),
+    @NamedQuery(name = "Users.deleteAll", query = "DELETE FROM User")})
+    
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -30,10 +39,10 @@ public class User implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
-   
+
     @Column(name = "user_email")
     private String email;
-    
+
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "user_pass")
@@ -42,10 +51,9 @@ public class User implements Serializable {
         @JoinColumn(name = "user_name", referencedColumnName = "user_name")}, inverseJoinColumns = {
         @JoinColumn(name = "role_name", referencedColumnName = "role_name")})
 
-    
-    @OneToMany(mappedBy = "user", cascade=CascadeType.PERSIST)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
     private List<CustomRecipe> cust = new ArrayList();
-    
+
     @ManyToMany
     private List<Role> roleList = new ArrayList();
 
@@ -89,7 +97,7 @@ public class User implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-    
+
     public String getUserPass() {
         return this.userPass;
     }
@@ -117,17 +125,15 @@ public class User implements Serializable {
     public void setCust(CustomRecipe cr) {
         this.cust.add(cr);
     }
-    
-public void addRecipe(CustomRecipe cr){
-    this.cust.add(cr);
-    cr.setUser(this);
-}    
+
+    public void addRecipe(CustomRecipe cr) {
+        this.cust.add(cr);
+        cr.setUser(this);
+    }
 
     @Override
     public String toString() {
         return "User[" + "userName:" + userName + " email:" + email + " userPass:" + userPass + " cust:" + cust + " roleList:" + roleList + ']';
     }
-    
 
 }
-    

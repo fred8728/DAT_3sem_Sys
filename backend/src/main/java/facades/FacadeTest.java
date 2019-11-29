@@ -28,14 +28,24 @@ public class FacadeTest {
         EntityManager em = emf.createEntityManager();
             
         UserFacade userFac = UserFacade.getUserFacade(emf);
+        RecipeFacade recFac = RecipeFacade.getRecipeFacade(emf);
+        
+        userFac.deleteUser("lar");
+        userFac.deleteUser("frede");
         
         userFac.createUser("lar", "bobNut@mail.dk","lolz");
         userFac.createUser("frede", "fred@nutmail.dk","lolz");
-        userFac.deleteUser("lar");
+        
         System.out.println("print data " +userFac.getUser("lar").getUserName());
         
+        recFac.addRecipe("pasta", 3, 1, "pata, oil, tomato, cheses", "cook pasta, add oil toamto and chese when cooked done");
+        recFac.addRecipe("pasta2 with fish", 3, 1, "pata, oil, tomato, cheses, can tuna", "cook pasta, add oil toamto and chese when cooked done and can tuna");
+        
+       // recFac.deleteCustomRecipe(1);
+        System.out.println("get list size" + recFac.getAllRecipes().size());
         RecipeFacade rf = RecipeFacade.getRecipeFacade(emf);
         rf.addRecipe("Burrito", 3, 30, "Pandekager, salsa, salat", "Snart med at varme pandekagerne i ovnen");
+        
     }
     
 }
