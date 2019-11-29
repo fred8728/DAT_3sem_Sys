@@ -20,6 +20,7 @@ import javax.validation.constraints.Size;
 import org.mindrot.jbcrypt.BCrypt;
 
 @Entity
+<<<<<<< HEAD
 //@Table(name = "users")
 //@NamedQueries({
 //    @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u"),
@@ -28,6 +29,8 @@ import org.mindrot.jbcrypt.BCrypt;
 //    @NamedQuery(name = "Users.findByUserPass", query = "SELECT u FROM Users u WHERE u.userPass = :userPass"),
 //    @NamedQuery(name = "Users.deleteAll", query = "DELETE FROM User")})
     
+=======
+>>>>>>> b6cf294b1095dffd7e93067979a3f50335ff2c6f
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;

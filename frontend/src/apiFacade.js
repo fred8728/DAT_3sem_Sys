@@ -47,31 +47,31 @@ function ApiFacade() {
     return opts;
   }
   const getRecipes = () => {
-    return fetch(URL + "/api/food/recipes", makeOptions("GET",true)).then(handleHttpErrors)
+    return fetch(URL + "/api/food/recipes", makeOptions("GET", true)).then(handleHttpErrors)
   }
 
-  const addRecipe = () =>{
-    return fetch(URL + "/api/food/add",makeOptions("POST", true)).then(handleHttpErrors)
+  const addRecipe = () => {
+    return fetch(URL + "/api/food/add", makeOptions("POST", true)).then(handleHttpErrors)
   }
 
-  const updateRecipe = () =>{
-    return fetch(URL + "NEED ENDPOINT FROM BACKEND",makeOptions("PUT", true)).then(handleHttpErrors);
+  const updateRecipe = () => {
+    return fetch(URL + "NEED ENDPOINT FROM BACKEND", makeOptions("PUT", true)).then(handleHttpErrors);
   }
 
-  const deleteRecipe = () =>{
-    return fetch(URL + "NEED ENDPOINT FROM BACKEND", makeOptions("DELETE", true)).then(handleHttpErrors);
+  const deleteRecipe = (id) => {
+    return fetch(URL + "/api/food/recipeC/" + id, makeOptions("DELETE", true)).then(handleHttpErrors);
   }
 
-  const getRecipe = (id) =>{
-    return fetch(URL + "NEED ENDPOINT FROM BACKEND"+id, makeOptions("GET", true)).then(handleHttpErrors)
+  const getCustomRecipe = (id) => {
+    return fetch(URL + "recipeC/get/" + id, makeOptions("GET", true)).then(handleHttpErrors)
   }
 
-  const getHomemadeRecipes = () =>{
+  const getHomemadeRecipes = () => {
     return fetch(URL + "/api/food/allh", makeOptions("GET", true)).then(handleHttpErrors)
   }
 
   const createUser = () => {
-    return fetch(URL + "NEED ENDPOINT FROM BACKEND", makeOptions("POST", true)).then(handleHttpErrors)
+    return fetch(URL + "/api/food/recipeC/add", makeOptions("POST", true)).then(handleHttpErrors)
   }
 
   return {
@@ -81,7 +81,7 @@ function ApiFacade() {
     addRecipe,
     updateRecipe,
     deleteRecipe,
-    getRecipe,
+    getRecipe: getCustomRecipe,
     getHomemadeRecipes,
     createUser
   }

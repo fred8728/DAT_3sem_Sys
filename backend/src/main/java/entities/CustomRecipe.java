@@ -22,6 +22,7 @@ import javax.persistence.NamedQuery;
  * @author fskn
  */
 @Entity
+<<<<<<< HEAD
 //@NamedQueries({
 //    @NamedQuery(name = "CustomRecipe.findAll", query = "SELECT u FROM CustomRecipe u"),
 //    @NamedQuery(name = "CustomRecipe.findByUserName", query = "SELECT u FROM Users u WHERE u.userName = :userName"),
@@ -29,6 +30,8 @@ import javax.persistence.NamedQuery;
 //    @NamedQuery(name = "CustomRecipe.findByUserPass", query = "SELECT u FROM Users u WHERE u.userPass = :userPass"),
 //    @NamedQuery(name = "CustomRecipe.deleteAll", query = "DELETE FROM CustomRecipe")})
 
+=======
+>>>>>>> b6cf294b1095dffd7e93067979a3f50335ff2c6f
 public class CustomRecipe implements Serializable {
 
     private static final long serialVersionUID = 1L;
