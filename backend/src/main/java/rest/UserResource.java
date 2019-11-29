@@ -2,8 +2,7 @@
 
 package rest;
 
-import DTO.UserDTO;
-import DTO.CustomRecipeDTO;
+import dto.UserDTO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 //import dto.CustomRecipeDTO;
