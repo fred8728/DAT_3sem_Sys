@@ -1,12 +1,11 @@
 package rest;
 
-import DTO.UserDTO;
+
 import DTO.CustomRecipeDTO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 //import dto.CustomRecipeDTO;
 import entities.CustomRecipe;
-import entities.User;
 import facades.RecipeFacade;
 import facades.UserFacade;
 import java.io.IOException;
@@ -17,12 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.core.Context;
