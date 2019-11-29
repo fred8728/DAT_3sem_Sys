@@ -16,12 +16,12 @@ import utils.EMF_Creator.Strategy;
 
 //Uncomment the line below, to temporarily disable this test
 @Disabled
-public class MultiFacadeTest {
+public class RecipeFacadeTest {
 
     private static EntityManagerFactory emf;
     private static UserFacade facade;
 
-    public MultiFacadeTest() {
+    public RecipeFacadeTest() {
     }
 
     //@BeforeAll
