@@ -47,7 +47,7 @@ function ApiFacade() {
     return opts;
   }
   const getRecipes = () => {
-    return fetch(URL + "/api/food/recipes", makeOptions("GET", true)).then(handleHttpErrors)
+    return fetch(URL + "/api/food/recipe/all", makeOptions("GET", true)).then(handleHttpErrors)
   }
 
   const addRecipe = () => {
