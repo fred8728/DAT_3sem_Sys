@@ -62,7 +62,7 @@ public class UserResource {
     public String getInfoForAll() {
         return "{\"msg\":\"Hello USERRESOURCE\"}";
     }
-
+//push
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("user/{name}")

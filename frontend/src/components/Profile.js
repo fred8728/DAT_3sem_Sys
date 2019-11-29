@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import "../scss/Profile.scss"
+
 
 function Profile() {
     //  const [user, setUser] = useState([]);
