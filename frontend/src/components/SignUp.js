@@ -74,7 +74,8 @@ const handleSubmit = event =>{
               </div>
               <p>{JSON.stringify(user)}</p>
               <div className="registered">
-                Already have an account? <NavLink to="/login">Log In</NavLink>.
+                Already have an account? <NavLink to="/signIn">
+                  Sign in</NavLink>.
               </div>
             </form>
           </div>

@@ -32,50 +32,13 @@ const AllRecipes = () => {
     const x = recipes.reverse()
     setRecipes([...x])
   }
-
-  /*<form>
-  <fieldset>
-  <legend>Search for recipe</legend>
-  <input
-    type="text"
-    placeholder="Search"
-    value={searchTerm}
-    onChange={handleChange}
-  />
-</fieldset>
-</form>
-<button onClick={sortData}>
-A-Z</button> */
   return (
     <>
     <section className="section section-recipes">
       <h1>Recipes</h1>
       <SearchForm value={searchTerm} onChange={handleChange} />
+      
       <div className="recipe-list">
-        <div className="item">
-          <div className="item-img">{<img src="" alt="img"/>}</div>
-          <div className="item-r">
-            <div className="item-c">
-              <div className="item-title">Recipe Title</div>
-              <div className="item-info">
-                <div className="portions">
-                  <i className="icon icon-portion"></i>
-                  <span>4 portions</span>
-                </div>
-                <div className="time">
-                  <i className="icon icon-time"></i>
-                  <span>1 h 30 m</span>
-                </div>
-              </div>
-            </div>
-            <div className="item-links">
-              <Link className="btn btn-green btn-sm btn-block" to="">
-                Details
-              </Link>
-              <a className="btn btn-grey btn-sm btn-block" href=""> Link </a>
-            </div>
-          </div>
-        </div>
           {recipes
             .filter(recipe => {
               return (
@@ -120,6 +83,7 @@ A-Z</button> */
     </>
   );
 }
+
 function Recipe() {
   let { picture, title, ingredients } = useParams();
   return (

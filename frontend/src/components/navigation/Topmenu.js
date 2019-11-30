@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
-import './Topmenu.scss';
+
 
 const Topmenu = (props) => {
   return (

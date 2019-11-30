@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import LatestRecipes from '../components/LatestRecipes';
-import "../scss/HomePage.scss"
+import "../scss/HomePage.scss";
 
 const HomePage = () => {
   return (

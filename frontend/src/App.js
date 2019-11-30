@@ -37,8 +37,8 @@ function Content() {
       <Route path="/recipes">
         <Recipes />
       </Route>
-      <Route path="/homemade-recipes">
-        <Recipes />
+      <Route path="/homemade">
+        <HomemadeRecipes/>
       </Route>
       <Route path="/search">
         
