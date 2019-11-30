@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import errorhandling.AuthenticationException;
 import java.util.List;
+import javax.persistence.TypedQuery;
 
 /**
  * @author lam@cphbusiness.dk
@@ -91,9 +92,30 @@ public class UserFacade {
         User foundUser = em.find(User.class, username);
         return foundUser;
     }
+    public long getAmount(){
+        EntityManager em = emf.createEntityManager();
+        try{
+        long userCount = (long) em.createQuery("SELECT COUNT(U) FROM User U").getSingleResult();
+        return  userCount;
+        }finally{
+            em.close();
+        }
+        
+    }
+    public List<User> getAllUsers() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery query
+                    = em.createQuery("Select u from  User u", User.class);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
 
     public void editUserPassword(String username, String newPassword) {
 
     }
+    
 
 }

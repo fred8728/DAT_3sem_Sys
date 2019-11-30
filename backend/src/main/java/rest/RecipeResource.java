@@ -123,7 +123,7 @@ public class RecipeResource {
         CustomRecipe chosenRecipe = facade.getRecipeById(id);
                 
         //String data = chosenOne;
-        System.out.println( "XX dATA " + chosenRecipe);
+        System.out.println( "Recipe dATA " + chosenRecipe);
         CustomRecipeDTO recipeDTo = new CustomRecipeDTO(chosenRecipe);
         return gson.toJson(recipeDTo);
     }
