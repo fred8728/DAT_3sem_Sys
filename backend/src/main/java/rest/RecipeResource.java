@@ -99,22 +99,22 @@ public class RecipeResource {
         return facade.editRecipe(recAsJson, id);
     }
     
-//    @POST
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    @Produces(MediaType.APPLICATION_JSON)
-//    @Path("recipeC/add")
-//    public String addCustomRecipe(String recAsJson) {
-//        CustomRecipe cNew = gson.fromJson(recAsJson, CustomRecipe.class);
-//        EntityManager em = EMF.createEntityManager();
-//        try {
-//            em.getTransaction().begin();
-//            em.persist(cNew);
-//            em.getTransaction().commit();
-//        } finally {
-//            em.close();
-//        }
-//        return gson.toJson(recAsJson);
-//    }
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("recipeC/add")
+    public String addCustomRecipe(String recAsJson) {
+        CustomRecipe cNew = gson.fromJson(recAsJson, CustomRecipe.class);
+        EntityManager em = EMF.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(cNew);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return gson.toJson(recAsJson);
+    }
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
