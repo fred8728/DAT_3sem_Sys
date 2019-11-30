@@ -1,12 +1,11 @@
 package rest;
 
-import DTO.UserDTO;
-import DTO.CustomRecipeDTO;
+
+import dto.CustomRecipeDTO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 //import dto.CustomRecipeDTO;
 import entities.CustomRecipe;
-import entities.User;
 import facades.RecipeFacade;
 import facades.UserFacade;
 import java.io.IOException;
@@ -17,12 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.core.Context;
@@ -104,6 +99,7 @@ public class RecipeResource {
         return facade.editRecipe(recAsJson, id);
     }
     
+<<<<<<< HEAD
 //    @POST
 //    @Consumes(MediaType.APPLICATION_JSON)
 //    @Produces(MediaType.APPLICATION_JSON)
@@ -121,6 +117,24 @@ public class RecipeResource {
 //        return gson.toJson(recAsJson);
 //
 //    }
+=======
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("recipeC/add")
+    public String addCustomRecipe(String recAsJson) {
+        CustomRecipe cNew = gson.fromJson(recAsJson, CustomRecipe.class);
+        EntityManager em = EMF.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(cNew);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return gson.toJson(recAsJson);
+    }
+>>>>>>> 72527b3e73e5363b3a428090919a19cf6736da19
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)

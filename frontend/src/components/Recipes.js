@@ -3,6 +3,7 @@ import apiFacade from "./apiFacade";
 import { //BrowserRouter,
   useRouteMatch, useParams, Route, Link
 } from "react-router-dom";
+import SearchForm from './SearchForm'
 
 const AllRecipes = () => {
 
@@ -32,37 +33,12 @@ const AllRecipes = () => {
     setRecipes([...x])
   }
   return (
-    <div>
-      <form>
-        <fieldset>
-          <legend>Search for recipe</legend>
-          <input
-            type="text"
-            placeholder="Search"
-            value={searchTerm}
-            onChange={handleChange}
-          />
-        </fieldset>
-      </form>
-      <button onClick={sortData}>
-        A-Z</button>
-      <link
-        rel="stylesheet"
-        href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-        crossOrigin="anonymous"
-      ></link>
-      <br></br>
-      <table className="table">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Recipe</th>
-            <th>Details</th>
-            <th>Link to webpage</th>
-          </tr>
-        </thead>
-        <tbody>
+    <>
+    <section className="section section-recipes">
+      <h1>Recipes</h1>
+      <SearchForm value={searchTerm} onChange={handleChange} />
+      
+      <div className="recipe-list">
           {recipes
             .filter(recipe => {
               return (
@@ -72,24 +48,39 @@ const AllRecipes = () => {
             }
             )
             .map((data, index) => (
-              <tr key={index}>
-                <td>{<img src={data.thumbnail} />}</td>
-                <td>{data.title}</td>
-                <td>
-                  <Link to={`${match.url}/${data.title}/${data.ingredients}/${data.href}`}>
-                    Details
+              <div className="item" key={index}>
+            <div className="item-img">{<img src={data.thumbnail} />}</div>
+            <div className="item-r">
+              <div className="item-c">
+              <div className="item-title">{data.title}</div>
+                <div className="item-info">
+                  <div className="portions">
+                    <i className="icon icon-portion"></i>
+                    <span>4 portions</span>
+                  </div>
+                  <div className="time">
+                    <i className="icon icon-time"></i>
+                    <span>1 h 30 m</span>
+                  </div>
+                </div>
+              </div>
+              <div className="item-links">
+                <Link className="btn btn-green btn-sm btn-block" to={`${match.url}/${data.title}/${data.ingredients}/${data.href}`}>
+                  Details
                 </Link>
-                </td>
-                <td>{<a href={data.href}> Link </a>}</td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
-      <br></br>
-      <Route path={`${match.path}/:title/:ingredients`}>
+                <a className="btn btn-grey btn-sm btn-block" href={data.href}> Link </a>
+              </div>
+            </div>
+            
+          </div>
+        ))}
+      </div>
+       
+      {/* <Route path={`${match.path}/:title/:ingredients`}>
         <Recipe></Recipe>
-      </Route>
-    </div >
+      </Route> */}
+    </section>
+    </>
   );
 }
 

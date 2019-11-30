@@ -20,6 +20,7 @@ import javax.validation.constraints.Size;
 import org.mindrot.jbcrypt.BCrypt;
 
 @Entity
+
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
