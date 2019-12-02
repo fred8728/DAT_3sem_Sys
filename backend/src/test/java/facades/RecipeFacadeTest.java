@@ -1,11 +1,16 @@
 package facades;
 
+import entities.CustomRecipe;
+import entities.User;
+import java.util.ArrayList;
+import java.util.List;
 import utils.EMF_Creator;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -15,25 +20,32 @@ import utils.EMF_Creator.DbSelector;
 import utils.EMF_Creator.Strategy;
 
 //Uncomment the line below, to temporarily disable this test
-@Disabled
+//@Disabled
 public class RecipeFacadeTest {
 
     private static EntityManagerFactory emf;
-    private static UserFacade facade;
+    private static RecipeFacade facade;
+    private CustomRecipe recipe1 = new CustomRecipe("basic pasta", 4, 2, "pasta, tomato sauce, salt, cheese", "cook pasta, add tomato sauce and cheese.");
+    private CustomRecipe recipe2 = new CustomRecipe("chicken", 4, 2, "chicken, butter sauce, salt", "cook chicken with butter sauce.");
+    private CustomRecipe recipe3 = new CustomRecipe("salat", 3, 1, "salat, tomato , salt sauce, cucumber", "cut the veggies and mix them all in bowl");
+    private CustomRecipe recipe4 = new CustomRecipe("nuts mix", 4, 2, "nuts, lots of nuts", "just mix nuts");
+    
 
     public RecipeFacadeTest() {
     }
 
     //@BeforeAll
     public static void setUpClass() {
-        emf = EMF_Creator.createEntityManagerFactory(
+       /* emf = EMF_Creator.createEntityManagerFactory(
                 "pu",
                 "jdbc:mysql://localhost:3307/startcode_test",
                 "dev",
                 "ax2",
                 EMF_Creator.Strategy.CREATE);
-        facade = UserFacade.getUserFacade(emf);
-    }
+        facade =  RecipeFacade.getRecipeFacade(emf);*/
+       EMF_Creator.startREST_TestWithDB();
+        emf = EMF_Creator.createEntityManagerFactory(EMF_Creator.DbSelector.TEST, EMF_Creator.Strategy.DROP_AND_CREATE);
+    } 
 
     /*   **** HINT **** 
         A better way to handle configuration values, compared to the UNUSED example above, is to store those values
@@ -44,7 +56,7 @@ public class RecipeFacadeTest {
     @BeforeAll
     public static void setUpClassV2() {
        emf = EMF_Creator.createEntityManagerFactory(DbSelector.TEST,Strategy.DROP_AND_CREATE);
-       facade = UserFacade.getUserFacade(emf);
+       facade = RecipeFacade.getRecipeFacade(emf); // GOTTA GET THIS RIGTH 
     }
 
     @AfterAll
@@ -57,14 +69,23 @@ public class RecipeFacadeTest {
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
-        try {
+        try {      
+            em.getTransaction().begin();
+            em.createQuery("delete from CustomRecipe").executeUpdate();
+            /*
+            //old data
             em.getTransaction().begin();
             em.createNamedQuery("User.deleteAllRows").executeUpdate();
             em.createNamedQuery("Role.deleteAllRows").executeUpdate();
             em.createNamedQuery("CustomRecipe.deleteAll").executeUpdate();
             //em.persist(new RenameMe("Some txt", "More text"));
             //em.persist(new RenameMe("aaa", "bbb"));
-
+            */
+            em.persist(recipe1);
+            em.persist(recipe2);
+            em.persist(recipe3);
+            em.persist(recipe4);
+            
             em.getTransaction().commit();
         } finally {
             em.close();
@@ -76,7 +97,59 @@ public class RecipeFacadeTest {
 //        Remove any data after each test was run
     }
 
-    // TODO: Delete or change this method 
+    @Test
+    public void countUserTest() {
+        assertEquals(4, facade.getAmount(), "Expects a amout of users added in setup");
+    }
+
+    
+//    @Test
+//    public void findUserTest() {
+//        CustomRecipe recipe = facade.getRecipeByName("basic pasta");  //SHIT METHOD
+//       // System.out.println("data2 you " + recipe.getName());
+//        assertEquals(recipe.getName(), "basic pasta");
+//    }
+    
+  @Test
+    public void checkListAreEqualTest(){
+        List<CustomRecipe> receipes = facade.getAlleRecipes();
+        List <CustomRecipe> recip = new ArrayList();
+        recip.add(recipe1);
+        recip.add(recipe2);
+        recip.add(recipe3);
+        recip.add(recipe4);
+        
+        assertNotNull(receipes);
+        assertNotNull(recip);
+        assertEquals(receipes.size(), recip.size());
+    }
+    
+    /*
+    // -- code to change and use for user
+    // also use for other code
+    */
+    /**
+     * This method check if it is possible to get a members information by only typing their name
+     */
+    /*
+    @Test
+    public void getUserByNameTest(){
+        //List <GroupMember> member = facade.getMemberByName(m3.getName());
+        User user = facade.getUser("tom");
+        assertNotNull(user);
+        assertEquals(user.getUserName().toLowerCase(), "tom");
+        assertEquals(user.getEmail(), "tomDK@mail.dk");
+    }
+    */
+    
+    @Test
+    public void addRecipeTest(){
+        
+        CustomRecipe recipeTest = facade.createCustomRecipe("nuts mix", 4, 2, "nuts, lots of nuts", "just mix nuts");
+        assertEquals(5, facade.getAmount());
+        
+        
+    }
    
 
 }
