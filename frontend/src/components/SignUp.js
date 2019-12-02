@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import "../scss/SignUp.scss"
 
 
+
 function CreateUser(props) {
 const facade = props.apiFacade;
 const [user, setUser] = useState([props.newUser]);
@@ -19,7 +20,7 @@ const handleChange = event =>{
 
 const handleSubmit = event =>{
     event.preventDefault();
-    //createUser(user);
+    createUser(user);
     setUser({...initialState})
 }
 

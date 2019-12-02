@@ -75,25 +75,10 @@ const AllRecipes = () => {
           </div>
         ))}
       </div>
-       
-      {/* <Route path={`${match.path}/:title/:ingredients`}>
-        <Recipe></Recipe>
-      </Route> */}
+      
     </section>
     </>
   );
-}
-
-function Recipe() {
-  let { picture, title, ingredients } = useParams();
-  return (
-    <div>
-      <p>Recipe: {title}</p>
-      <p>Ingredients: {ingredients}</p>
-      <br></br>
-      {picture}
-    </div>
-  )
 }
 
 export default AllRecipes;
