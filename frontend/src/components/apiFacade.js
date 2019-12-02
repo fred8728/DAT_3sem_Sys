@@ -55,7 +55,7 @@ function ApiFacade() {
   }
 
   const updateRecipe = (id) => {
-    return fetch(URL + "/api/food/recipeC/edit/"+id, makeOptions("PUT", true)).then(handleHttpErrors);
+    return fetch(URL + "/api/food/recipeC/edit/" + id, makeOptions("PUT", true)).then(handleHttpErrors);
   }
 
   const deleteRecipe = (id) => {

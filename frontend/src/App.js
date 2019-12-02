@@ -9,6 +9,7 @@ import SignUp from "./components/SignUp";
 import Header from "./components/navigation/Header";
 import Footer from "./components/navigation/Footer"
 import HomePage from "./components/HomePage"
+import { tsPropertySignature } from "@babel/types";
 
 
 const NoMatch = () => <div>Urlen matcher ingen kendte routes</div>;
@@ -28,7 +29,7 @@ function App({ apiFacade }) {
   );
 }
 // <SearchPage /> under search
-function Content() {
+function Content(props) {
   return (
     <Switch>
       <Route exact path="/">
@@ -47,13 +48,13 @@ function Content() {
         <Login />
       </Route>
       <Route path="/signup" exact>
-        <SignUp />
+        <SignUp/>
       </Route>
       <Route path="/profile" exact>
-        <Profile />
+        <Profile/>
       </Route>
       <Route path="/add-recipe" exact>
-        <AddRecipe />
+        <AddRecipe/>
       </Route>
       <Route path="/about" render={() => <h1>About Us</h1>} exact />
       <Route path="/terms" render={() => <h1>Terms</h1>} exact />

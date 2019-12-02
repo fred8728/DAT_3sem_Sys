@@ -1,6 +1,6 @@
 import React,{useState, useEffect} from 'react'
 import facade from './apiFacade'
-import { Link, useRouteMatch
+import {Route, Link, useRouteMatch, useParams
 } from "react-router-dom";
 import SearchForm from './SearchForm'
 
@@ -16,6 +16,7 @@ return(
     <>
     <section className="section section-recipes">
       <h1>Recipes</h1>
+      
       <div className="recipe-list">
           {customRecipe
             .map((data, index) => (
@@ -26,28 +27,43 @@ return(
                 <div className="item-info">
                   <div className="portions">
                     <i className="icon icon-portion"></i>
-                    <span>4 portions</span>
+                    <span>Portion: {data.portion_size}</span>
                   </div>
                   <div className="time">
                     <i className="icon icon-time"></i>
-                    <span>1 h 30 m</span>
+                    <span>Time: {data.cooking_time}</span>
                   </div>
                 </div>
               </div>
-              <div className="item-links">
-                <Link className="btn btn-green btn-sm btn-block" to={`${match.url}/${data.title}/${data.ingredients}/${data.href}`}>
+            </div>
+            <div className="item-links">
+                <Link className="btn btn-green btn-sm btn-block" to={`${match.url}/${data.name}/${data.cooking_time}/${data.portion_size}/${data.ingredients}/${data.description}`}>
                   Details
                 </Link>
-                <a className="btn btn-grey btn-sm btn-block" href={data.href}> Link </a>
-              </div>
-            </div>
-            
+              </div> 
           </div>
         ))}
       </div>
+      { <Route path={`${match.path}/:name/:time/:portion/:ingredients/:description`}>
+        <Recipe></Recipe>
+      </Route> }
     </section>
     </>
   );
 }
 
+function Recipe() {
+  let { user, name, time, portion, ingredients, description } = useParams();
+  return (
+    <div>
+      
+      <p>Recipe: {name}</p>
+      <p>Time: {time}</p>
+      <p>Portion: {portion}</p>
+      <p>Ingredients: {ingredients}</p>
+      <p>Description: {description}</p>
+      <br></br>
+    </div>
+  )
+}
 export default CustomRecipe;
