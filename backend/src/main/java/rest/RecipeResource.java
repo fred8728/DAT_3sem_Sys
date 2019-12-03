@@ -8,6 +8,11 @@ import com.google.gson.GsonBuilder;
 import entities.CustomRecipe;
 import facades.RecipeFacade;
 import facades.UserFacade;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Contact;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.servers.Server;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -33,8 +38,32 @@ import javax.ws.rs.core.SecurityContext;
 import utils.EMF_Creator;
 
 /**
- * @author lam@cphbusiness.dk
+ * @author bud 
  */
+@OpenAPIDefinition(
+            info = @Info(
+                    title = "recipe API",
+                    version = "undefiend",
+                    description = "A API that contains api with user made recipes, and API to "
+                            + " a api online, this API's function is get info about recipes.",        
+                    contact = @Contact( name = "Team ASEF", email = "cph-ao141@cphbusiness.dk")
+            ),
+          tags = {
+                    @Tag(name = "recipes", description = "API related to Info about user made recipes")
+              
+            },
+            servers = {
+                    @Server(
+                            description = "For Local host testing",
+                            url = "http://localhost:8080/securitystarter/food"
+                    ),
+                    @Server(
+                            description = "Server API",
+                            url = "https://frederikkesimone.dk/sys/food"
+                    )
+                          
+            }
+    )
 @Path("food")
 public class RecipeResource {
 
