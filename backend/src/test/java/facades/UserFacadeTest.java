@@ -95,7 +95,7 @@ public class UserFacadeTest {
     }
 
     @Test
-    public void finUserTest() {
+    public void findUserTest() {
         User user = facade.getUser("lars");
         assertEquals(user.getUserName(), "lars");
     }

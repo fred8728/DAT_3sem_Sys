@@ -8,11 +8,15 @@ package dto;
 import entities.CustomRecipe;
 import java.util.ArrayList;
 import java.util.List;
+import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
  * @author Bruger
  */
+@Schema(name="CustomRecipes")
 public class CustomRecipeDTO {
     
     private Integer id;

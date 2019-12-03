@@ -95,8 +95,9 @@ public class RecipeFacade {
     public CustomRecipe getRecipeById(int id) {
         EntityManager em = getEntityManager();
         try {
-            CustomRecipe rec1 = em.find(CustomRecipe.class, id);
-            return rec1;
+            TypedQuery<CustomRecipe> query //CustomRecipe
+                    = em.createNamedQuery("Select R from CustomRecipe R where R.id =:id", CustomRecipe.class);
+            return query.setParameter("id", id).getSingleResult();
 
         } finally {
             em.close();
@@ -107,9 +108,10 @@ public class RecipeFacade {
     public CustomRecipe getRecipeByName(String name) {
         EntityManager em = emf.createEntityManager();
         try {
-            TypedQuery<CustomRecipe> query
-                    = em.createNamedQuery("Select R from CustomRecipe R where R.name =:NAME", CustomRecipe.class);
-            return query.setParameter("NAME", name).getSingleResult();
+            TypedQuery<CustomRecipe> query //CustomRecipe
+                    = em.createNamedQuery("Select R from CustomRecipe R where R.Name =:name", CustomRecipe.class);
+            CustomRecipe result = query.setParameter("name", name).getSingleResult();
+            return result;
         } finally {
             em.close();
 
