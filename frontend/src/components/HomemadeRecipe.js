@@ -2,7 +2,6 @@ import React,{useState, useEffect} from 'react'
 import facade from './apiFacade'
 import {Route, Link, useRouteMatch, useParams
 } from "react-router-dom";
-import SearchForm from './SearchForm'
 
 function CustomRecipe(){
 const [customRecipe, setCustomRecipe] = useState([]);
@@ -53,17 +52,22 @@ return(
 }
 
 function Recipe() {
-  let { user, name, time, portion, ingredients, description } = useParams();
+  let { name, time, portion, ingredients, description } = useParams();
   return (
-    <div>
+    <div className="item-info">
+                  <div className="portions">
+                    <i className="icon icon-portion"></i>
+                    <span>Recipe {name}</span>
+                    <br></br>
+                    <span>Portion: {portion}, Time: {time}</span>
+                    <br></br>
+                    <span>Ingredients: {ingredients}</span>
+                    <br></br>
+                    <span>Description: {description}</span>
+                </div>
+                </div>
+    
       
-      <p>Recipe: {name}</p>
-      <p>Time: {time}</p>
-      <p>Portion: {portion}</p>
-      <p>Ingredients: {ingredients}</p>
-      <p>Description: {description}</p>
-      <br></br>
-    </div>
   )
 }
 export default CustomRecipe;

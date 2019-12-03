@@ -8,8 +8,9 @@ function CreateUser(props) {
 const facade = props.apiFacade;
 const [user, setUser] = useState([props.newUser]);
 const initialState = {username: "", email: "" , password: ""}
-const newUser = facade.newUser;
-const { createUser} = facade;
+//const newUser = facade.newUser;
+
+//const { createUser} = facade;
 
 const handleChange = event =>{
     const target = event.target;
@@ -20,13 +21,13 @@ const handleChange = event =>{
 
 const handleSubmit = event =>{
     event.preventDefault();
-    createUser(user);
+    //createUser(user);
     setUser({...initialState})
 }
 
- useEffect (() => 
-   setUser({...newUser}), [newUser])
-
+ /*useEffect (() => 
+   //setUser({...newUser}), [newUser])
+*/
     return(
       <div className="centered">
       <section className="section section-signup">

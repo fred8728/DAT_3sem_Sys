@@ -9,11 +9,9 @@ import SignUp from "./components/SignUp";
 import Header from "./components/navigation/Header";
 import Footer from "./components/navigation/Footer"
 import HomePage from "./components/HomePage"
-import { tsPropertySignature } from "@babel/types";
 
 
 const NoMatch = () => <div>Urlen matcher ingen kendte routes</div>;
-const Home = () => <div></div>;
 
 function App({ apiFacade }) {
   return (
