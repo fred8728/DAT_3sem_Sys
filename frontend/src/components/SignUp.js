@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavLink } from "react-router-dom";
 import facade from './apiFacade'
 import "../scss/SignUp.scss"
@@ -7,25 +7,25 @@ import "../scss/SignUp.scss"
 
 function CreateUser() {
 
-const initialState = {username: "", email: "" , password: ""}
-const [user, setUser] = useState(initialState);
+  const initialState = { user_name: "", user_email: "", user_pass: "" }
+  const [user, setUser] = useState(initialState);
 
-const handleChange = event =>{
+  const handleChange = event => {
     const target = event.target;
     const name = target.name;
     const value = target.value;
-    setUser({...user,[name]: value})
-}
+    setUser({ ...user, [name]: value })
+  }
 
-const handleSubmit = event =>{
+  const handleSubmit = event => {
     event.preventDefault();
     facade.createUser(user.name, user.email, user.password)
     setUser(initialState)
     window.alert("You have created a user")
-}
+  }
 
-    return(
-      <div className="centered">
+  return (
+    <div className="centered">
       <section className="section section-signup">
         <div className="alert alert-light">
           Something goes wrong. Please, try again later.
@@ -91,6 +91,6 @@ const handleSubmit = event =>{
     </div>
   );
 }
-      
+
 
 export default CreateUser;
