@@ -1,66 +1,94 @@
-import React, { useState, Component } from "react"
 import facade from "./apiFacade";
-import "../scss/Login.scss"
+import React, { useState, useEffect} from "react";
+import { NavLink } from "react-router-dom";
+import "../scss/Login.scss";
+import LoggedIn from "./LoggedIn";
 
 function LogIn(props) {
-  const [state, setState] = useState();
+  const [user, setUser] = useState();
 
-  const login = (event) => {
+  const login = event => {
     event.preventDefault();
-    props.login(state.username, state.password);
-  }
-  const onChange = (event) => {
-    setState({ ...state, [event.target.id]: event.target.value })
-  }
+    props.login(user.username, user.password);
+  };
+  const onChange = event => {
+    setUser({ ...user, [event.target.id]: event.target.value });
+  };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={login} onChange={onChange} >
-        <input placeholder="User Name" id="username" />
-        <input placeholder="Password" id="password" type="password" />
-        <button>Login</button>
-      </form>
+    <div className="centered">
+      <section className="section section-login">
+        <div className="login-block">
+          <div className="block-inner">
+            <h1>Login</h1>
+            <form onSubmit={login} onChange={onChange}>
+              <div className="form-group form-group-icon form-group-username">
+                <input
+                  type="text"
+                  className="form-control form-control-lg"
+                  placeholder="Your username"
+                  id="username"
+                />
+              </div>
+              <div className="form-group">
+                <div className="form-group-icon form-group-password">
+                  <input
+                    type="password"
+                    className="form-control form-control-lg"
+                    placeholder="Your password"
+                    id="password"
+                  />
+                </div>
+              </div>
+
+              <div className="btn-w">
+                <button className="btn btn-red btn-lg btn-block" type="submit">
+                  Log In
+                </button>
+              </div>
+
+              <div className="not-registered">
+                Not registered?{" "}
+                <NavLink to="/signup">Create an account</NavLink>.
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
     </div>
-  )
+  );
 }
 
-function LoggedIn() {
+function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
 
-  return (
-    <div>
-      <h2>Data Received from server</h2>
-    </div>
-  )
-}
-
-
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { loggedIn: false }
-  }
-
-  logout = () => {
+  const logout = () => {
     facade.logout();
-    this.setState({ loggedIn: false });
-  }
+    setLoggedIn(false);
+  };
 
-  login = (user, pass) => {
-    facade.login(user, pass)
-      .then(res => this.setState({ loggedIn: true }));
-  }
-
-  render() {
-    return (
-      <div>
-        {!this.state.loggedIn ? (<LogIn login={this.login} />) :
-          (<div>
-            <LoggedIn />
-            <button onClick={this.logout}>Logout</button>
-          </div>)}
-      </div>
-    )
-  }
+  const login = (user, pass) => {
+    facade
+      .login(user, pass)
+      .then(res => {
+        setLoggedIn(true);
+      })
+      .catch(e => window.alert("Wrong username or password!"));
+  };
+  return (
+    <div>
+      {!loggedIn ? (
+        <div>
+          {" "}
+          <LogIn login={login} />
+        </div>
+      ) : (
+        <div>
+          <LoggedIn />
+          <button onClick={logout}>Logout</button>
+        </div>
+      )}
+    </div>
+  );
 }
 export default App;

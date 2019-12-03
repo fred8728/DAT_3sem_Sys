@@ -1,0 +1,76 @@
+@import '../../assets/scss/global.scss';
+
+.section-intro {
+    background: url("../../assets/images/intro-bg.jpg") 50% 50% no-repeat;
+    background-size: cover;
+    padding: 30px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    // height: 300px;
+    margin-bottom: 30px;
+    border-radius: 5px;
+    @include max($medium) {
+        padding: 30px 20px;
+    }
+    h1 {}
+    p {
+        margin: 0 0 30px;
+        font-size: 20px;        
+        max-width: 520px;
+    }
+    .btn-block {
+        .btn {
+            width: 300px;            
+        }
+    }
+}
+
+.section-btnlinks {
+    margin-bottom: 30px;
+    .row {
+        .col-4 {
+
+        }
+    }
+    a.btnlink {
+        display: block;
+        border-radius: 5px;
+        padding: 20px 20px;
+        text-align: center;
+        transition: all 0.2s;
+        margin-bottom: 20px;
+        .title {
+            text-transform: uppercase;
+            color: #fff;
+            font-size: 36px;
+            line-height: 1;
+            margin-bottom: 10px;
+            font-family: "Oswald", sans-serif;
+            display: block;
+            @include max($xlarge) {
+                font-size: 24px;
+                margin-bottom: 5px;
+            }
+        }
+        .desc {
+            color: rgba(255, 255, 255, .8);
+            display: block;
+            @include max($xlarge) {
+                font-size: 14px;
+            }
+        }
+        &.btnlink-1 {
+            background: linear-gradient(to bottom, #59cd86, #44ba71);
+        }
+        &.btnlink-2 {
+            background: linear-gradient(to bottom, #4ba18d, #2e9678);
+        }
+        &.btnlink-3 {
+            background: linear-gradient(to bottom, #94c177, #83b661);
+        }
+        &:hover {
+            opacity: 0.9;
+        }
+    }
+}

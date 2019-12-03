@@ -1,0 +1,106 @@
+@import '../../../assets/scss/global.scss';
+
+.header {
+    background: #edf5e1;
+    padding: 8px 0;
+    height: 72px;
+    flex: 0 0 72px;
+    position: relative;
+    z-index: 5;
+    .container {
+        display: flex;
+        align-items: center;
+        .toggler {
+            margin-left: auto;
+            padding: 10px;
+            margin-right: -10px;
+            opacity: 0.8;
+            cursor: pointer;
+            i.icon {}
+        }
+        .logo {
+            padding: 0 0 5px;
+            a {
+                img {}
+            }
+        }
+        .topmenu {
+            margin-left: auto;
+            padding: 8px 0;
+            @include max($medium) {
+                display: none;
+                position: absolute;
+                top: 60px;
+                right: 15px;
+                border-radius: 5px;
+                background: #dde6cf;
+            }
+            &.active {
+                display: block;
+            }
+            ul.nav {
+                margin: 0;
+                padding: 0;
+                display: flex;
+                align-items: center;  
+                @include max($medium) {
+                    display: block;
+                }     
+                li {
+                    display: block;
+                    list-style: none;
+                    font-family: "Oswald", sans-serif;
+                    font-size: 21px;
+                    margin-right: 10px;  
+                    @include max($medium) {
+                        margin: 0;
+                    }                   
+                    a {
+                        display: block;
+                        padding: 4px 12px 8px;
+                        line-height: 25px;
+                        border-radius: 5px;
+                        @include max($medium) {
+                            border-radius: 0;
+                        }
+                        &.active {
+                            color: $green;
+                        }
+                    }
+                    &.nav-login {
+                        margin: 0 0 0 40px;
+                        @include max($medium) {
+                            margin: 0;
+                        }
+                    }
+                    &.nav-profile {
+                        margin: 0 0 0 40px;
+                        @include max($medium) {
+                            margin: 0;
+                        }
+                    }
+                    &.nav-signup {
+                        margin-right: 0;
+                        a {
+                            background: rgba(255, 255, 255, .5);
+                            color: $lred;
+                            &:hover {
+                                color: $lredhover;
+                            }
+                        }
+                    }
+                    &.nav-logout {
+                        margin-right: 0;
+                        a {
+                            background: rgba(255, 255, 255, .5);
+                            color: $lred;
+                            &:hover {
+                                color: $lredhover;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

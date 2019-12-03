@@ -12,9 +12,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.core.UriBuilder;
 import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.grizzly.http.util.HttpStatus;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItems;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,11 +24,12 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import utils.EMF_Creator;
 
-@Disabled
+//@Disabled
 public class UserRecourseTest {
 
     private static final int SERVER_PORT = 7777;
     private static final String SERVER_URL = "http://localhost/api";
+    private static final String TEST_DB = "jdbc:mysql://localhost:3307/startcode_test";
 
     static final URI BASE_URI = UriBuilder.fromUri(SERVER_URL).port(SERVER_PORT).build();
     private static HttpServer httpServer;
@@ -91,135 +94,169 @@ public class UserRecourseTest {
     
     //This is how we hold on to the token after login, similar to that a client must store the token somewhere
   private static String securityToken;
-
-  //Utility method to login and set the returned securityToken
-  private static void login(String role, String password) {
-    String json = String.format("{username: \"%s\", password: \"%s\"}", role, password);
-    securityToken = given()
-            .contentType("application/json")
-            .body(json)
-            //.when().post("/api/login")
-            .when().post("/login")
-            .then()
-            .extract().path("token");
-      System.out.println("TOKEN ---> "+securityToken);
-  }
-
-  private void logOut() {
-    securityToken = null;
-  }
-
-  @Test
-  public void serverIsRunning() {
-    System.out.println("Testing is server UP");
-    given().when().get("/info").then().statusCode(200);
-  }
-
-  @Test
-  public void testRestNoAuthenticationRequired() {
-    given()
-            .contentType("application/json")
-            .when()
-            .get("/info").then()
-            .statusCode(200)
-            .body("msg", equalTo("Hello anonymous"));
-  }
-
-  @Test
-  public void testRestForAdmin() {
-    login("admin", "test");
-    given()
-            .contentType("application/json")
-            .accept(ContentType.JSON)
-            .header("x-access-token", securityToken)
-            .when()
-            .get("/info/admin").then()
-            .statusCode(200)
-            .body("msg", equalTo("Hello to (admin) User: admin"));
-  }
-
-  @Test
-  public void testRestForUser() {
-    login("user", "test");
-    given()
-            .contentType("application/json")
-            .header("x-access-token", securityToken)
-            .when()
-            .get("/info/user").then()
-            .statusCode(200)
-            .body("msg", equalTo("Hello to User: user"));
-  }
   
   @Test
-  public void testAutorizedUserCannotAccesAdminPage() {
-    login("user", "test");
-    given()
-            .contentType("application/json")
-            .header("x-access-token", securityToken)
-            .when()
-            .get("/info/admin").then()  //Call Admin endpoint as user
-            .statusCode(401);
-  }
-  
-  @Test
-  public void testAutorizedAdminCannotAccesUserPage() {
-    login("admin", "test");
-    given()
-            .contentType("application/json")
-            .header("x-access-token", securityToken)
-            .when()
-            .get("/info/user").then()  //Call User endpoint as Admin
-            .statusCode(401);
-  }
-  
-  @Test
-  public void testRestForMultiRole1() {
-    login("user_admin", "test");
-    given()
-            .contentType("application/json")
-            .accept(ContentType.JSON)
-            .header("x-access-token", securityToken)
-            .when()
-            .get("/info/admin").then()
-            .statusCode(200)
-            .body("msg", equalTo("Hello to (admin) User: user_admin"));
-  }
+    public void testServerIsUp() {
+        System.out.println("Testing is server UP");
+        given().when().get("/user").then().statusCode(200);
+    }
+    
+            @Test
+    public void testGetCustomRecipes() {
+        given()
+                .contentType("application/json")
+                .get("/user/user/user").then()
+                .assertThat()
+                .statusCode(HttpStatus.OK_200.getStatusCode())
+                .body("mail", equalTo("email@test.dk"));
+    }
+    
+             @Test
+    public void testPostUser() {
+            String postlol = "{\n" +
+"\"userName\": \"Frederik\",\n" +
+"\"mail\": \"fred@test.dk\"\n" +
+"}";
+            UserResource posttest = new UserResource();
+            posttest.addUser(postlol);
+        given()
+                .contentType("application/json")
+                .get("/user/user/Frederik").then()
+                .assertThat()
+                .statusCode(HttpStatus.OK_200.getStatusCode())
+                .body("userName", equalTo("Frederik"));
+    }
+    
+    //hvorfor kan jeg ikke pushe test nogensinde
 
-  @Test
-  public void testRestForMultiRole2() {
-    login("user_admin", "test");
-    given()
-            .contentType("application/json")
-            .header("x-access-token", securityToken)
-            .when()
-            .get("/info/user").then()
-            .statusCode(200)
-            .body("msg", equalTo("Hello to User: user_admin"));
-  }
-
-  @Test
-  public void userNotAuthenticated() {
-    logOut();
-    given()
-            .contentType("application/json")
-            .when()
-            .get("/info/user").then()
-            .statusCode(403)
-            .body("code", equalTo(403))
-            .body("message", equalTo("Not authenticated - do login"));
-  }
-
-  @Test
-  public void adminNotAuthenticated() {
-    logOut();
-    given()
-            .contentType("application/json")
-            .when()
-            .get("/info/user").then()
-            .statusCode(403)
-            .body("code", equalTo(403))
-            .body("message", equalTo("Not authenticated - do login"));
-  }
+//  //Utility method to login and set the returned securityToken
+//  private static void login(String role, String password) {
+//    String json = String.format("{username: \"%s\", password: \"%s\"}", role, password);
+//    securityToken = given()
+//            .contentType("application/json")
+//            .body(json)
+//            //.when().post("/api/login")
+//            .when().post("/login")
+//            .then()
+//            .extract().path("token");
+//      System.out.println("TOKEN ---> "+securityToken);
+//  }
+//
+//  private void logOut() {
+//    securityToken = null;
+//  }
+//
+//  @Test
+//  public void serverIsRunning() {
+//    System.out.println("Testing is server UP");
+//    given().when().get("/info").then().statusCode(200);
+//  }
+//
+//  @Test
+//  public void testRestNoAuthenticationRequired() {
+//    given()
+//            .contentType("application/json")
+//            .when()
+//            .get("/info").then()
+//            .statusCode(200)
+//            .body("msg", equalTo("Hello anonymous"));
+//  }
+//
+//  @Test
+//  public void testRestForAdmin() {
+//    login("admin", "test");
+//    given()
+//            .contentType("application/json")
+//            .accept(ContentType.JSON)
+//            .header("x-access-token", securityToken)
+//            .when()
+//            .get("/info/admin").then()
+//            .statusCode(200)
+//            .body("msg", equalTo("Hello to (admin) User: admin"));
+//  }
+//
+//  @Test
+//  public void testRestForUser() {
+//    login("user", "test");
+//    given()
+//            .contentType("application/json")
+//            .header("x-access-token", securityToken)
+//            .when()
+//            .get("/info/user").then()
+//            .statusCode(200)
+//            .body("msg", equalTo("Hello to User: user"));
+//  }
+//  
+//  @Test
+//  public void testAutorizedUserCannotAccesAdminPage() {
+//    login("user", "test");
+//    given()
+//            .contentType("application/json")
+//            .header("x-access-token", securityToken)
+//            .when()
+//            .get("/info/admin").then()  //Call Admin endpoint as user
+//            .statusCode(401);
+//  }
+//  
+//  @Test
+//  public void testAutorizedAdminCannotAccesUserPage() {
+//    login("admin", "test");
+//    given()
+//            .contentType("application/json")
+//            .header("x-access-token", securityToken)
+//            .when()
+//            .get("/info/user").then()  //Call User endpoint as Admin
+//            .statusCode(401);
+//  }
+//  
+//  @Test
+//  public void testRestForMultiRole1() {
+//    login("user_admin", "test");
+//    given()
+//            .contentType("application/json")
+//            .accept(ContentType.JSON)
+//            .header("x-access-token", securityToken)
+//            .when()
+//            .get("/info/admin").then()
+//            .statusCode(200)
+//            .body("msg", equalTo("Hello to (admin) User: user_admin"));
+//  }
+//
+//  @Test
+//  public void testRestForMultiRole2() {
+//    login("user_admin", "test");
+//    given()
+//            .contentType("application/json")
+//            .header("x-access-token", securityToken)
+//            .when()
+//            .get("/info/user").then()
+//            .statusCode(200)
+//            .body("msg", equalTo("Hello to User: user_admin"));
+//  }
+//
+//  @Test
+//  public void userNotAuthenticated() {
+//    logOut();
+//    given()
+//            .contentType("application/json")
+//            .when()
+//            .get("/info/user").then()
+//            .statusCode(403)
+//            .body("code", equalTo(403))
+//            .body("message", equalTo("Not authenticated - do login"));
+//  }
+//
+//  @Test
+//  public void adminNotAuthenticated() {
+//    logOut();
+//    given()
+//            .contentType("application/json")
+//            .when()
+//            .get("/info/user").then()
+//            .statusCode(403)
+//            .body("code", equalTo(403))
+//            .body("message", equalTo("Not authenticated - do login"));
+//  }
     
     
 }

@@ -1,0 +1,26 @@
+@import "../../assets/scss/global.scss";
+
+.section-add-recipe {
+    .col-sm-2 {
+        .btn {
+            padding: 5px 5px 7px;
+            @include max($xsmall) {
+                margin-top: 10px;
+            }
+            i {
+                @include max($small) {
+                    margin: 0;
+                }
+            }
+            span {
+                @include max($small) {
+                    display: none;
+                }
+            }
+        }
+    }
+    .btn-lg {
+        width: 360px;
+        max-width: 100%;
+    }
+}

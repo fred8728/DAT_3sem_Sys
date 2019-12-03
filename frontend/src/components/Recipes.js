@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import apiFacade from "./apiFacade";
 import { //BrowserRouter,
-  useRouteMatch, useParams, Route, Link
+  useRouteMatch, Link
 } from "react-router-dom";
 import SearchForm from './SearchForm'
 
@@ -28,16 +28,12 @@ const AllRecipes = () => {
       console.log("check data", data.results)
     });
   }, [searchTerm]);
-  function sortData() {
-    const x = recipes.reverse()
-    setRecipes([...x])
-  }
+  
   return (
     <>
     <section className="section section-recipes">
       <h1>Recipes</h1>
       <SearchForm value={searchTerm} onChange={handleChange} />
-      
       <div className="recipe-list">
           {recipes
             .filter(recipe => {
@@ -56,18 +52,11 @@ const AllRecipes = () => {
                 <div className="item-info">
                   <div className="portions">
                     <i className="icon icon-portion"></i>
-                    <span>4 portions</span>
-                  </div>
-                  <div className="time">
-                    <i className="icon icon-time"></i>
-                    <span>1 h 30 m</span>
+                    <span>{data.ingredients}</span>
                   </div>
                 </div>
               </div>
               <div className="item-links">
-                <Link className="btn btn-green btn-sm btn-block" to={`${match.url}/${data.title}/${data.ingredients}/${data.href}`}>
-                  Details
-                </Link>
                 <a className="btn btn-grey btn-sm btn-block" href={data.href}> Link </a>
               </div>
             </div>

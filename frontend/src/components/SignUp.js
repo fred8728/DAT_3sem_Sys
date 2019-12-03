@@ -1,34 +1,31 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { NavLink } from "react-router-dom";
+import facade from './apiFacade'
 import "../scss/SignUp.scss"
 
 
 
-function CreateUser(props) {
-const facade = props.apiFacade;
-const [user, setUser] = useState([props.newUser]);
-const initialState = {username: "", email: "" , password: ""}
-const newUser = facade.newUser;
-const { createUser} = facade;
+function CreateUser() {
 
-const handleChange = event =>{
+  const initialState = { user_name: "", user_email: "", user_pass: "" }
+  const [user, setUser] = useState(initialState);
+
+  const handleChange = event => {
     const target = event.target;
-    const id = target.id;
+    const name = target.name;
     const value = target.value;
-    setUser({...user,[id]: value})
-}
+    setUser({ ...user, [name]: value })
+  }
 
-const handleSubmit = event =>{
+  const handleSubmit = event => {
     event.preventDefault();
-    createUser(user);
-    setUser({...initialState})
-}
+    facade.createUser(user.name, user.email, user.password)
+    setUser(initialState)
+    window.alert("You have created a user")
+  }
 
- useEffect (() => 
-   setUser({...newUser}), [newUser])
-
-    return(
-      <div className="centered">
+  return (
+    <div className="centered">
       <section className="section section-signup">
         <div className="alert alert-light">
           Something goes wrong. Please, try again later.
@@ -40,6 +37,9 @@ const handleSubmit = event =>{
               <div className="form-group form-group-icon form-group-username">
                 <input
                   type="text"
+                  name="username"
+                  value={user.name}
+                  onChange={handleChange}
                   className="form-control form-control-lg"
                   placeholder="Your username"
                   id="username"
@@ -48,6 +48,9 @@ const handleSubmit = event =>{
               <div className="form-group form-group-icon form-group-email">
                 <input
                   type="email"
+                  name="email"
+                  value={user.email}
+                  onChange={handleChange}
                   className="form-control form-control-lg"
                   placeholder="Your email"
                   id="email"
@@ -56,6 +59,9 @@ const handleSubmit = event =>{
               <div className="form-group form-group-icon form-group-password">
                 <input
                   type="password"
+                  name="password"
+                  value={user.password}
+                  onChange={handleChange}
                   className="form-control form-control-lg"
                   placeholder="Your password"
                   id="password"
@@ -69,7 +75,7 @@ const handleSubmit = event =>{
               </div>
 
               <div className="btn-w">
-                <button className="btn btn-red btn-lg btn-block" type="submit">
+                <button className="btn btn-red btn-lg btn-block" type="submit" onClick={handleSubmit}>
                   Log In
                 </button>
               </div>
@@ -85,6 +91,6 @@ const handleSubmit = event =>{
     </div>
   );
 }
-      
+
 
 export default CreateUser;
