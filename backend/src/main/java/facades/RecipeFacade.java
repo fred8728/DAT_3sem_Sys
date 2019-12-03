@@ -28,6 +28,8 @@ public class RecipeFacade {
 
     private static EntityManagerFactory emf;
     private static RecipeFacade instance;
+
+    //private static CustomRecipe inst; // gotta change this i guess.
     int threads = 8;
     private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
     ExecutorService executorservice = Executors.newFixedThreadPool(threads);
@@ -61,10 +63,10 @@ public class RecipeFacade {
             em.close();
         }
 
-    }    
-    
-    public CustomRecipe addRecipe(String name, int portion, int time, String ingredients, String description){
-       EntityManager em = emf.createEntityManager();
+    }
+
+    public CustomRecipe addRecipe(String name, int portion, int time, String ingredients, String description) {
+        EntityManager em = emf.createEntityManager();
         CustomRecipe cr = new CustomRecipe(name, portion, time, ingredients, description);
         try {
             em.getTransaction().begin();
@@ -98,36 +100,81 @@ public class RecipeFacade {
 
         } finally {
             em.close();
-            
-        }  
-    }
-    public CustomRecipe getRecipeByName(String name){
-        EntityManager em = getEntityManager();
-        try{
-            CustomRecipe rec1 = em.find(CustomRecipe.class,name);
-            return rec1;
-            
-        }finally{
-            em.close();
-            
+
         }
     }
+
+    public CustomRecipe getRecipeByName(String name) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery<CustomRecipe> query
+                    = em.createNamedQuery("Select R from CustomRecipe R where R.name =:NAME", CustomRecipe.class);
+            return query.setParameter("NAME", name).getSingleResult();
+        } finally {
+            em.close();
+
+        }
+    }
+//    public List<GroupMember> getMemberByName(String name) {
+//        EntityManager em = emf.createEntityManager();
+//        try {
+//            TypedQuery<GroupMember> query
+//                    = em.createQuery("Select m from GroupMember m where m.name =:name", GroupMember.class);
+//            return query.setParameter("name", name).getResultList();
+//        } finally {
+//            em.close();
+//        }
+//    }
+
     public void deleteCustomRecipe(int id) {
         EntityManager em = emf.createEntityManager();
-        CustomRecipe recipeCust = em.find(CustomRecipe.class,id);
+        CustomRecipe recipeCust = em.find(CustomRecipe.class, id);
         CustomRecipe deletedRecipe = recipeCust;
-        
-        try{
-        em.getTransaction().begin();
-        em.remove(recipeCust);
-        em.getTransaction().commit();
-        }finally{
-        em.close();
+
+        try {
+            em.getTransaction().begin();
+            em.remove(recipeCust);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
         }
         System.out.println(deletedRecipe);
-        
+    }
+
+    public long getAmount() {
+        EntityManager em = emf.createEntityManager(); //CUSTOMRECIPE
+        try {
+            long userCount = (long) em.createQuery("SELECT COUNT(R) FROM CustomRecipe R").getSingleResult();
+            return userCount;
+        } finally {
+            em.close();
+        }
 
     }
 
-   
+    public List<CustomRecipe> getAlleRecipes() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery query
+                    = em.createQuery("Select r from CustomRecipe r", CustomRecipe.class);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+
+    }
+    public CustomRecipe createCustomRecipe(String recipeName, int portion, int cookTime, String ingredients, String description){
+        EntityManager em = emf.createEntityManager();
+         CustomRecipe recipe = new CustomRecipe(recipeName,portion,cookTime,ingredients,description);
+        try {
+            em.getTransaction().begin();
+            em.persist(recipe);
+            em.getTransaction().commit();
+            return recipe;
+        } finally {
+            em.close();
+        }
+
+    }
+
 }
