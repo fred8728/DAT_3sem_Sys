@@ -71,8 +71,8 @@ function ApiFacade() {
     return fetch(URL + "/api/food/recipeC/all", makeOptions("GET", true)).then(handleHttpErrors)
   }
 
-  const createUser = () => {
-return fetch(URL + "/api/user/add", makeOptions("POST", true)).then(handleHttpErrors)
+  const createUser = (username, email, password) => {
+return fetch(URL + "/api/user/add", makeOptions("POST", true, {username: username, email: email, password: password})).then(handleHttpErrors)
   }
 
   const getUser = (name) =>{
