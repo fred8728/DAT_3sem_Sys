@@ -72,7 +72,11 @@ function ApiFacade() {
   }
 
   const createUser = () => {
-    return fetch(URL + "/api/user/add", makeOptions("POST", true)).then(handleHttpErrors)
+return fetch(URL + "/api/user/add", makeOptions("POST", true)).then(handleHttpErrors)
+  }
+
+  const getUser = (name) =>{
+    return fetch(URL + "/api/user/" + name, makeOptions("GET", true)).then(handleHttpErrors)
   }
 
   return {
@@ -84,7 +88,8 @@ function ApiFacade() {
     deleteRecipe,
     getRecipe: getCustomRecipe,
     getHomemadeRecipes,
-    createUser
+    createUser,
+    getUser
   }
 
 }

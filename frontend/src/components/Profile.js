@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { NavLink } from 'react-router-dom';
-import { BrowserRouter, useRouteMatch, useParams, Route, Link } from "react-router-dom";
+import {  Link } from "react-router-dom";
 import '../scss/Recipes.scss';
 import "../scss/Profile.scss"
 
 import tmpImg from "../assets/images/tmp/userpic.jpg"; // temp
 
-function Profile  () {
-  
+function Profile  (props) {
+  const {user} = props;
     return (
       <section className="section section-profile">
         <div className="section-heading">
@@ -38,7 +38,6 @@ function Profile  () {
               
               
               <div className="recipe-list">
-                
                 <div className="item">
                   <div className="item-img">{<img src="" alt="img"/>}</div>
                   <div className="item-r">
