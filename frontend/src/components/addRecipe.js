@@ -58,10 +58,10 @@ export default function Addrecipe() {
                           <select name="cooking_time"
                             value={addRecipes.cooking_time}
                             onChange={handleChange}
-                            id="" className="form-control">
+                            id="cooking_time:hour" className="form-control">
                             <option value="0">0</option>
-                            <option value="0">1</option>
-                            <option value="0">2</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
                           </select>
                         </div>
                       </div>
@@ -73,7 +73,7 @@ export default function Addrecipe() {
                           <select name="cooking_time"
                             value={addRecipes.cooking_time}
                             onChange={handleChange}
-                            id="" className="form-control">
+                            id="cooking_time:minute" className="form-control">
                             <option value="10">10</option>
                             <option value="20">20</option>
                             <option value="30">30</option>
@@ -122,10 +122,10 @@ export default function Addrecipe() {
                 <div className="row">
                   <div className="col-sm-10">
                     <div className="form-group">
-                      <input type="text" className="form-control"
+                      <input type="text" className="form-control" name="ingredients"
                         value={addRecipes.ingredients}
                         onChange={handleChange}
-                        id="recipeTitle" placeholder="Your recipe title" value="1/4 teaspoon cayenne pepper" />
+                        id="recipeTitle" placeholder="Your recipe title" placeholder="1/4 teaspoon cayenne pepper" />
                     </div>
                   </div>
                 </div>
