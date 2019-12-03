@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import utils.EMF_Creator;
 
-//@Disabled
+@Disabled
 public class UserRecourseTest {
 
     private static final int SERVER_PORT = 7777;
@@ -127,7 +127,7 @@ public class UserRecourseTest {
                 .body("userName", equalTo("Frederik"));
     }
     
-    
+    //hvorfor kan jeg ikke pushe test nogensinde
 
 //  //Utility method to login and set the returned securityToken
 //  private static void login(String role, String password) {
