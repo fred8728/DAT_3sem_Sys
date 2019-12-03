@@ -70,17 +70,8 @@ public class UserFacadeTest {
     public void setUp() {
         EntityManager em = emf.createEntityManager();
         try {
-            //
-            //GOTTA FIX THE SETUP FIGURE OUT 
-            //
             em.getTransaction().begin();
             em.createQuery("delete from User").executeUpdate();
-            //em.createQuery("delete from Role").executeUpdate();
-//            em.createNamedQuery("DELETE FROM User").executeUpdate();
-//            em.createNamedQuery("Role.deleteAllRows").executeUpdate();
-//            em.createNamedQuery("CustomRecipe.deleteAll").executeUpdate();
-            //em.persist(new RenameMe("Some txt", "More text"));
-            //em.persist(new RenameMe("aaa", "bbb"));
             em.persist(user1);
             em.persist(user2);
             em.persist(user3);
@@ -130,25 +121,26 @@ public class UserFacadeTest {
     /**
      * This method check if it is possible to get a members information by only typing their name
      */
-    /*
+    
     @Test
-    public void getMemberByNameTest(){
-        List <GroupMember> member = facade.getMemberByName(m3.getName());
-        assertNotNull(member);
-        assertEquals(member.get(0).getName(), "Ahmed");
-        assertEquals(member.get(0).getColor(), "Rød");
+    public void getUserByNameTest(){
+        //List <GroupMember> member = facade.getMemberByName(m3.getName());
+        User user = facade.getUser("tom");
+        assertNotNull(user);
+        assertEquals(user.getUserName().toLowerCase(), "tom");
+        assertEquals(user.getEmail(), "tomDK@mail.dk");
     }
     
     
     @Test
-    public void addMemberTest(){
-        String name = "Caroline";
-        String color = "Grøn";
-        GroupMember member = facade.addMember(name, color);
-        assertEquals(6, facade.getMemberCount());
+    public void addUserTest(){
+        
+        //List<User> userList = facade.getAllUsers();
+        User member = facade.createUser("dylan", "test123", "dylanUK@mail.uk");
+        assertEquals(5, facade.getAmount());
         
         
     }
-    */
+    
 
 }

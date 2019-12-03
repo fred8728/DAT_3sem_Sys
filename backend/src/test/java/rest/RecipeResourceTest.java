@@ -76,7 +76,7 @@ public class RecipeResourceTest {
         EntityManager em = emf.createEntityManager();
         try {
     em.getTransaction().begin();
-
+    //em.createQuery("DELETE FROM CUSTOMRECIPE").executeUpdate();
     em.persist(cr);
     em.persist(cr1);
     em.getTransaction().commit();
@@ -122,24 +122,24 @@ public class RecipeResourceTest {
 //                .body("description", equalTo("Start med at putte oksekødet i gryden"));
 //    }
     
-//         @Test
-//    public void testPostCustomRecipes() {
-//            String postlol = "{\n" +
-//"    \"name\": \"Chili con carne\",\n" +
-//"    \"portion_size\": 6,\n" +
-//"    \"cooking_time\": 60,\n" +
-//"    \"ingredients\": \"Chili, bønner, kødsovs\",\n" +
-//"    \"description\": \"Put det hele i en gryde.\"\n" +
-//"  }";
-//            RecipeResource posttest = new RecipeResource();
-//            posttest.addCustomRecipe(postlol);
-//        given()
-//                .contentType("application/json")
-//                .get("/food/recipeC/all").then()
-//                .assertThat()
-//                .statusCode(HttpStatus.OK_200.getStatusCode())
-//                .body("name", hasItems("Spaghetti Carbonare", "Spaghetti kødsovs", "Chili con carne"));
-//    }
+         @Test
+    public void testPostCustomRecipes() {
+            String postlol = "{\n" +
+"    \"name\": \"Chili con carne\",\n" +
+"    \"portion_size\": 6,\n" +
+"    \"cooking_time\": 60,\n" +
+"    \"ingredients\": \"Chili, bønner, kødsovs\",\n" +
+"    \"description\": \"Put det hele i en gryde.\"\n" +
+"  }";
+            RecipeResource posttest = new RecipeResource();
+            posttest.addCustomRecipe(postlol);
+        given()
+                .contentType("application/json")
+                .get("/food/recipeC/all").then()
+                .assertThat()
+                .statusCode(HttpStatus.OK_200.getStatusCode())
+                .body("name", hasItems("Spaghetti Carbonare", "Spaghetti kødsovs", "Chili con carne"));
+    }
     
 
     

@@ -50,8 +50,9 @@ function ApiFacade() {
     return fetch(URL + "/api/food/recipe/all", makeOptions("GET", true)).then(handleHttpErrors)
   }
 
-  const addRecipe = () => {
-    return fetch(URL + "/api/food/recipeC/add", makeOptions("POST", true)).then(handleHttpErrors)
+  const addRecipe = (name, portion_size, cooking_time, ingredients, description) => {
+    const option = makeOptions("POST", true, { name: name, portion_size: portion_size, cooking_time: cooking_time, ingredients: ingredients, description: description });
+    return fetch(URL + "/api/food/recipeC/add", option).then(handleHttpErrors)
   }
 
   const updateRecipe = (id) => {
@@ -71,7 +72,7 @@ function ApiFacade() {
   }
 
   const createUser = () => {
-    return fetch(URL + "/api/user/recipeC/add", makeOptions("POST", true)).then(handleHttpErrors)
+return fetch(URL + "/api/user/add", makeOptions("POST", true)).then(handleHttpErrors)
   }
 
   const getUser = (name) =>{
