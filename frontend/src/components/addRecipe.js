@@ -31,10 +31,9 @@ export default function Addrecipe() {
   };
 
   return (
-    <form name="blog_post" className="form-horizontal">
-      <section className="section section-add-recipe">
-        <h1>Add recipe</h1>
-
+    <>
+    <section className="section section-add-recipe">
+      <h1>Add recipe</h1>
 
         <div className="form-block">
           <div className="block-inner">
@@ -62,6 +61,10 @@ export default function Addrecipe() {
                             <option value="0">0</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
                           </select>
                         </div>
                       </div>
@@ -77,6 +80,8 @@ export default function Addrecipe() {
                             <option value="10">10</option>
                             <option value="20">20</option>
                             <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="50">50</option>
                           </select>
                         </div>
                       </div>
@@ -125,18 +130,11 @@ export default function Addrecipe() {
                       <input type="text" className="form-control" name="ingredients"
                         value={addRecipes.ingredients}
                         onChange={handleChange}
-                        id="recipeTitle" placeholder="Your recipe title" placeholder="1/4 teaspoon cayenne pepper" />
+                        id="recipeTitle" placeholder="Your recipe title" placeholder="Ingredient" />
                     </div>
                   </div>
                 </div>
-                <div className="row">
-                  <div className="col-sm-10">
-                    <input type="text" className="form-control" id="recipeTitle" placeholder="Your recipe title" />
-                  </div>
-                  <div className="col-sm-2">
-                    <button className="btn btn-red btn-block"><i className="plus">+</i> <span>Add</span></button>
-                  </div>
-                </div>
+                
               </div>
 
               <div className="form-group">
@@ -157,6 +155,6 @@ export default function Addrecipe() {
         </div>
 
       </section>
-    </form>
+      </>
   );
 }

@@ -1,0 +1,31 @@
+@import "../../assets/scss/global.scss";
+
+.search-block {
+    background: $beige;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 30px;
+    .form-group.form-group-search {
+        position: relative;
+        margin: 0;
+        &:after {
+            content: "";
+            display: block;
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            top: 50%;
+            margin-top: -15px;
+            right: 15px;
+            z-index: 1;
+            opacity: .1;
+            background: url("../../assets/images/icons/search.svg") 50% 50% no-repeat;
+            background-size: contain;
+        }
+        input.form-control {
+            padding-right: 60px;
+            z-index: 0;
+            position: relative;
+        }
+    }
+}

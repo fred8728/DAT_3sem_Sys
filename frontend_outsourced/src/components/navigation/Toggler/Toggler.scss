@@ -1,0 +1,9 @@
+@import '../../../assets/scss/global.scss';
+
+.toggler {
+    display: none;
+    @include max($medium) {
+        display: block;
+    }
+}
+

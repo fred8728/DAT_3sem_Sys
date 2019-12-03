@@ -1,0 +1,83 @@
+@import "../../assets/scss/global.scss";
+
+.section-profile {
+    .section-heading {}
+    .section-body {
+        display: flex;
+        @include max($medium) {
+            flex-direction: column;
+        }
+        .profile-l {
+            width: 50%;
+            flex: 0 0 50%;
+            padding-right: 30px;
+            display: flex;
+            @include max($medium) {
+                width: 100%;
+                flex: auto;
+            }
+            @include max($xsmall) {
+                flex-direction: column;
+                align-items: flex-start;
+                padding-right: 0;
+            }
+            .profile-userpic {
+                width: 150px;
+                flex: 0 0 150px;
+                margin-right: 20px;
+                @include max($xsmall) {
+                    flex: auto;
+                    margin: 0 0 20px;
+                }
+                img {
+                    border-radius: 50%;
+                }
+            }
+            .profile-info {
+                flex: 1;
+                .profile-name {
+                    font-size: 24px;
+                    margin-bottom: 10px;
+                }
+                .profile-registered {
+                    margin-bottom: 10px;
+                    .label {
+                        color: $grey;
+                    }
+                    .val {}
+                }
+                .profile-edit {
+                    margin-bottom: 30px;
+                    a {
+                        color: $green;
+                        display: flex;
+                        align-items: center;
+                        i.icon {
+                            margin-right: 5px;
+                        }
+                        &:hover {
+                            color: $lred;
+                            i.icon {
+                                background: url("../../assets/images/icons/edit-hover.svg") 50% 50% no-repeat;
+                                background-size: contain;
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+        .profile-r {
+            width: 50%;
+            flex: 0 0 50%;
+            @include max($medium) {
+                width: 100%;
+                flex: auto;
+                margin-top: 30px;
+            }
+            .section-recipes {
+                margin: 0;
+            }
+        }
+    }
+}

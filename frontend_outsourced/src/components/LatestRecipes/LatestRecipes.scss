@@ -1,0 +1,78 @@
+@import '../../assets/scss/global.scss';
+
+.section-latest-recipes {
+    .section-heading {
+        display: flex;
+        align-items: flex-end;
+        margin-bottom: 20px;
+        justify-content: space-between;
+        h2 {
+            margin-bottom: 0;
+        }
+        .all {
+            a {
+                
+                font-size: 20px;
+                &:hover {
+                }
+            }
+        }
+    }
+    .section-body {
+        .recipe-blocks {
+            .row {
+                .col-4 {}
+            }
+            .recipe-block {
+                border: none;
+                a {
+                    @include max($small) {
+                        display: flex;
+                        margin-bottom: 20px;
+                    }
+                    .recipe-block-img {
+                        transition: all 0.2s;
+                        @include max($small) {
+                            flex: 0 0 200px;
+                            width: 200px;
+                            margin-right: 20px;
+                        }
+                        @include max($xxsmall) {
+                            flex: 0 0 100px;
+                            width: 100px;
+                        }
+                        img {
+                            border-radius: 5px 5px 0 0;
+                            @include max($small) {
+                                border-radius: 5px;
+                            }
+                        }                    
+                    }
+                    .recipe-block-title {
+                        background: #f7f6f4;
+                        border-radius: 0 0 5px 5px;
+                        padding: 15px 20px;
+                        font-size: 18px;
+                        display: block;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        @include max($small) {
+                            background: none;
+                            flex: 1;
+                            white-space: normal;
+                            text-overflow: inherit;
+                            overflow: visible;
+                            padding: 0;
+                        }
+                    }
+                    &:hover {
+                        .recipe-block-img {
+                            opacity: 0.9;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

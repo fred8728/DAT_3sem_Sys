@@ -1,0 +1,33 @@
+$green: #379683;
+$lgreen: #8ee4af;
+$red: #cd3c3b;
+$lred: #f76c6c;
+$lredhover: #ff8181;
+$beige: #f5f4e1;
+$lbeige: #fffff3;
+$dbeige: #eae7dc;
+$black: #333;
+$grey: #999;
+$lgrey: #bbb;
+
+$xxxsmall: 400px;
+$xxsmall: 480px;
+$xsmall: 576px;
+$small: 768px;
+$medium: 992px;
+$large: 1140px;
+$xlarge: 1200px;
+$xxlarge: 1400px;
+$xxxlarge: 1600px;
+
+@mixin min($device-width) { 
+    @media screen and (min-width: $device-width) {
+        @content 
+    }
+}
+  
+@mixin max($device-width) { 
+    @media screen and (max-width: $device-width - 1) {
+        @content 
+    }
+}

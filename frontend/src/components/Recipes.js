@@ -34,7 +34,6 @@ const AllRecipes = () => {
     <section className="section section-recipes">
       <h1>Recipes</h1>
       <SearchForm value={searchTerm} onChange={handleChange} />
-      
       <div className="recipe-list">
           {recipes
             .filter(recipe => {
