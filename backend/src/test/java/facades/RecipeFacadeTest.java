@@ -135,10 +135,11 @@ public class RecipeFacadeTest {
     @Test
     public void getUserByNameTest(){
         //List <GroupMember> member = facade.getMemberByName(m3.getName());
-        User user = facade.getUser("tom");
-        assertNotNull(user);
-        assertEquals(user.getUserName().toLowerCase(), "tom");
-        assertEquals(user.getEmail(), "tomDK@mail.dk");
+        //CustomRecipe recipe = facade.getRecipeByName("salat");
+        CustomRecipe recipe = facade.getRecipeById(2);
+        assertNotNull(recipe);
+        assertEquals(recipe.getName().toLowerCase(), "salat");
+        assertEquals(recipe.getCooking_time(), 1);
     }
     */
     

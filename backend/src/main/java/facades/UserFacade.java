@@ -92,6 +92,7 @@ public class UserFacade {
         User foundUser = em.find(User.class, username);
         return foundUser;
     }
+    
     public long getAmount(){
         EntityManager em = emf.createEntityManager();
         try{

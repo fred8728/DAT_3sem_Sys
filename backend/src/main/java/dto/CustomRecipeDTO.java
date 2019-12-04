@@ -8,18 +8,28 @@ package dto;
 import entities.CustomRecipe;
 import java.util.ArrayList;
 import java.util.List;
+import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
  * @author Bruger
  */
+@Schema(name="CustomRecipes")
 public class CustomRecipeDTO {
     
+    @Schema(required = true, example="id value")
     private Integer id;
+    @Schema(required = true, example="tomato soup")
     private String name;
+    @Schema(required = true, example="4")
     private int portion_size;
+    @Schema(required = true, example="2")
     private int cooking_time;
+    @Schema(required = true, example="tomatoes, basil, water, salt")
     private String ingredients;
+    @Schema(required = true, example="fry peeled tomatoes in a pan, add after spices and then water")
     private String description;
     
     public CustomRecipeDTO(){}

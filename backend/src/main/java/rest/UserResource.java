@@ -1,5 +1,3 @@
-
-
 package rest;
 
 import dto.UserDTO;
@@ -10,6 +8,15 @@ import entities.CustomRecipe;
 import entities.User;
 import facades.RecipeFacade;
 import facades.UserFacade;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.info.Contact;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.servers.Server;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -39,8 +46,31 @@ import javax.ws.rs.core.SecurityContext;
 import utils.EMF_Creator;
 
 /**
- * @author lam@cphbusiness.dk
+ * @author team ASEF,
  */
+@OpenAPIDefinition(
+        info = @Info(
+                title = "User recipe API",
+                version = "undefiend",
+                description = "Simple API to get info about users for the recipe webpage.",
+                contact = @Contact(name = "Team ASEF", email = "cph-ao141@cphbusiness.dk")
+        ),
+        tags = {
+            @Tag(name = "user", description = "API related to Info about User")
+
+        },
+        servers = {
+            @Server(
+                    description = "For Local host testing",
+                    url = "http://localhost:8080/securitystarter/user"
+            ),
+            @Server(
+                    description = "Server API",
+                    url = "https://frederikkesimone.dk/sys/user"
+            )
+
+        }
+)
 @Path("user")
 public class UserResource {
 
@@ -62,6 +92,15 @@ public class UserResource {
         return "{\"msg\":\"Hello USERRESOURCE\"}";
     }
 //push
+
+    @Operation(summary = "Get USer info by the username",
+            tags = {"movie"},
+            responses = {
+                @ApiResponse(
+                        content = @Content(mediaType = "application/json", schema = @Schema(implementation = User.class))),
+                @ApiResponse(responseCode = "200", description = "The Requested User"),
+                @ApiResponse(responseCode = "500", description = "Internal Server Error")})
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("user/{name}")
@@ -70,19 +109,24 @@ public class UserResource {
         User chosenOne = facadeUser.getUser(name);
 
         //String data = chosenOne;
-        System.out.println( "XX dATA " + chosenOne);
+        System.out.println(" dATA " + chosenOne);
         UserDTO userdto = new UserDTO(chosenOne);
         return gson.toJson(userdto);
     }
-    
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Create a user", tags = {"user"},
+            responses = {
+                @ApiResponse(responseCode = "200", description = "The Newly created user"),
+                @ApiResponse(responseCode = "500", description = "Internal Server Error")// gotta serve
+            })
     @Path("user/add")
     public String addUser(String userAsJson) {
         User uNew = gson.fromJson(userAsJson, User.class);
         EntityManager em = EMF.createEntityManager();
-        facadeUser.createUser(uNew.getUserName(), uNew.getEmail(), uNew.getUserPass());  
+        facadeUser.createUser(uNew.getUserName(), uNew.getEmail(), uNew.getUserPass());
         return gson.toJson(uNew);
 
     }

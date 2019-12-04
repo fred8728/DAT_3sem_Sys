@@ -4,16 +4,20 @@
  * and open the template in the editor.
  */
 package dto;
-
+import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.HashSet;
+import java.util.Set;
 import entities.User;
 
 /**
  *
  * @author ahmed
  */
+@Schema(name ="User")
 public class UserDTO {
-    
+    @Schema(required = true, example ="userMAN21")
     private String userName;
+    @Schema(required = true, example="userman@mail.com")
     private String mail;
 
     public UserDTO() {

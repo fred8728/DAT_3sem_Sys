@@ -11,6 +11,11 @@ import entities.User;
 import facades.OpenMealFacade;
 import facades.RecipeFacade;
 import facades.UserFacade;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Contact;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.servers.Server;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -40,8 +45,31 @@ import javax.ws.rs.core.SecurityContext;
 import utils.EMF_Creator;
 
 /**
- * @author lam@cphbusiness.dk
+ * @author buds
  */
+@OpenAPIDefinition(
+            info = @Info(
+                    title = "User recipe API",
+                    version = "undefiend",
+                    description = " API used to get info from a recipe database called openMeal for the recipes.",        
+                    contact = @Contact( name = "Team ASEF", email = "cph-ao141@cphbusiness.dk")
+            ),
+          tags = {
+                    @Tag(name = "user", description = "API related to Info about User")
+              
+            },
+            servers = {
+                    @Server(
+                            description = "For Local host testing",
+                            url = "http://localhost:8080/securitystarter/openmeal"
+                    ),
+                    @Server(
+                            description = "Server API",
+                            url = "https://frederikkesimone.dk/sys/openmeal"
+                    )
+                          
+            }
+    )
 @Path("openmeal")
 public class OpenRecipeResource {
 

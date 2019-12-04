@@ -8,6 +8,15 @@ import com.google.gson.GsonBuilder;
 import entities.CustomRecipe;
 import facades.RecipeFacade;
 import facades.UserFacade;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.info.Contact;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.servers.Server;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -33,8 +42,32 @@ import javax.ws.rs.core.SecurityContext;
 import utils.EMF_Creator;
 
 /**
- * @author lam@cphbusiness.dk
+ * @author bud 
  */
+@OpenAPIDefinition(
+            info = @Info(
+                    title = "recipe API",
+                    version = "undefiend",
+                    description = "A API that contains api with user made recipes, and API to "
+                            + " a api online, this API's function is get info about recipes.",        
+                    contact = @Contact( name = "Team ASEF", email = "cph-ao141@cphbusiness.dk")
+            ),
+          tags = {
+                    @Tag(name = "recipes", description = "API related to Info about user made recipes")
+              
+            },
+            servers = {
+                    @Server(
+                            description = "For Local host testing",
+                            url = "http://localhost:8080/securitystarter/food"
+                    ),
+                    @Server(
+                            description = "Server API",
+                            url = "https://frederikkesimone.dk/sys/food"
+                    )
+                          
+            }
+    )
 @Path("food")
 public class RecipeResource {
 
@@ -60,6 +93,13 @@ public class RecipeResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Get all API recipes",
+            tags = {"custom recipe"},
+            responses = {
+                     @ApiResponse(
+                     content = @Content(mediaType = "application/json",schema = @Schema(implementation = CustomRecipe.class))),
+                    @ApiResponse(responseCode = "200", description = "Returns the Requested recipes"),                       
+                    @ApiResponse(responseCode = "400", description = " recipes not found")})
     @Path("recipe/all")
     public String getRecipes(@PathParam("id") int id) throws MalformedURLException, IOException, InterruptedException, ExecutionException, ExecutionException {
         URL url = new URL("http://www.recipepuppy.com/api/");
@@ -79,6 +119,13 @@ public class RecipeResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Get all custom made recipes",
+            tags = {"custom recipes"},
+            responses = {
+                     @ApiResponse(
+                     content = @Content(mediaType = "application/json",schema = @Schema(implementation = CustomRecipe.class))),
+                    @ApiResponse(responseCode = "200", description = "Returns the Requested custom recipes"),                       
+                    @ApiResponse(responseCode = "400", description = "custom recipes not found")})
     @Path("recipeC/all")
     public String getAllHomemadeRecipes() {
         List<CustomRecipe> chosenRecipe = facade.getAllRecipes();
@@ -94,6 +141,14 @@ public class RecipeResource {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "eddit custom made recipe by ID",
+            tags = {"custom recipe"},
+            responses = {
+                     @ApiResponse(
+                     content = @Content(mediaType = "application/json",schema = @Schema(implementation = CustomRecipe.class))),
+                    @ApiResponse(responseCode = "200", description = "The Requested custom recipe"),                       
+                    @ApiResponse(responseCode = "400", description = "custom recipe not found")})
+
     @Path("recipeC/edit/{id}")
     public String editRecipe(String recAsJson, @PathParam("id") int id) {
         return facade.editRecipe(recAsJson, id);
@@ -102,6 +157,11 @@ public class RecipeResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Create a custom recipe", tags = {"custom recipe"},
+            responses = {
+                @ApiResponse(responseCode = "200", description = "The Newly created recipe"),
+                @ApiResponse(responseCode = "500", description = "Internal Server Error")// gotta serve
+            })
     @Path("recipeC/add")
     public String addCustomRecipe(String recAsJson) {
         CustomRecipe cNew = gson.fromJson(recAsJson, CustomRecipe.class);
@@ -118,6 +178,11 @@ public class RecipeResource {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary =  "Returns the Requested custom recipe", tags = {"custom recipe"},
+            responses = {
+                @ApiResponse(responseCode = "200", description = "The requestd recipe"),
+                @ApiResponse(responseCode = "500", description = "Internal Server Error")// gotta serve
+            })
     @Path("recipeC/get/{id}")
     public String getRecipe(@PathParam("id") int id) {
         CustomRecipe chosenRecipe = facade.getRecipeById(id);
@@ -130,6 +195,11 @@ public class RecipeResource {
     
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
+    @Operation(summary =  "Deletes the Requested custom recipe", tags = {"custom recipe"},
+            responses = {
+                @ApiResponse(responseCode = "200", description = " Requestd recipe Deleted"),
+                @ApiResponse(responseCode = "500", description = "Internal Server Error")// gotta serve
+            })
     @Path("recipeC/{id}")
      public void deleteRecipe(@PathParam("id") int id) {
         CustomRecipe chosenRecipe = facade.getRecipeById(id);
