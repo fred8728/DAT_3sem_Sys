@@ -59,7 +59,7 @@ import utils.EMF_Creator;
                     contact = @Contact( name = "Team ASEF", email = "cph-ao141@cphbusiness.dk")
             ),
           tags = {
-                    @Tag(name = "API recipe", description = "API's used to get recipes")
+                    @Tag(name = "API recipes", description = "API's used to get recipes")
               
             },
             servers = {

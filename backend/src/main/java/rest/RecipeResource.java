@@ -53,7 +53,7 @@ import utils.EMF_Creator;
                     contact = @Contact( name = "Team ASEF", email = "cph-ao141@cphbusiness.dk")
             ),
           tags = {
-                    @Tag(name = "recipes", description = "API related to Info about user made recipes")
+                    @Tag(name = "custom recipes", description = "API related to Info about user made recipes")
               
             },
             servers = {
@@ -84,7 +84,7 @@ public class RecipeResource {
     @Context
     SecurityContext securityContext;
     @Operation(summary = "Endpoint for the custom recipes",
-            tags = {"custom recipe"},
+            tags = {"custom recipes"},
             responses = {
                      @ApiResponse(
                      content = @Content(mediaType = "application/json",schema = @Schema(implementation = CustomRecipe.class)))})
@@ -97,8 +97,8 @@ public class RecipeResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Operation(summary = "Get all API recipes",
-            tags = {"custom recipe"},
+    @Operation(summary = "Get all recipes",
+            tags = {"custom recipes"},
             responses = {
                      @ApiResponse(
                      content = @Content(mediaType = "application/json",schema = @Schema(implementation = CustomRecipe.class))),
@@ -124,7 +124,7 @@ public class RecipeResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "Get all custom made recipes",
-            tags = {"custom recipe"},
+            tags = {"custom recipes"},
             responses = {
                      @ApiResponse(
                      content = @Content(mediaType = "application/json",schema = @Schema(implementation = CustomRecipe.class))),
@@ -146,7 +146,7 @@ public class RecipeResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "eddit custom made recipe by ID",
-            tags = {"custom recipe"},
+            tags = {"custom recipes"},
             responses = {
                      @ApiResponse(
                      content = @Content(mediaType = "application/json",schema = @Schema(implementation = CustomRecipe.class))),
@@ -161,7 +161,7 @@ public class RecipeResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @Operation(summary = "Create a custom recipe", tags = {"custom recipe"},
+    @Operation(summary = "Create a custom recipe", tags = {"custom recipes"},
             responses = {
                 @ApiResponse(responseCode = "200", description = "The Newly created recipe"),
                 @ApiResponse(responseCode = "500", description = "Internal Server Error")// gotta serve
@@ -182,7 +182,7 @@ public class RecipeResource {
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Operation(summary =  "Returns the Requested custom recipe", tags = {"custom recipe"},
+    @Operation(summary =  "Returns the Requested custom recipe", tags = {"custom recipes"},
             responses = {
                 @ApiResponse(responseCode = "200", description = "The requestd recipe"),
                 @ApiResponse(responseCode = "500", description = "Internal Server Error")// gotta serve
@@ -199,7 +199,7 @@ public class RecipeResource {
     
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
-    @Operation(summary =  "Deletes the Requested custom recipe", tags = {"custom recipe"},
+    @Operation(summary =  "Deletes the Requested custom recipe", tags = {"custom recipes"},
             responses = {
                 @ApiResponse(responseCode = "200", description = " Requestd recipe Deleted"),
                 @ApiResponse(responseCode = "500", description = "Internal Server Error")// gotta serve
