@@ -24,8 +24,8 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import utils.EMF_Creator;
 
-@Disabled
-//@Disabled 
+
+@Disabled 
 public class UserRecourseTest {
 
     private static final int SERVER_PORT = 7777;
@@ -74,11 +74,11 @@ public class UserRecourseTest {
 
             Role userRole = new Role("user");
             Role adminRole = new Role("admin");
-            User user = new User("user","email@test.dk", "test");
+            User user = new User("user", "email@test.dk", "test");
             user.addRole(userRole);
-            User admin = new User("admin","email@test.dk", "test");
+            User admin = new User("admin", "email@test.dk", "test");
             admin.addRole(adminRole);
-            User both = new User("user_admin","email@test.dk", "test");
+            User both = new User("user_admin", "email@test.dk", "test");
             both.addRole(userRole);
             both.addRole(adminRole);
             em.persist(userRole);
@@ -92,34 +92,34 @@ public class UserRecourseTest {
             em.close();
         }
     }
-    
+
     //This is how we hold on to the token after login, similar to that a client must store the token somewhere
-  private static String securityToken;
-  
-  @Test
+    private static String securityToken;
+
+    @Test
     public void testServerIsUp() {
         System.out.println("Testing is server UP");
         given().when().get("/user").then().statusCode(200);
     }
-    
-            @Test
+
+    @Test
     public void testGetCustomRecipes() {
         given()
                 .contentType("application/json")
-                .get("/user/user/user").then()
+                .get("/user/user").then()
                 .assertThat()
-                .statusCode(HttpStatus.OK_200.getStatusCode())
-                .body("mail", equalTo("email@test.dk"));
+                .statusCode(HttpStatus.OK_200.getStatusCode());
+                //.body("mail", equalTo("email@test.dk"));
     }
-    
-             @Test
+
+    @Test
     public void testPostUser() {
-            String postlol = "{\n" +
-"\"userName\": \"Frederik\",\n" +
-"\"mail\": \"fred@test.dk\"\n" +
-"}";
-            UserResource posttest = new UserResource();
-            posttest.addUser(postlol);
+        String postlol = "{\n"
+                + "\"userName\": \"Frederik\",\n"
+                + "\"mail\": \"fred@test.dk\"\n"
+                + "}";
+        UserResource posttest = new UserResource();
+        posttest.addUser(postlol);
         given()
                 .contentType("application/json")
                 .get("/user/user/Frederik").then()
@@ -127,9 +127,8 @@ public class UserRecourseTest {
                 .statusCode(HttpStatus.OK_200.getStatusCode())
                 .body("userName", equalTo("Frederik"));
     }
-    
-    //hvorfor kan jeg ikke pushe test nogensinde
 
+    //hvorfor kan jeg ikke pushe test nogensinde
 //  //Utility method to login and set the returned securityToken
 //  private static void login(String role, String password) {
 //    String json = String.format("{username: \"%s\", password: \"%s\"}", role, password);
@@ -258,6 +257,4 @@ public class UserRecourseTest {
 //            .body("code", equalTo(403))
 //            .body("message", equalTo("Not authenticated - do login"));
 //  }
-    
-    
 }

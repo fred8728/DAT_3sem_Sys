@@ -10,10 +10,12 @@ import facades.RecipeFacade;
 import facades.UserFacade;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.servers.Server;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -93,18 +95,24 @@ public class UserResource {
     }
 //push
 
-    @Operation(summary = "Get USer info by the username",
-            tags = {"movie"},
-            responses = {
-                @ApiResponse(
-                        content = @Content(mediaType = "application/json", schema = @Schema(implementation = User.class))),
-                @ApiResponse(responseCode = "200", description = "The Requested User"),
-                @ApiResponse(responseCode = "500", description = "Internal Server Error")})
+    
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON) // {"userName":"dasda", "email":"bob@yoho.com","userPass":"1234test"}
+    @Operation(summary = "Get User info by the username",
+            tags = {"user"},
+//            @RequestBody( 
+//                description = "the endpoints work by giveing a name value which exist in the database"
+//            //name = "userName:/dasda,/ email:/bob@yoho.com,/userPass:/1234test"
+//            ),
+                    
+            responses = {
+                @ApiResponse(
+                        content = @Content( mediaType = "application/json", schema = @Schema(implementation = User.class))),
+                @ApiResponse(responseCode = "200", description = "The Requested User"),
+                @ApiResponse(responseCode = "500", description = "Internal Server Error")})
     @Path("user/{name}")
-    public String getUser(@PathParam("name") String name) {
+    public String getUser(@Parameter(description ="in the url it takes a string value that returns json element ",required = true) @PathParam("name") String name) {
 
         User chosenOne = facadeUser.getUser(name);
 
@@ -117,13 +125,13 @@ public class UserResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @Operation(summary = "Create a user", tags = {"user"},
+    @Operation(summary = "Create and add a user to a database", tags = {"user"},
             responses = {
                 @ApiResponse(responseCode = "200", description = "The Newly created user"),
                 @ApiResponse(responseCode = "500", description = "Internal Server Error")// gotta serve
             })
     @Path("user/add")
-    public String addUser(String userAsJson) {
+    public String addUser( @Parameter(description ="takes a User JSON element as a String") String userAsJson) {
         User uNew = gson.fromJson(userAsJson, User.class);
         EntityManager em = EMF.createEntityManager();
         facadeUser.createUser(uNew.getUserName(), uNew.getEmail(), uNew.getUserPass());

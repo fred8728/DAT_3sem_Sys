@@ -12,8 +12,12 @@ import facades.OpenMealFacade;
 import facades.RecipeFacade;
 import facades.UserFacade;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.servers.Server;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.io.IOException;
@@ -55,7 +59,7 @@ import utils.EMF_Creator;
                     contact = @Contact( name = "Team ASEF", email = "cph-ao141@cphbusiness.dk")
             ),
           tags = {
-                    @Tag(name = "user", description = "API related to Info about User")
+                    @Tag(name = "API recipe", description = "API's used to get recipes")
               
             },
             servers = {
@@ -70,6 +74,7 @@ import utils.EMF_Creator;
                           
             }
     )
+
 @Path("openmeal")
 public class OpenRecipeResource {
 
@@ -100,6 +105,13 @@ public class OpenRecipeResource {
 //    https://www.themealdb.com/api/json/v1/1/lookup.php?i=52772
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Get all custom made recipes",
+            tags = {"API recipes"},
+            responses = {
+                     @ApiResponse(
+                     content = @Content(mediaType = "application/json",schema = @Schema(implementation = CustomRecipe.class))),
+                    @ApiResponse(responseCode = "200", description = "Returns the Requested custom recipes"),                       
+                    @ApiResponse(responseCode = "400", description = "custom recipes not found")})
     @Path("multiple")
     public String getMultiple() throws MalformedURLException, IOException, InterruptedException, ExecutionException {
         OpenMealFacade recipeFac = new OpenMealFacade();
@@ -109,6 +121,13 @@ public class OpenRecipeResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Get all custom made recipes",
+            tags = {"API recipes"},
+            responses = {
+                     @ApiResponse(
+                     content = @Content(mediaType = "application/json",schema = @Schema(implementation = CustomRecipe.class))),
+                    @ApiResponse(responseCode = "200", description = "Returns the Requested custom recipes"),                       
+                    @ApiResponse(responseCode = "400", description = "custom recipes not found")})
     @Path("recipe/openMeal/{letter}")
     public static String getRecipeLetter(@PathParam("letter") String letter) throws MalformedURLException, IOException {
         URL url = new URL("https://www.themealdb.com/api/json/v1/1/search.php?f=" + letter);
@@ -129,6 +148,13 @@ public class OpenRecipeResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Operation(summary = "Get all custom made recipes",
+            tags = {"API recipes"},
+            responses = {
+                     @ApiResponse(
+                     content = @Content(mediaType = "application/json",schema = @Schema(implementation = CustomRecipe.class))),
+                    @ApiResponse(responseCode = "200", description = "Returns the Requested custom recipes"),                       
+                    @ApiResponse(responseCode = "400", description = "custom recipes not found")})
     @Path("recipe/openMeal/all")
     public static String getAllOpenMealDB() throws IOException {
         //cached thread pool create  a cache thread pool instead of fixed if you dont know the amount of calls
