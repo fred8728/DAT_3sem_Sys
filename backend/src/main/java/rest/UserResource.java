@@ -87,7 +87,11 @@ public class UserResource {
 
     @Context
     SecurityContext securityContext;
-
+    @Operation(summary = "Endpoint for the User rest endpoint",
+            tags = {"user"},
+            responses = {
+                     @ApiResponse(
+                     content = @Content(mediaType = "application/json",schema = @Schema(implementation = CustomRecipe.class)))})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getInfoForAll() {

@@ -83,7 +83,11 @@ public class RecipeResource {
 
     @Context
     SecurityContext securityContext;
-
+    @Operation(summary = "Endpoint for the custom recipes",
+            tags = {"custom recipe"},
+            responses = {
+                     @ApiResponse(
+                     content = @Content(mediaType = "application/json",schema = @Schema(implementation = CustomRecipe.class)))})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getInfoForAll() {
@@ -120,7 +124,7 @@ public class RecipeResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "Get all custom made recipes",
-            tags = {"custom recipes"},
+            tags = {"custom recipe"},
             responses = {
                      @ApiResponse(
                      content = @Content(mediaType = "application/json",schema = @Schema(implementation = CustomRecipe.class))),
